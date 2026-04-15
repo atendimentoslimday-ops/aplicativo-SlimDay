@@ -968,10 +968,10 @@ function OnboardingQuiz({
           </div>
         </div>
       </div>
-    );
-  }
+  );
+}
 
-  function AuthScreen({
+function AuthScreen({
     mode, setMode, nome, setNome, email, setEmail, senha, setSenha, onSubmit, loading, error, success,
   }: {
   mode: "login" | "register";
