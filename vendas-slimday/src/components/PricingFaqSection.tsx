@@ -1,6 +1,7 @@
 import React from "react";
 import { ShieldCheck, Sparkles, Zap, Heart, Calendar, Check, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 const faqs = [
   { q: "Preciso ter experiência com exercícios?", a: "Não. A SlimDay é desenhada para quem quer começar do zero, com algo simples e real." },

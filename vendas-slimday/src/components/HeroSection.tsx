@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 
 const HeroSection = () => (
   <section className="py-12 md:py-24 relative overflow-hidden bg-sand/30">
