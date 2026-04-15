@@ -8,7 +8,7 @@ import {
   Salad,
   Dumbbell,
   Sparkles,
-  ChevronRight,
+  ChevronLeft, ChevronRight,
   Trophy,
   Flame,
   Heart,
@@ -2425,11 +2425,35 @@ export default function SlimDayApp() {
                                       <div key={d} className="text-center text-[10px] font-bold uppercase text-slate-400 py-1">{d}</div>
                                     ))}
                                     {(() => {
-                                      if (cycleCalendar.length === 0) return null;
+                                      const firstDayKey = cycleCalendar[0]?.dateKey;
+                                      if (!firstDayKey) return null;
+                                      const firstDate = new Date(`${firstDayKey}T12:00:00`);
+                                      const startDow = firstDate.getDay();
+                                      const blanks = Array.from({ length: startDow }, (_, i) => (
+                                        <div key={`blank-${i}`} className="aspect-square" />
+                                      ));
+                                      const days = cycleCalendar.map((day) => {
+                                        const isToday = day.dateKey === todayKey;
+                                        return (
+                                          <div key={day.dateKey} className={`aspect-square rounded-2xl flex flex-col items-center justify-center relative transition-all ${isToday ? "bg-primary text-white shadow-lg ring-4 ring-primary/10" : "hover:bg-slate-50"}`}>
+                                            <span className={`text-sm font-bold ${isToday ? "text-white" : "text-slate-700"}`}>{day.dayNumber}</span>
+                                            {day.phase !== "neutro" && (
+                                              <div className={`absolute bottom-2 h-1.5 w-1.5 rounded-full ${day.phase === "menstrua\u00e7\u00e3o" ? "bg-rose-400" : day.phase === "ovula\u00e7\u00e3o" ? "bg-emerald-400" : "bg-violet-400"}`} />
+                                            )}
+                                          </div>
+                                        );
+                                      });
+                                      return [...blanks, ...days];
+                                    })()}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
                             <div className="space-y-8 min-w-0">
                               <Card className="rounded-[40px] border-none shadow-premium bg-white p-8">
                                 <div className="flex items-center justify-between mb-8">
-                                  <h3 className="text-2xl font-serif italic">Seu Calend├írio</h3>
+                                  <h3 className="text-2xl font-serif italic text-slate-900">Seu Calend\u00e1rio</h3>
                                   <div className="flex gap-2">
                                     <Button variant="ghost" size="icon" className="rounded-xl border border-slate-50" onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)))}>
                                       <ChevronLeft className="h-4 w-4" />
@@ -2439,41 +2463,29 @@ export default function SlimDayApp() {
                                     </Button>
                                   </div>
                                 </div>
-                                
                                 <div className="grid grid-cols-7 gap-1 md:gap-4">
-                                  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "S├íb"].map((d) => (
+                                  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "S\u00e1b"].map((d) => (
                                     <div key={d} className="text-center text-[10px] font-bold text-slate-300 uppercase tracking-widest pb-4">{d}</div>
                                   ))}
                                   {(() => {
-                                    const firstDayKey = cycleCalendar[0]?.dateKey;
-                                    if (!firstDayKey) return null;
-                                    
-                                    const firstDate = new Date(`${firstDayKey}T12:00:00`);
-                                    const startDow = firstDate.getDay();
-                                    const blanks = Array.from({ length: startDow }, (_, i) => (
-                                      <div key={`blank-${i}`} className="aspect-square" />
-                                    ));
-                                    const days = cycleCalendar.map((day) => {
+                                    const fdk = cycleCalendar[0]?.dateKey;
+                                    if (!fdk) return null;
+                                    const fd = new Date(`${fdk}T12:00:00`);
+                                    const sd = fd.getDay();
+                                    const b = Array.from({ length: sd }, (_, i) => <div key={`b-${i}`} className="aspect-square" />);
+                                    const ds = cycleCalendar.map((day) => {
                                       const isToday = day.dateKey === todayKey;
                                       return (
-                                        <div key={day.dateKey} className={`aspect-square rounded-2xl flex flex-col items-center justify-center relative transition-all ${
-                                          isToday ? "bg-primary text-white shadow-lg ring-4 ring-primary/10" : "hover:bg-slate-50"
-                                        }`}>
+                                        <div key={day.dateKey + "-2"} className={`aspect-square rounded-2xl flex flex-col items-center justify-center relative transition-all ${isToday ? "bg-primary text-white shadow-lg ring-4 ring-primary/10" : "hover:bg-slate-50"}`}>
                                           <span className={`text-sm font-bold ${isToday ? "text-white" : "text-slate-700"}`}>{day.dayNumber}</span>
-                                          {day.phase !== "neutro" && (
-                                            <div className={`absolute bottom-2 h-1.5 w-1.5 rounded-full ${
-                                              day.phase === "menstrua├º├úo" ? "bg-rose-400" : 
-                                              day.phase === "ovula├º├úo" ? "bg-emerald-400" : "bg-violet-400"
-                                            }`} />
-                                          )}
+                                          {day.phase !== "neutro" && <div className={`absolute bottom-2 h-1.5 w-1.5 rounded-full ${day.phase === "menstrua\u00e7\u00e3o" ? "bg-rose-400" : day.phase === "ovula\u00e7\u00e3o" ? "bg-emerald-400" : "bg-violet-400"}`} />}
                                         </div>
                                       );
                                     });
-                                    return [...blanks, ...days];
+                                    return [...b, ...ds];
                                   })()}
                                 </div>
                               </Card>
-
                               <div className="grid gap-8 md:grid-cols-2">
                                 <Card className="rounded-[40px] border-none shadow-premium bg-slate-900 text-white p-8 overflow-hidden relative">
                                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-3xl rounded-full -mr-16 -mt-16" />
