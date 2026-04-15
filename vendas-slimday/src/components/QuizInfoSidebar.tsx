@@ -15,7 +15,7 @@ const QuizInfoSidebar = () => {
       <h2 className="text-3xl md:text-[40px] font-extrabold leading-none tracking-tight text-secondary mb-3">
         Descubra o plano que mais combina com o seu momento
       </h2>
-      <p className="text-muted-foreground leading-relaxed mb-5">
+      <p className="text-slate-600 leading-relaxed mb-5">
         Em menos de 2 minutos, você descobre qual formato pode funcionar melhor para a sua rotina, o seu objetivo e o tempo que você realmente tem disponível.
       </p>
 
@@ -42,8 +42,8 @@ const QuizInfoSidebar = () => {
           Uma condição pensada para facilitar sua entrada no SlimDay.
         </p>
         <div className="flex items-end gap-3 mb-3 flex-wrap">
-          <span className="text-muted-foreground text-xl font-extrabold line-through">R$ 89,90</span>
-          <span className="text-4xl font-black text-secondary tracking-tighter leading-none">R$ 29,90</span>
+          <span className="text-slate-400 text-xl font-extrabold line-through leading-none">R$ 89,90</span>
+          <span className="text-4xl font-black text-slate-900 tracking-tighter leading-none">R$ 29,90</span>
         </div>
         <div className="grid gap-2.5 mb-4">
           {["Acesso à experiência SlimDay.", "Treinos curtos para rotina corrida.", "Começo simples, direto e prático."].map((item) => (

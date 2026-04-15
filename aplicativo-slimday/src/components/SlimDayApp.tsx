@@ -35,6 +35,10 @@ import {
   MessageCircle,
   Send,
   Video,
+  Star,
+  Check,
+  Bell,
+  BellOff,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -968,10 +972,10 @@ function OnboardingQuiz({
           </div>
         </div>
       </div>
-  );
-}
+    );
+  }
 
-function AuthScreen({
+  function AuthScreen({
     mode, setMode, nome, setNome, email, setEmail, senha, setSenha, onSubmit, loading, error, success,
   }: {
   mode: "login" | "register";

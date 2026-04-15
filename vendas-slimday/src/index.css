@@ -18,11 +18,11 @@
     --primary: 152 50% 28%; /* Emerald profundo premium */
     --primary-foreground: 30 20% 98%;
 
-    --secondary: 152 20% 94%;
-    --secondary-foreground: 152 50% 28%;
+    --secondary: 152 40% 12%; /* Dark green for readable text */
+    --secondary-foreground: 30 20% 98%;
 
     --muted: 30 15% 94%;
-    --muted-foreground: 152 20% 40%;
+    --muted-foreground: 152 15% 35%; /* Darker for better readability */
 
     --accent: 350 50% 90%; /* Soft Rose Quartz */
     --accent-foreground: 152 50% 28%;

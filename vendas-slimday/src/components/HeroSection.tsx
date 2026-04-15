@@ -24,13 +24,13 @@ const HeroSection = () => (
           Sua melhor versão em <span className="text-primary italic">15 minutos</span> por dia
         </h1>
         
-        <p className="text-xl text-slate-500 leading-relaxed mb-12 max-w-2xl font-light">
+        <p className="text-xl text-slate-600 leading-relaxed mb-12 max-w-2xl font-light">
           Descubra o plano personalizado SlimDay. Criado para mulheres reais que buscam resultados reais, sem complicar a rotina.
         </p>
         
         <div className="flex flex-wrap gap-4 mb-12">
           {["Público Feminino", "Treinos Rápidos", "Alimentação Prática", "Foco em Constância"].map((chip) => (
-            <div key={chip} className="px-6 py-2.5 rounded-full bg-white border border-slate-50 text-[10px] font-bold text-slate-400 uppercase tracking-widest shadow-sm">
+            <div key={chip} className="px-6 py-2.5 rounded-full bg-white border border-slate-100 text-[10px] font-bold text-slate-500 uppercase tracking-widest shadow-sm">
               {chip}
             </div>
           ))}

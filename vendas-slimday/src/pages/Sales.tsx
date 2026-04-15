@@ -17,8 +17,8 @@ const Sales = () => {
       <header className="sticky top-0 z-20 backdrop-blur-md bg-card/80 border-b border-border/80">
         <div className="container flex items-center justify-between py-3.5">
           <div>
-            <span className="text-2xl font-extrabold text-secondary">SlimDay</span>
-            <div className="text-xs font-bold text-muted-foreground mt-0.5">
+            <span className="text-2xl font-extrabold text-slate-900 leading-none">SlimDay</span>
+            <div className="text-[11px] font-bold text-slate-600 mt-1 uppercase tracking-tight">
               Seu corpo em forma, mesmo com rotina corrida
             </div>
           </div>
@@ -49,8 +49,8 @@ const Sales = () => {
                   { val: "100%", label: "feito para rotina corrida" },
                 ].map((s) => (
                   <div key={s.val} className="p-4 rounded-2xl bg-card border border-border shadow-sm text-center">
-                    <strong className="block text-xl text-secondary">{s.val}</strong>
-                    <span className="text-xs text-muted-foreground">{s.label}</span>
+                    <strong className="block text-xl text-slate-900">{s.val}</strong>
+                    <span className="text-xs text-slate-600 font-medium">{s.label}</span>
                   </div>
                 ))}
               </div>
