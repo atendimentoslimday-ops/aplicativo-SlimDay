@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+﻿import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -176,26 +176,53 @@ const QuizSection = () => {
   const { bmi, profile, focus } = getProfileData(answers);
 
   return (
-    <section className="w-full py-20 px-4 bg-emerald-50/30" id="quiz">
-      <div className="max-w-2xl mx-auto">
+    <section
+      className="w-full py-24 px-4 relative overflow-hidden"
+      id="quiz"
+      style={{
+        background: "linear-gradient(160deg, #064e3b 0%, #065f46 35%, #047857 60%, #10b981 100%)",
+      }}
+    >
+      {/* Background decorative elements */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px] -ml-64 -mt-64 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-300/10 rounded-full blur-[100px] -mr-32 -mb-32 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(52,211,153,0.15),transparent_50%)] pointer-events-none" />
+
+      <div className="max-w-2xl mx-auto relative z-10">
+        {/* Section header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-emerald-200 font-bold text-[10px] uppercase tracking-[3px] mb-6 backdrop-blur-md">
+            <Sparkles className="h-3 w-3" /> Descubra seu perfil
+          </div>
+          <h2 className="text-4xl md:text-6xl font-serif text-white leading-tight mb-4">
+            Seu plano <span className="italic text-emerald-300">personalizado</span><br />em 2 minutos
+          </h2>
+          <p className="text-emerald-100 text-lg font-light max-w-lg mx-auto leading-relaxed">
+            Responda 8 perguntas rápidas e receba uma recomendação feita exclusivamente para a sua rotina.
+          </p>
+        </div>
+
         <AnimatePresence mode="wait">
           {step === "quiz" && (
-            <motion.div 
+            <motion.div
               key="quiz-card"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-[40px] shadow-premium p-8 md:p-12 border border-emerald-100 shadow-emerald-900/5"
+              className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12 border-0"
             >
-              <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-[3px] mb-6">
-                <span>Passo {currentQuestion + 1} de {questions.length}</span>
-                <span>{progress}% Concluído</span>
+              {/* Progress info */}
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-[3px]">Passo {currentQuestion + 1} de {questions.length}</span>
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[3px]">{progress}% Concluído</span>
               </div>
-              <div className="h-1.5 w-full bg-slate-100 rounded-full mb-10 overflow-hidden">
-                <motion.div 
+              {/* Progress bar */}
+              <div className="h-2 w-full bg-emerald-50 rounded-full mb-10 overflow-hidden">
+                <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
-                  className="h-full bg-primary"
+                  className="h-full rounded-full"
+                  style={{ background: "linear-gradient(90deg, #059669, #10b981)" }}
                 />
               </div>
 
@@ -204,21 +231,26 @@ const QuizSection = () => {
               </h3>
 
               {q.type === "options" && (
-                <div className="grid gap-4">
-                  {q.options!.map((option) => (
+                <div className="grid gap-3">
+                  {q.options!.map((option, idx) => (
                     <button
                       key={option}
                       type="button"
                       onClick={() => selectOption(option)}
-                      className={`w-full text-left font-bold text-base p-6 rounded-[24px] border transition-all duration-300 group
+                      className={`w-full text-left font-bold text-base p-5 rounded-[20px] border-2 transition-all duration-300 group relative overflow-hidden
                         ${answers[q.key] === option
-                          ? "border-primary bg-primary/5 shadow-md -translate-y-1 text-primary"
-                          : "border-slate-100 bg-white hover:border-primary/40 hover:-translate-y-1 hover:shadow-sm text-slate-600"
+                          ? "border-emerald-500 bg-emerald-500 text-white shadow-lg shadow-emerald-200 -translate-y-0.5"
+                          : "border-slate-100 bg-slate-50/50 hover:border-emerald-300 hover:bg-emerald-50 hover:-translate-y-0.5 text-slate-700"
                         }`}
                     >
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className={`h-7 w-7 rounded-full border-2 flex items-center justify-center shrink-0 text-xs font-black transition-all ${answers[q.key] === option ? "border-white bg-white/20 text-white" : "border-slate-200 text-slate-400"}`}>
+                          {String.fromCharCode(65 + idx)}
+                        </div>
                         <span>{option}</span>
-                        <ChevronRight className={`h-5 w-5 transition-all duration-300 ${answers[q.key] === option ? "translate-x-1 opacity-100" : "opacity-0"}`} />
+                        {answers[q.key] === option && (
+                          <CheckCircle2 className="h-5 w-5 ml-auto text-white" />
+                        )}
                       </div>
                     </button>
                   ))}
@@ -228,70 +260,76 @@ const QuizSection = () => {
               {q.type === "input" && (
                 <div className="space-y-6">
                   <div>
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[2px] mb-4 block">{q.label}</label>
+                    <label className="text-[10px] font-bold text-emerald-600 uppercase tracking-[2px] mb-4 block">{q.label}</label>
                     <Input
                       type="number"
                       inputMode="decimal"
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       placeholder={q.placeholder}
-                      className="rounded-[20px] text-xl py-8 px-6 border-slate-100 focus-visible:ring-primary h-auto transition-all"
+                      className="rounded-[20px] text-xl py-8 px-6 border-2 border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400 h-auto transition-all"
                       onKeyDown={(e) => e.key === "Enter" && handleNext()}
                     />
                   </div>
-                  <Button variant="cta" onClick={handleNext} className="w-full h-16 rounded-[24px] text-lg font-bold shadow-premium">
-                    Continuar
+                  <Button
+                    onClick={handleNext}
+                    className="w-full h-16 rounded-[20px] text-lg font-bold text-white"
+                    style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}
+                  >
+                    Continuar <ChevronRight className="ml-2 h-5 w-5" />
                   </Button>
                 </div>
               )}
 
-              <div className="mt-10 flex justify-center text-slate-300">
+              <div className="mt-8 flex justify-center">
                 <button
                   onClick={handleBack}
-                  className={`flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-primary transition-colors ${currentQuestion === 0 ? "invisible" : ""}`}
+                  className={`flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-300 hover:text-emerald-600 transition-colors ${currentQuestion === 0 ? "invisible" : ""}`}
                 >
-                  Voltar para anterior
+                  ← Voltar para anterior
                 </button>
               </div>
             </motion.div>
           )}
 
           {step === "processing" && (
-            <motion.div 
+            <motion.div
               key="processing-card"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-[40px] shadow-premium p-8 md:p-12 border border-slate-50 text-center"
+              className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12 text-center"
             >
-              <div className="h-16 w-16 bg-primary/10 rounded-3xl text-primary mx-auto flex items-center justify-center mb-8 animate-bounce">
-                <Sparkles className="h-8 w-8" />
+              <div className="h-20 w-20 rounded-[28px] mx-auto flex items-center justify-center mb-8 animate-bounce" style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}>
+                <Sparkles className="h-10 w-10 text-white" />
               </div>
               <h3 className="text-3xl md:text-5xl font-serif text-slate-900 leading-tight mb-4">
-                Personalizando sua <span className="text-primary italic">recomendação Elite</span>
+                Criando sua{" "}
+                <span className="italic" style={{ color: "#059669" }}>recomendação Elite</span>
               </h3>
               <p className="text-lg text-slate-500 font-light mb-10">
                 Estamos processando seus dados para criar a melhor experiência possível.
               </p>
-              
-              <div className="h-2 w-full bg-emerald-100 rounded-full mb-10 overflow-hidden">
-                <motion.div 
+
+              <div className="h-3 w-full bg-emerald-50 rounded-full mb-10 overflow-hidden border border-emerald-100">
+                <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${processingProgress}%` }}
-                  className="h-full bg-primary shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                  className="h-full rounded-full"
+                  style={{ background: "linear-gradient(90deg, #059669, #34d399)" }}
                 />
               </div>
 
-              <div className="grid gap-4">
+              <div className="grid gap-3 text-left">
                 {processingSteps.map((text, i) => (
                   <div
                     key={i}
-                    className={`p-5 rounded-[24px] border font-bold text-sm transition-all duration-500 flex items-center gap-4 ${
+                    className={`p-5 rounded-[20px] border-2 font-bold text-sm transition-all duration-500 flex items-center gap-4 ${
                       i <= activeProcessingStep
-                        ? "opacity-100 translate-x-1 bg-primary/5 border-primary/20 text-slate-900"
+                        ? "border-emerald-200 bg-emerald-50 text-emerald-900"
                         : "opacity-30 bg-white border-slate-100 text-slate-400"
                     }`}
                   >
-                    <CheckCircle2 className={`h-5 w-5 ${i <= activeProcessingStep ? "text-primary" : "text-slate-300"}`} />
+                    <CheckCircle2 className={`h-5 w-5 shrink-0 ${i <= activeProcessingStep ? "text-emerald-500" : "text-slate-300"}`} />
                     {text}
                   </div>
                 ))}
@@ -300,137 +338,141 @@ const QuizSection = () => {
           )}
 
           {step === "result" && (
-            <motion.div 
+            <motion.div
               key="result-card"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-[40px] shadow-premium p-8 md:p-12 border border-slate-50"
+              className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12"
             >
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-primary/5 text-primary font-bold text-[10px] uppercase tracking-[3px] mb-8 shadow-sm">
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full font-bold text-[10px] uppercase tracking-[3px] mb-8 shadow-sm text-white" style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}>
                 ✨ Plano de Elite Identificado
               </div>
-              
-              <h3 className="text-3xl md:text-6xl font-serif text-slate-900 leading-tight mb-6">
-                Seu plano foca em <span className="text-primary italic">resultados rápidos</span> e consistentes
+
+              <h3 className="text-3xl md:text-5xl font-serif text-slate-900 leading-tight mb-6">
+                Seu plano foca em{" "}
+                <span className="italic" style={{ color: "#059669" }}>resultados rápidos</span>{" "}
+                e consistentes
               </h3>
-              
+
               <p className="text-lg text-slate-500 font-light leading-relaxed mb-10">
                 Pelas suas respostas, você se beneficiará de uma rotina minimalista, com treinos de 15 minutos que protegem seu tempo e sua disposição.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-                <div className="p-6 rounded-[30px] bg-emerald-50/50 border border-emerald-100/50">
-                  <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-2">Perfil Elite</span>
-                  <strong className="text-slate-900 text-lg font-serif italic">{profile}</strong>
+                <div className="p-6 rounded-[24px] border-2 border-emerald-200 bg-emerald-50">
+                  <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-2">Perfil Elite</span>
+                  <strong className="text-emerald-900 text-lg font-serif italic">{profile}</strong>
                 </div>
-                <div className="p-6 rounded-[30px] bg-slate-50/50 border border-slate-100">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Formato Recomendado</span>
+                <div className="p-6 rounded-[24px] border-2 border-emerald-100 bg-emerald-50/50">
+                  <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest block mb-2">Formato Recomendado</span>
                   <strong className="text-slate-900 text-lg font-serif italic">15 min / dia</strong>
                 </div>
-                <div className="p-6 rounded-[30px] bg-slate-50/50 border border-slate-100">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Destaque do Plano</span>
+                <div className="p-6 rounded-[24px] border-2 border-emerald-100 bg-emerald-50/50">
+                  <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest block mb-2">Destaque do Plano</span>
                   <strong className="text-slate-900 text-lg font-serif italic">{focus}</strong>
                 </div>
               </div>
 
-              <div className="rounded-[40px] bg-slate-900 p-8 mb-10 text-white relative overflow-hidden shadow-premium-dark">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-3xl -mr-16 -mt-16" />
-                <h4 className="text-xl font-serif mb-4 flex items-center gap-3">
-                  <ShieldCheck className="h-6 w-6 text-primary" />
+              <div className="rounded-[32px] p-8 mb-10 text-white relative overflow-hidden" style={{ background: "linear-gradient(135deg, #064e3b, #065f46)" }}>
+                <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-400/20 blur-3xl rounded-full -mr-16 -mt-16" />
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-300/10 blur-2xl rounded-full -ml-8 -mb-8" />
+                <h4 className="text-xl font-serif mb-3 flex items-center gap-3 relative z-10">
+                  <ShieldCheck className="h-6 w-6 text-emerald-400" />
                   O Método SlimDay
                 </h4>
-                <p className="text-slate-400 leading-relaxed text-sm font-light">
+                <p className="text-emerald-100 leading-relaxed text-sm font-light relative z-10">
                   Diferente de planos genéricos, sua recomendação elite prioriza a proteção do seu metabolismo através de treinos inteligentes e micro-hábitos funcionais.
                 </p>
               </div>
 
-              <div className="rounded-[30px] border border-primary/20 bg-primary/5 p-6 mb-10 flex items-center justify-between flex-wrap gap-6">
+              <div className="rounded-[28px] border-2 border-emerald-200 bg-emerald-50 p-6 mb-10 flex items-center justify-between flex-wrap gap-6">
                 <div>
-                  <div className="text-[10px] font-bold text-primary uppercase tracking-[2px] mb-2">Acesso Completo · Oferta Única</div>
+                  <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-[2px] mb-2">Acesso Completo · Oferta Única</div>
                   <div className="text-4xl font-serif text-slate-900 leading-none">
                     R$ 29,90 <span className="text-sm font-light line-through text-slate-400 ml-2">R$ 89,90</span>
                   </div>
                 </div>
                 <div className="flex -space-x-3">
-                    {[1,2,3,4].map(i => (
-                        <div key={i} className="h-10 w-10 rounded-full border-2 border-white bg-slate-200" />
-                    ))}
-                    <div className="h-10 w-10 rounded-full border-2 border-white bg-primary flex items-center justify-center text-[10px] font-bold text-white">+8K</div>
+                  {[1, 2, 3, 4].map((i) => (
+                    <div key={i} className="h-10 w-10 rounded-full border-2 border-white bg-emerald-200" />
+                  ))}
+                  <div className="h-10 w-10 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white" style={{ background: "#059669" }}>+8K</div>
                 </div>
               </div>
 
-              <Button 
-                variant="cta" 
-                onClick={() => setStep("lead")} 
-                className="w-full h-20 rounded-[30px] text-xl font-bold shadow-premium bg-primary hover:bg-slate-900 transition-all active:scale-[0.98]"
+              <button
+                onClick={() => setStep("lead")}
+                className="w-full h-20 rounded-[28px] text-xl font-bold text-white transition-all active:scale-[0.98] shadow-xl shadow-emerald-900/30"
+                style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}
               >
-                Ativar meu plano personalizado
-              </Button>
+                Ativar meu plano personalizado ✦
+              </button>
             </motion.div>
           )}
 
           {step === "lead" && (
-            <motion.div 
+            <motion.div
               key="lead-card"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-[40px] shadow-premium p-8 md:p-12 border border-slate-50"
+              className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12"
             >
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-slate-50 text-slate-400 font-bold text-[10px] uppercase tracking-[3px] mb-8 shadow-sm">
-                ✨ Recepção SlimDay
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full font-bold text-[10px] uppercase tracking-[3px] mb-8 shadow-sm text-white" style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}>
+                ✨ Recepção SlimDay Elite
               </div>
               <h3 className="text-3xl md:text-5xl font-serif text-slate-900 leading-tight mb-4">
-                Pronta para <span className="text-primary italic">começar o seu dia 1?</span>
+                Pronta para{" "}
+                <span className="italic" style={{ color: "#059669" }}>começar o seu dia 1?</span>
               </h3>
               <p className="text-lg text-slate-500 font-light leading-relaxed mb-10">
-                Preencha seus dados para salvar sua recomendação personalizada e seguir para a página de ativação segura por <strong>R$ 29,90</strong>.
+                Preencha seus dados para salvar sua recomendação personalizada e seguir para a página de ativação segura por <strong className="text-emerald-700">R$ 29,90</strong>.
               </p>
 
-              <div className="grid gap-6">
+              <div className="grid gap-4">
                 <div className="relative">
-                  <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                  <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-400" />
                   <Input
                     value={name}
                     onChange={(e) => { setName(e.target.value); setLeadErrors((p) => ({ ...p, name: undefined })); }}
                     placeholder="Seu primeiro nome"
-                    className={`rounded-[24px] text-base py-8 pl-14 pr-6 h-auto bg-slate-50/50 border-slate-100 ${leadErrors.name ? "border-red-400 focus-visible:ring-red-400" : ""}`}
+                    className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.name ? "border-red-400 focus-visible:ring-red-400" : "border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400"}`}
                   />
                 </div>
-                
+
                 <div className="relative">
-                  <Phone className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                  <Phone className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-400" />
                   <Input
                     value={phone}
                     onChange={(e) => { setPhone(e.target.value); setLeadErrors((p) => ({ ...p, phone: undefined })); }}
                     placeholder="WhatsApp"
                     type="tel"
-                    className={`rounded-[24px] text-base py-8 pl-14 pr-6 h-auto bg-slate-50/50 border-slate-100 ${leadErrors.phone ? "border-red-400 focus-visible:ring-red-400" : ""}`}
+                    className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.phone ? "border-red-400 focus-visible:ring-red-400" : "border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400"}`}
                   />
                 </div>
-                
+
                 <div className="relative">
-                  <Mail className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                  <Mail className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-400" />
                   <Input
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setLeadErrors((p) => ({ ...p, email: undefined })); }}
                     placeholder="E-mail principal"
                     type="email"
-                    className={`rounded-[24px] text-base py-8 pl-14 pr-6 h-auto bg-slate-50/50 border-slate-100 ${leadErrors.email ? "border-red-400 focus-visible:ring-red-400" : ""}`}
+                    className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.email ? "border-red-400 focus-visible:ring-red-400" : "border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400"}`}
                   />
                 </div>
 
-                <Button 
-                  variant="cta" 
-                  onClick={validateAndGoCheckout} 
-                  className="w-full h-20 rounded-[30px] text-xl font-bold shadow-premium mt-4 bg-primary hover:bg-slate-900 transition-all"
+                <button
+                  onClick={validateAndGoCheckout}
+                  className="w-full h-20 rounded-[24px] text-xl font-bold text-white mt-4 transition-all shadow-xl shadow-emerald-900/30 active:scale-[0.98]"
+                  style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}
                 >
                   Finalizar Ativação · R$ 29,90
-                </Button>
+                </button>
               </div>
 
               <div className="mt-8 flex items-center justify-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                <ShieldCheck className="h-4 w-4 text-primary" />
-                Ambiente 100% Seguro & Protegido
+                <ShieldCheck className="h-4 w-4 text-emerald-500" />
+                Ambiente 100% Seguro &amp; Protegido
               </div>
             </motion.div>
           )}

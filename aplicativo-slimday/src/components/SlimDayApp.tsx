@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+﻿import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { recipeImages } from "@/assets/recipes";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
@@ -2437,99 +2437,103 @@ export default function SlimDayApp() {
                                   <span className="rounded-full bg-fuchsia-100 px-3 py-1 text-fuchsia-700">Janela fértil</span>
                                   <span className="rounded-full bg-emerald-100 px-3 py-1 text-emerald-700">Hoje</span>
                                 </div>
-                                {cycleCalendar.length === 0 ? (
-                                  <div className="rounded-2xl bg-slate-50 p-5 text-sm text-slate-600">Preencha a data do último ciclo para gerar seu calendário personalizado.</div>
-                                ) : (
-                                  <div className="grid grid-cols-7 gap-1.5">
-                                    {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map((d) => (
-                                      <div key={d} className="text-center text-[10px] font-bold uppercase text-slate-400 py-1">{d}</div>
-                                    ))}
-                                    {(() => {
-                                      if (cycleCalendar.length === 0) return null;
-                            <div className="space-y-8 min-w-0">
-                              <Card className="rounded-[40px] border-none shadow-premium bg-white p-8">
-                                <div className="flex items-center justify-between mb-8">
-                                  <h3 className="text-2xl font-serif italic">Seu Calendário</h3>
-                                  <div className="flex gap-2">
-                                    <Button variant="ghost" size="icon" className="rounded-xl border border-slate-50" onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)))}>
-                                      <ChevronLeft className="h-4 w-4" />
-                                    </Button>
-                                    <Button variant="ghost" size="icon" className="rounded-xl border border-slate-50" onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)))}>
-                                      <ChevronRight className="h-4 w-4" />
-                                    </Button>
-                                  </div>
-                                </div>
-                                
-                                <div className="grid grid-cols-7 gap-1 md:gap-4">
-                                  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((d) => (
-                                    <div key={d} className="text-center text-[10px] font-bold text-slate-300 uppercase tracking-widest pb-4">{d}</div>
-                                  ))}
-                                  {(() => {
-                                    const firstDayKey = cycleCalendar[0]?.dateKey;
-                                    if (!firstDayKey) return null;
-                                    
-                                    const firstDate = new Date(`${firstDayKey}T12:00:00`);
-                                    const startDow = firstDate.getDay();
-                                    const blanks = Array.from({ length: startDow }, (_, i) => (
-                                      <div key={`blank-${i}`} className="aspect-square" />
-                                    ));
-                                    const days = cycleCalendar.map((day) => {
-                                      const isToday = day.dateKey === todayKey;
-                                      return (
-                                        <div key={day.dateKey} className={`aspect-square rounded-2xl flex flex-col items-center justify-center relative transition-all ${
-                                          isToday ? "bg-primary text-white shadow-lg ring-4 ring-primary/10" : "hover:bg-slate-50"
-                                        }`}>
-                                          <span className={`text-sm font-bold ${isToday ? "text-white" : "text-slate-700"}`}>{day.dayNumber}</span>
-                                          {day.phase !== "neutro" && (
-                                            <div className={`absolute bottom-2 h-1.5 w-1.5 rounded-full ${
-                                              day.phase === "menstruação" ? "bg-rose-400" : 
-                                              day.phase === "ovulação" ? "bg-emerald-400" : "bg-violet-400"
-                                            }`} />
-                                          )}
-                                        </div>
-                                      );
-                                    });
-                                    return [...blanks, ...days];
-                                  })()}
-                                </div>
-                              </Card>
+                                 {cycleCalendar.length === 0 ? (
+                                   <div className="rounded-2xl bg-slate-50 p-5 text-sm text-slate-600">Preencha a data do último ciclo para gerar seu calendário personalizado.</div>
+                                 ) : (
+                                   <div className="grid grid-cols-7 gap-1.5">
+                                     {["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"].map((d) => (
+                                       <div key={d} className="text-center text-[10px] font-bold uppercase text-slate-400 py-1">{d}</div>
+                                     ))}
+                                     {(() => {
+                                       const fdKey = cycleCalendar[0]?.dateKey;
+                                       if (!fdKey) return null;
+                                       const fd = new Date(`${fdKey}T12:00:00`);
+                                       const startDow = fd.getDay();
+                                       const blanks = Array.from({ length: startDow }, (_, i) => (
+                                         <div key={`blank-${i}`} className="aspect-square" />
+                                       ));
+                                       const days = cycleCalendar.map((day) => {
+                                         const isToday = day.dateKey === todayKey;
+                                         return (
+                                           <div key={day.dateKey} className={`aspect-square rounded-2xl flex flex-col items-center justify-center relative transition-all ${isToday ? "bg-primary text-white shadow-lg ring-4 ring-primary/10" : "hover:bg-slate-50"}`}>
+                                             <span className={`text-sm font-bold ${isToday ? "text-white" : "text-slate-700"}`}>{day.dayNumber}</span>
+                                             {day.phase !== "neutro" && (
+                                               <div className={`absolute bottom-2 h-1.5 w-1.5 rounded-full ${day.phase === "menstrua\u00e7\u00e3o" ? "bg-rose-400" : day.phase === "ovula\u00e7\u00e3o" ? "bg-emerald-400" : "bg-violet-400"}`} />
+                                             )}
+                                           </div>
+                                         );
+                                       });
+                                       return [...blanks, ...days];
+                                     })()}
+                                   </div>
+                                 )}
+                               </div>
+                             </div>
 
-                              <div className="grid gap-8 md:grid-cols-2">
-                                <Card className="rounded-[40px] border-none shadow-premium bg-slate-900 text-white p-8 overflow-hidden relative">
-                                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-3xl rounded-full -mr-16 -mt-16" />
-                                  <div className="relative z-10">
-                                    <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-500 mb-4">Fase Hormonal de Hoje</p>
-                                    <h4 className="text-3xl font-serif italic mb-2 capitalize">{currentCycleDay ? getPhaseTitle(currentCycleDay.phase) : "Fase Neutra"}</h4>
-                                    <p className="text-slate-400 text-sm font-light leading-relaxed">
-                                      {currentCycleDay ? currentCycleDay.label : "Suas previsões hormonais aparecem aqui."}
-                                    </p>
-                                  </div>
-                                </Card>
+                             <div className="space-y-8 min-w-0">
+                               <Card className="rounded-[40px] border-none shadow-premium bg-white p-8">
+                                 <div className="flex items-center justify-between mb-8">
+                                   <h3 className="text-2xl font-serif italic">Seu Calendário</h3>
+                                   <div className="flex gap-2">
+                                     <Button variant="ghost" size="icon" className="rounded-xl border border-slate-50" onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)))}><ChevronLeft className="h-4 w-4" /></Button>
+                                     <Button variant="ghost" size="icon" className="rounded-xl border border-slate-50" onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)))}><ChevronRight className="h-4 w-4" /></Button>
+                                   </div>
+                                 </div>
+                                 <div className="grid grid-cols-7 gap-1 md:gap-4">
+                                   {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "S\u00e1b"].map((d) => (
+                                     <div key={d} className="text-center text-[10px] font-bold text-slate-300 uppercase tracking-widest pb-4">{d}</div>
+                                   ))}
+                                   {(() => {
+                                     const fdKey2 = cycleCalendar[0]?.dateKey;
+                                     if (!fdKey2) return null;
+                                     const fd2 = new Date(`${fdKey2}T12:00:00`);
+                                     const startDow2 = fd2.getDay();
+                                     const blanks2 = Array.from({ length: startDow2 }, (_, i) => (
+                                       <div key={`blank2-${i}`} className="aspect-square" />
+                                     ));
+                                     const days2 = cycleCalendar.map((day) => {
+                                       const isToday = day.dateKey === todayKey;
+                                       return (
+                                         <div key={day.dateKey + "2"} className={`aspect-square rounded-2xl flex flex-col items-center justify-center relative transition-all ${isToday ? "bg-primary text-white shadow-lg ring-4 ring-primary/10" : "hover:bg-slate-50"}`}>
+                                           <span className={`text-sm font-bold ${isToday ? "text-white" : "text-slate-700"}`}>{day.dayNumber}</span>
+                                           {day.phase !== "neutro" && (
+                                             <div className={`absolute bottom-2 h-1.5 w-1.5 rounded-full ${day.phase === "menstrua\u00e7\u00e3o" ? "bg-rose-400" : day.phase === "ovula\u00e7\u00e3o" ? "bg-emerald-400" : "bg-violet-400"}`} />
+                                           )}
+                                         </div>
+                                       );
+                                     });
+                                     return [...blanks2, ...days2];
+                                   })()}
+                                 </div>
+                               </Card>
 
-                                <div className="space-y-4">
-                                  <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-400 ml-4">Docinho Fit do Dia</p>
-                                  <div className="grid gap-4">
-                                    {cycleTreats.slice(0, 2).map((item, i) => (
-                                      <div key={i} className="bg-white p-5 rounded-[32px] border border-slate-50 shadow-sm flex items-center gap-4">
-                                        <div className="h-12 w-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center shrink-0">
-                                          <Sparkles className="h-6 w-6" />
-                                        </div>
-                                        <div>
-                                          <p className="font-bold text-slate-900 text-sm">{item.titulo}</p>
-                                          <p className="text-[10px] text-slate-400 mt-0.5 uppercase tracking-widest font-bold">Ideal para {currentCycleDay?.phase}</p>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </CardContent>
-                  </Card>
-                </TabsContent>
+                               <div className="grid gap-8 md:grid-cols-2">
+                                 <Card className="rounded-[40px] border-none shadow-premium bg-slate-900 text-white p-8 overflow-hidden relative">
+                                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-3xl rounded-full -mr-16 -mt-16" />
+                                   <div className="relative z-10">
+                                     <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-500 mb-4">Fase Hormonal de Hoje</p>
+                                     <h4 className="text-3xl font-serif italic mb-2 capitalize">{currentCycleDay ? getPhaseTitle(currentCycleDay.phase) : "Fase Neutra"}</h4>
+                                     <p className="text-slate-400 text-sm font-light leading-relaxed">{currentCycleDay ? currentCycleDay.label : "Suas previsões hormonais aparecem aqui."}</p>
+                                   </div>
+                                 </Card>
+                                 <div className="space-y-4">
+                                   <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-400 ml-4">Docinho Fit do Dia</p>
+                                   <div className="grid gap-4">
+                                     {cycleTreats.slice(0, 2).map((item, i) => (
+                                       <div key={i} className="bg-white p-5 rounded-[32px] border border-slate-50 shadow-sm flex items-center gap-4">
+                                         <div className="h-12 w-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center shrink-0"><Sparkles className="h-6 w-6" /></div>
+                                         <div><p className="font-bold text-slate-900 text-sm">{item.titulo}</p><p className="text-[10px] text-slate-400 mt-0.5 uppercase tracking-widest font-bold">Ideal para {currentCycleDay?.phase}</p></div>
+                                       </div>
+                                     ))}
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                           </>
+                         )}
+                       </CardContent>
+                     </Card>
+                   </TabsContent>
 
                 <TabsContent value="checklist" className="mt-0 animate-in fade-in duration-500">
                   <div className="grid gap-8 lg:grid-cols-[1.5fr,1fr]">
