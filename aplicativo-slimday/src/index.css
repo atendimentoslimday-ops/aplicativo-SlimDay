@@ -6,57 +6,44 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    --background: 30 20% 98.5%; 
+    --foreground: 152 40% 12%; 
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 152 40% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 152 40% 12%;
 
-    --primary: 152 69% 41%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 152 50% 28%; 
+    --primary-foreground: 30 20% 98%;
 
-    --secondary: 222 47% 11%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 152 20% 94%;
+    --secondary-foreground: 152 50% 28%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 30 15% 94%;
+    --muted-foreground: 152 20% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 350 50% 90%; 
+    --accent-foreground: 152 50% 28%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 152 69% 41%;
+    --border: 152 20% 88%;
+    --input: 152 20% 88%;
+    --ring: 152 50% 28%;
 
-    --radius: 0.5rem;
+    --radius: 1.5rem; 
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 152 69% 41%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 152 69% 41%;
-
-    /* SlimDay custom tokens */
-    --slim-success: 152 69% 41%;
-    --slim-success-light: 152 76% 95%;
-    --slim-warning: 25 95% 53%;
-    --slim-warning-light: 33 100% 96%;
-    --slim-info: 199 89% 48%;
-    --slim-info-light: 199 80% 94%;
-    --slim-rose: 347 77% 50%;
-    --slim-rose-light: 347 100% 97%;
-    --slim-violet: 263 70% 50%;
-    --slim-violet-light: 263 85% 96%;
-    --slim-gradient-bg: linear-gradient(180deg, hsl(152 76% 97%) 0%, hsl(25 100% 98%) 45%, hsl(0 0% 100%) 100%);
+    /* SlimDay Premium Tokens */
+    --slim-emerald: 152 50% 28%;
+    --slim-emerald-light: 152 40% 95%;
+    --slim-rose: 350 50% 90%;
+    --slim-rose-dark: 350 40% 80%;
+    --slim-sand: 30 20% 98%;
+    --slim-gold: 38 45% 72%;
+    --slim-gradient-premium: linear-gradient(135deg, hsl(152 50% 28%) 0%, hsl(152 40% 40%) 100%);
   }
 
   .dark {
@@ -104,8 +91,17 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    @apply font-semibold tracking-tight;
+  }
+
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
   }
 }
 

@@ -373,27 +373,27 @@ const tutorialMap: Record<string, string[]> = {
 };
 
 const exerciseMeta: Record<string, Partial<PlanItem>> = {
-  "Finisher SlimDay": { dificuldade: "intenso", cuidado: "Feche forte, mas sem sacrificar a execução.", explicacaoSimples: "É o bloco final para terminar com sensação de missão cumprida.", youtubeId: "dZgVxmf6jkA" },
+  "Finisher SlimDay": { dificuldade: "intenso", cuidado: "Feche forte, mas sem sacrificar a execução.", explicacaoSimples: "É o bloco final para terminar com sensação de missão cumprida.", youtubeId: "TU8QYVW0gDU" },
   // Novos Iniciante
-  "Elevação pélvica": { dificuldade: "leve", cuidado: "Não force a lombar, suba usando os glúteos.", explicacaoSimples: "É levantar o quadril do chão e apertar o bumbum.", youtubeId: "w_mP96HPrpQ" },
+  "Elevação pélvica": { dificuldade: "leve", cuidado: "Não force a lombar, suba usando os glúteos.", explicacaoSimples: "É levantar o quadril do chão e apertar o bumbum.", youtubeId: "wPM8icD6st0" },
   "Prancha de joelhos": { dificuldade: "leve", cuidado: "Mantenha o pescoço alinhado com a coluna.", explicacaoSimples: "É ficar paradinha apoiada nos braços e joelhos.", youtubeId: "6I2In2_S7m0" },
   "Polichinelo adaptado": { dificuldade: "leve", cuidado: "Se sentir dor no ombro, não suba os braços até o topo.", explicacaoSimples: "É o polichinelo sem pulo, um passo de cada vez.", youtubeId: "lV5a4IueVjE" },
   "4 apoios (Glúteos)": { dificuldade: "leve", cuidado: "Não deixe a barriga cair, mantenha firme.", explicacaoSimples: "É chutar o teto estando de joelhos no chão.", youtubeId: "vN_j_2a2S7o" },
-  "Mobilidade de escápulas": { dificuldade: "leve", cuidado: "Mova apenas os ombros, não os braços.", explicacaoSimples: "É 'afundar' e 'empurrar' o peito para soltar os ombros.", youtubeId: "tV_6V_6X_Xo" },
+  "Mobilidade de escápulas": { dificuldade: "leve", cuidado: "Mova apenas os ombros, não os braços.", explicacaoSimples: "É 'afundar' e 'empurrar' o peito para soltar os ombros.", youtubeId: "aclHkVaku9U" },
   // Novos Intermediário
   "Mountain Climber": { dificuldade: "moderado", cuidado: "Não eleve muito o quadril, mantenha-o baixo.", explicacaoSimples: "É como se estivesse subindo uma montanha no chão.", youtubeId: "nmwgirgXLYM" },
-  "Tríceps no banco": { dificuldade: "moderado", cuidado: "Mantenha as costas próximas ao banco.", explicacaoSimples: "É descer e subir usando a força do 'tchau'.", youtubeId: "jX-VvX6X_Xo" },
-  "Stiff": { dificuldade: "moderado", cuidado: "Mantenha a coluna reta o tempo todo.", explicacaoSimples: "É descer o corpo reto para alongar atrás das pernas.", youtubeId: "HML6f35U_f4" },
-  "Prancha Lateral": { dificuldade: "moderado", cuidado: "Não deixe o quadril cair em direção ao chão.", explicacaoSimples: "É ficar de ladinho tirando o corpo do chão.", youtubeId: "N_6V_6X_Xo" },
-  "Agachamento Sumô": { dificuldade: "moderado", cuidado: "Mantenha os joelhos na direção dos dedos dos pés.", explicacaoSimples: "É o agachamento com as pernas mais abertas.", youtubeId: "Y2Xp1x6L_2o" },
+  "Tríceps no banco": { dificuldade: "moderado", cuidado: "Mantenha as costas próximas ao banco.", explicacaoSimples: "É descer e subir usando a força do 'tchau'.", youtubeId: "6kALZHewig4" },
+  "Stiff": { dificuldade: "moderado", cuidado: "Mantenha a coluna reta o tempo todo.", explicacaoSimples: "É descer o corpo resto para alongar atrás das pernas.", youtubeId: "HML6f35U_f4" },
+  "Prancha Lateral": { dificuldade: "moderado", cuidado: "Não deixe o quadril cair em direção ao chão.", explicacaoSimples: "É ficar de ladinho tirando o corpo do chão.", youtubeId: "pSHjTRCQxIw" },
+  "Agachamento Sumô": { dificuldade: "moderado", cuidado: "Mantenha os joelhos na direção dos dedos dos pés.", explicacaoSimples: "É o agachamento com as pernas mais abertas.", youtubeId: "aclHkVaku9U" },
   "Remada alta": { dificuldade: "moderado", cuidado: "Não levante os ombros até as orelhas.", explicacaoSimples: "É puxar o peso até o queixo como um remador.", youtubeId: "S8_X9QpZp38" },
   // Novos Avançado
-  "Burpee completo": { dificuldade: "intenso", cuidado: "Cuidado no impacto do pulo ao voltar.", explicacaoSimples: "O exercício mais completo: chão, peito e salto.", youtubeId: "Y2Xp1x6L_2o" },
-  "Afundo Búlgaro": { dificuldade: "intenso", cuidado: "O tronco pode inclinar levemente para frente.", explicacaoSimples: "Afundo com um pé elevado, o 'terror' das pernas.", youtubeId: "h_MIs-bX_Xo" },
-  "V-ups": { dificuldade: "intenso", cuidado: "Tente subir o tronco e pernas juntos.", explicacaoSimples: "Um abdominal 'canivete' para fechar o corpo.", youtubeId: "Y2Xp1x6L_2o" },
-  "Agachamento com Salto Sumô": { dificuldade: "intenso", cuidado: "Aterrisse suave com as pontas dos pés primeiro.", explicacaoSimples: "Agachamento aberto com salto para explosão.", youtubeId: "Y2Xp1x6L_2o" },
-  "Flexão de braços": { dificuldade: "intenso", cuidado: "Mantenha o corpo como uma tábua, sem cair.", explicacaoSimples: "A clássica flexão para braços e peito.", youtubeId: "y6v1D_uY_vI" },
-  "Prancha sobe e desce": { dificuldade: "intenso", cuidado: "Mantenha o quadril o mais parado possível.", explicacaoSimples: "É revezar entre apoiar as mãos e os cotovelos.", youtubeId: "Y2Xp1x6L_2o" },
+  "Burpee completo": { dificuldade: "intenso", cuidado: "Cuidado no impacto do pulo ao voltar.", explicacaoSimples: "O exercício mais completo: chão, peito e salto.", youtubeId: "TU8QYVW0gDU" },
+  "Afundo Búlgaro": { dificuldade: "intenso", cuidado: "O tronco pode inclinar levemente para frente.", explicacaoSimples: "Afundo com um pé elevado, o 'terror' das pernas.", youtubeId: "QOVaHwm-Q6U" },
+  "V-ups": { dificuldade: "intenso", cuidado: "Tente subir o tronco e pernas juntos.", explicacaoSimples: "Um abdominal 'canivete' para fechar o corpo.", youtubeId: "pSHjTRCQxIw" },
+  "Agachamento com Salto Sumô": { dificuldade: "intenso", cuidado: "Aterrisse suave com as pontas dos pés primeiro.", explicacaoSimples: "Agachamento aberto com salto para explosão.", youtubeId: "aclHkVaku9U" },
+  "Flexão de braços": { dificuldade: "intenso", cuidado: "Mantenha o corpo como uma tábua, sem cair.", explicacaoSimples: "A clássica flexão para braços e peito.", youtubeId: "i9sTjhN42zY" },
+  "Prancha sobe e desce": { dificuldade: "intenso", cuidado: "Mantenha o quadril o mais parado possível.", explicacaoSimples: "É revezar entre apoiar as mãos e os cotovelos.", youtubeId: "pSHjTRCQxIw" },
 };
 
 function buildWorkoutPlan(profile: Profile): PlanItem[] {
@@ -643,99 +643,86 @@ function OnboardingQuiz({
   return (
     <div className="px-3 py-6 md:p-8">
       <div className="mx-auto max-w-xl">
-        {/* Progress bar */}
-        <div className="mb-6">
-          <div className="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
+        <div className="mb-10 text-center">
+          <div className="h-1.5 w-full rounded-full bg-slate-100 overflow-hidden mb-4">
             <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-emerald-600"
+              className="h-full rounded-full bg-primary"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.6, ease: "circOut" }}
             />
           </div>
-          <div className="mt-2 text-center text-xs text-slate-500 font-medium">
-            {currentIndex > 0 && currentIndex < ONBOARDING_STEPS.length - 1
-              ? `Passo ${currentIndex} de ${ONBOARDING_STEPS.length - 2}`
-              : ""}
-          </div>
+          <p className="text-[10px] uppercase tracking-[2px] font-bold text-slate-400">Personalizando sua jornada</p>
         </div>
 
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
           >
             {step === "intro" && (
-              <Card className="rounded-[28px] border-emerald-100 shadow-xl overflow-hidden">
-                <div className="bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-8 text-white text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-3xl bg-white/20 backdrop-blur-sm">
-                    <Sparkles className="h-8 w-8 text-white" />
+              <Card className="rounded-[40px] border-none shadow-2xl overflow-hidden bg-white">
+                <div className="bg-secondary p-10 text-white text-center relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-3xl rounded-full -mr-16 -mt-16" />
+                  <div className="relative z-10">
+                    <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-3xl bg-white/10 backdrop-blur-md border border-white/20">
+                      <Sparkles className="h-8 w-8 text-primary" />
+                    </div>
+                    <h1 className="text-3xl md:text-4xl font-serif italic mb-3">Bem-vinda ao SlimDay</h1>
+                    <p className="text-slate-300 text-sm font-light leading-relaxed max-w-xs mx-auto">
+                      Vamos criar juntas um plano que respeita seu tempo e seu corpo.
+                    </p>
                   </div>
-                  <h1 className="text-3xl font-black">Bem-vinda ao SlimDay! 🌸</h1>
-                  <p className="mt-3 text-sm leading-6 opacity-90 max-w-md mx-auto">
-                    O app que monta um plano personalizado de treino + alimentação para caber na sua rotina.
-                  </p>
                 </div>
-                <CardContent className="p-6 space-y-5">
-                  <div className="grid gap-3">
-                    <div className="flex items-start gap-3 rounded-2xl bg-emerald-50 p-4">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600"><Dumbbell className="h-4 w-4" /></div>
-                      <div>
-                        <div className="font-bold text-slate-900 text-sm">Treino personalizado</div>
-                        <div className="text-xs text-slate-600 mt-0.5">Exercícios de 10 a 20 min adaptados ao seu nível, com tutorial passo-a-passo.</div>
+                <CardContent className="p-10 space-y-6">
+                  <div className="space-y-4">
+                    {[
+                      { icon: <Dumbbell />, title: "Treinos Inteligentes", desc: "10 a 20 min que realmente funcionam.", color: "bg-emerald-50 text-emerald-600" },
+                      { icon: <Utensils />, title: "Menu Prático", desc: "Receitas que cabem na sua rotina real.", color: "bg-rose-50 text-rose-600" },
+                      { icon: <CalendarDays />, title: "Ciclo+", desc: "Acompanhamento hormonal exclusivo.", color: "bg-violet-50 text-violet-600" },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-5 p-4 rounded-3xl hover:bg-slate-50 transition-colors">
+                        <div className={`h-12 w-12 rounded-2xl flex items-center justify-center shrink-0 ${item.color}`}>
+                          {React.cloneElement(item.icon as React.ReactElement, { className: "h-6 w-6" })}
+                        </div>
+                        <div>
+                          <p className="font-bold text-slate-900 text-sm">{item.title}</p>
+                          <p className="text-xs text-slate-500 mt-0.5">{item.desc}</p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-start gap-3 rounded-2xl bg-orange-50 p-4">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-orange-600"><Utensils className="h-4 w-4" /></div>
-                      <div>
-                        <div className="font-bold text-slate-900 text-sm">Alimentação prática</div>
-                        <div className="text-xs text-slate-600 mt-0.5">Refeições simples com receita completa, pensadas para a sua rotina.</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 rounded-2xl bg-rose-50 p-4">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-rose-100 text-rose-600"><CalendarDays className="h-4 w-4" /></div>
-                      <div>
-                        <div className="font-bold text-slate-900 text-sm">Calendário de ciclo+ grátis por 7 dias</div>
-                        <div className="text-xs text-slate-600 mt-0.5">Acompanhe suas fases com previsões, docinhos fit e mais.</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 rounded-2xl bg-violet-50 p-4">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-violet-600"><Trophy className="h-4 w-4" /></div>
-                      <div>
-                        <div className="font-bold text-slate-900 text-sm">Motivação e constância</div>
-                        <div className="text-xs text-slate-600 mt-0.5">Check-list do dia, streak de atividade e mensagens para manter o ritmo.</div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
-                  <Button className="w-full rounded-2xl h-12 text-base font-bold bg-emerald-600 hover:bg-emerald-700" onClick={next}>
-                    Vamos começar! <ChevronRight className="ml-2 h-5 w-5" />
+                  <Button className="w-full h-16 rounded-2xl text-lg font-bold bg-secondary hover:bg-black group transition-all" onClick={next}>
+                    Começar minha jornada <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </CardContent>
               </Card>
             )}
 
             {step === "nome" && (
-              <Card className="rounded-[28px] border-violet-100 shadow-xl">
-                <CardContent className="p-6 md:p-8 space-y-5">
-                  <div className="text-center">
-                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 text-violet-600"><User className="h-6 w-6" /></div>
-                    <h2 className="text-2xl font-black text-slate-900">Como você se chama?</h2>
-                    <p className="mt-2 text-sm text-slate-600">Vamos personalizar tudo pra você.</p>
+              <Card className="rounded-[40px] border-none shadow-2xl p-10 bg-white">
+                <CardContent className="p-0 space-y-8">
+                  <div className="text-center space-y-3">
+                    <div className="mx-auto h-16 w-16 rounded-3xl bg-violet-50 text-violet-500 flex items-center justify-center mb-6">
+                      <User className="h-8 w-8" />
+                    </div>
+                    <h2 className="text-3xl font-serif">Como podemos te chamar?</h2>
+                    <p className="text-slate-500 font-light">Sua experiência será única e personalizada.</p>
                   </div>
                   <Input
                     value={profile.nome}
                     onChange={(e) => onUpdateProfile("nome", e.target.value)}
-                    placeholder="Seu nome"
-                    className="h-12 rounded-2xl text-center text-lg font-semibold"
+                    placeholder="Seu nome aqui..."
+                    className="h-16 rounded-2xl text-center text-xl font-medium border-slate-100 bg-slate-50/50 focus:bg-white focus:ring-primary/20"
                     autoFocus
                   />
-                  <div className="flex gap-3">
-                    <Button variant="outline" className="flex-1 rounded-2xl" onClick={back}>Voltar</Button>
-                    <Button className="flex-1 rounded-2xl bg-violet-600 hover:bg-violet-700" onClick={next} disabled={!profile.nome.trim()}>
-                      Continuar <ChevronRight className="ml-1 h-4 w-4" />
+                  <div className="flex gap-4">
+                    <Button variant="ghost" className="h-16 px-8 rounded-2xl text-slate-400 font-bold" onClick={back}>Voltar</Button>
+                    <Button className="flex-1 h-16 rounded-2xl bg-secondary hover:bg-black font-bold" onClick={next} disabled={!profile.nome.trim()}>
+                      Continuar
                     </Button>
                   </div>
                 </CardContent>
@@ -743,51 +730,35 @@ function OnboardingQuiz({
             )}
 
             {step === "medidas_calendario" && (
-              <Card className="rounded-[28px] border-rose-100 shadow-xl">
-                <CardContent className="p-6 md:p-8 space-y-5">
-                  <div className="text-center">
-                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-rose-600"><CalendarDays className="h-6 w-6" /></div>
-                    <h2 className="text-2xl font-black text-slate-900">Sobre seu corpo e ciclo</h2>
-                    <p className="mt-2 text-sm text-slate-600">Esses dados geram estimativas precisas pro seu calendário menstrual.</p>
+              <Card className="rounded-[40px] border-none shadow-2xl p-10 bg-white">
+                <CardContent className="p-0 space-y-8">
+                  <div className="text-center space-y-3">
+                    <div className="mx-auto h-16 w-16 rounded-3xl bg-rose-50 text-rose-500 flex items-center justify-center mb-6">
+                      <CalendarDays className="h-8 w-8" />
+                    </div>
+                    <h2 className="text-3xl font-serif">Seu corpo, seu ritmo</h2>
+                    <p className="text-slate-500 font-light text-sm">Dados essenciais para o seu calendário hormonal.</p>
                   </div>
-                  <div className="grid gap-4">
-                    <div>
-                      <Label className="text-sm font-semibold text-slate-700">Idade</Label>
-                      <Input
-                        type="number"
-                        value={profile.idade}
-                        onChange={(e) => onUpdateProfile("idade", e.target.value)}
-                        placeholder="Ex: 28"
-                        className="mt-1.5 h-12 rounded-2xl"
-                        autoFocus
-                      />
+                  <div className="grid gap-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label className="text-xs uppercase tracking-widest font-bold text-slate-400 ml-1">Idade</Label>
+                        <Input type="number" value={profile.idade} onChange={(e) => onUpdateProfile("idade", e.target.value)} placeholder="00" className="h-14 rounded-2xl border-slate-100 bg-slate-50/50" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs uppercase tracking-widest font-bold text-slate-400 ml-1">Peso (kg)</Label>
+                        <Input type="number" step="0.1" value={profile.peso} onChange={(e) => onUpdateProfile("peso", e.target.value)} placeholder="0.0" className="h-14 rounded-2xl border-slate-100 bg-slate-50/50" />
+                      </div>
                     </div>
-                    <div>
-                      <Label className="text-sm font-semibold text-slate-700">Peso atual (kg)</Label>
-                      <Input
-                        type="number"
-                        step="0.1"
-                        value={profile.peso}
-                        onChange={(e) => onUpdateProfile("peso", e.target.value)}
-                        placeholder="Ex: 65,5"
-                        className="mt-1.5 h-12 rounded-2xl"
-                      />
-                    </div>
-                    <div>
-                      <Label className="text-sm font-semibold text-slate-700">Início da última menstruação</Label>
-                      <Input
-                        type="date"
-                        value={profile.ultimoCiclo || ""}
-                        onChange={(e) => onUpdateProfile("ultimoCiclo", e.target.value)}
-                        className="mt-1.5 h-12 rounded-2xl"
-                      />
-                      <p className="mt-1 text-xs text-slate-500">Se não lembrar, coloque uma data aproximada.</p>
+                    <div className="space-y-2">
+                      <Label className="text-xs uppercase tracking-widest font-bold text-slate-400 ml-1">Última Menstruação</Label>
+                      <Input type="date" value={profile.ultimoCiclo || ""} onChange={(e) => onUpdateProfile("ultimoCiclo", e.target.value)} className="h-14 rounded-2xl border-slate-100 bg-slate-50/50" />
                     </div>
                   </div>
-                  <div className="flex gap-3 mt-2">
-                    <Button variant="outline" className="flex-1 rounded-2xl" onClick={back}>Voltar</Button>
-                    <Button className="flex-1 rounded-2xl bg-rose-600 hover:bg-rose-700" onClick={next} disabled={!profile.idade || !profile.peso || !profile.ultimoCiclo}>
-                      Continuar <ChevronRight className="ml-1 h-4 w-4" />
+                  <div className="flex gap-4 pt-4">
+                    <Button variant="ghost" className="h-14 px-6 rounded-2xl text-slate-400" onClick={back}>Voltar</Button>
+                    <Button className="flex-1 h-14 rounded-2xl bg-secondary hover:bg-black font-bold" onClick={next} disabled={!profile.idade || !profile.peso || !profile.ultimoCiclo}>
+                      Continuar
                     </Button>
                   </div>
                 </CardContent>
@@ -984,29 +955,7 @@ function OnboardingQuiz({
                       <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-rose-500" /> Fases menstruais visuais</li>
                       <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-rose-500" /> Previsão de TPM e janela fértil</li>
                       <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-rose-500" /> Docinhos fit fáceis para aliviar a TPM</li>
-                    </ul>
-                  </div>
-
-                  <a href={PROMO_LINK} target="_blank" rel="noopener noreferrer" className="block" onClick={onComplete}>
-                    <Button className="w-full rounded-2xl h-14 text-lg font-black bg-rose-600 hover:bg-rose-700 shadow-xl shadow-rose-200 animate-pulse-slow">
-                      EU QUERO POR R$ 29,90! 🚀
-                    </Button>
-                  </a>
-
-                  <button className="mt-3 text-sm font-semibold text-slate-400 hover:text-slate-600 underline underline-offset-4 transition-colors" onClick={onComplete}>
-                    Não obrigado, quero apenas usar meus 7 dias de teste grátis.
-                  </button>
-                </CardContent>
-              </Card>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-}
-
-function AuthScreen({
+  function AuthScreen({
   mode, setMode, nome, setNome, email, setEmail, senha, setSenha, onSubmit, loading, error, success,
 }: {
   mode: "login" | "register";
@@ -1023,80 +972,93 @@ function AuthScreen({
   success: string;
 }) {
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#f3fff8_0%,#fffaf7_45%,#ffffff_100%)] px-3 py-4 md:p-8">
-      <div className="mx-auto grid max-w-6xl gap-4 md:gap-6 lg:grid-cols-[1.05fr,0.95fr]">
-        <Card className="rounded-[20px] md:rounded-[32px] border-emerald-100 shadow-xl">
-          <CardContent className="p-5 md:p-10">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700">
-              <Sparkles className="h-4 w-4" /> SlimDay
-            </div>
-            <h1 className="mt-4 text-2xl md:text-4xl font-black tracking-tight text-slate-900">Entre na sua área pessoal</h1>
-            <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600 md:text-base">
-              Faça login para salvar seu progresso online, continuar de onde parou e manter seu plano sincronizado entre acessos.
-            </p>
-            <div className="mt-6 md:mt-8 grid gap-3 md:gap-4 md:grid-cols-3">
-              <div className="rounded-2xl md:rounded-3xl bg-emerald-50 p-4 md:p-5">
-                <Cloud className="h-5 w-5 text-emerald-600" />
-                <div className="mt-3 font-bold text-slate-900">Sincronização</div>
-                <div className="mt-1 text-sm text-slate-600">Seu progresso fica salvo online automaticamente.</div>
-              </div>
-              <div className="rounded-2xl md:rounded-3xl bg-violet-50 p-4 md:p-5">
-                <ShieldCheck className="h-5 w-5 text-violet-600" />
-                <div className="mt-3 font-bold text-slate-900">Área segura</div>
-                <div className="mt-1 text-sm text-slate-600">Sua conta é protegida com autenticação real.</div>
-              </div>
-              <div className="rounded-2xl md:rounded-3xl bg-orange-50 p-4 md:p-5">
-                <BarChart3 className="h-5 w-5 text-orange-600" />
-                <div className="mt-3 font-bold text-slate-900">Progresso contínuo</div>
-                <div className="mt-1 text-sm text-slate-600">Você mantém streak, check-list, notificações e perfil.</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+    <div className="min-h-screen bg-background px-4 py-12 md:py-24 overflow-hidden relative">
+      {/* Decorative blobs */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[150px] rounded-full -mr-64 -mt-64" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 blur-[150px] rounded-full -ml-64 -mb-64" />
 
-        <Card className="rounded-[20px] md:rounded-[32px] border-slate-200 shadow-xl">
-          <CardHeader>
-            <CardTitle className="text-2xl md:text-3xl">{mode === "login" ? "Entrar" : "Criar conta"}</CardTitle>
-            <CardDescription>
-              {mode === "login" ? "Acesse sua conta SlimDay." : "Crie sua conta para salvar tudo online."}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-5">
-            {error && (
-              <div className="rounded-2xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">{error}</div>
-            )}
-            {success && (
-              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 animate-pulse-slow">{success}</div>
-            )}
-            {mode === "register" && (
-              <div>
-                <Label>Seu nome</Label>
-                <div className="relative mt-2">
-                  <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <Input className="pl-10" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Digite seu nome" />
+      <div className="mx-auto max-w-5xl grid lg:grid-cols-[1.1fr,0.9fr] gap-12 items-center relative z-10">
+        <div className="space-y-8">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-bold uppercase tracking-widest">
+              <Sparkles className="h-4 w-4" /> Boutique de Saúde
+            </div>
+            <h1 className="text-5xl md:text-7xl font-serif leading-[1.1]">Evolua no <span className="text-primary italic">seu tempo.</span></h1>
+            <p className="text-lg text-slate-500 font-light max-w-md leading-relaxed">
+              O ecossistema definitivo para mulheres que buscam equilíbrio entre rotina corrida e bem-estar real.
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {[
+              { icon: <Lock className="h-5 w-5" />, title: "Seus dados seguros", desc: "Privacidade absoluta no seu acompanhamento." },
+              { icon: <RefreshCcw className="h-5 w-5" />, title: "Sincronização Nuvem", desc: "Acesse de qualquer lugar, sempre de onde parou." },
+            ].map((feature, i) => (
+              <div key={i} className="flex gap-4 p-5 rounded-3xl bg-white border border-slate-100 shadow-sm">
+                <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 shrink-0">
+                  {feature.icon}
+                </div>
+                <div>
+                  <p className="font-bold text-slate-900 text-sm">{feature.title}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{feature.desc}</p>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+
+        <Card className="rounded-[48px] border-none shadow-premium p-10 bg-white">
+          <CardHeader className="p-0 mb-8 space-y-2">
+            <CardTitle className="text-3xl font-serif">{mode === "login" ? "Entrar" : "Criar Conta"}</CardTitle>
+            <CardDescription className="font-light">
+              {mode === "login" ? "Bem-vinda de volta ao seu espaço." : "Comece hoje sua nova fase."}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-0 space-y-6">
+            {error && (
+              <div className="p-4 rounded-2xl bg-rose-50 text-rose-700 text-sm border border-rose-100 animate-in fade-in slide-in-from-top-2">
+                {error}
+              </div>
             )}
-            <div>
-              <Label>E-mail</Label>
-              <div className="relative mt-2">
-                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                <Input className="pl-10" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="voce@email.com" />
+            {success && (
+              <div className="p-4 rounded-2xl bg-emerald-50 text-emerald-700 text-sm border border-emerald-100">
+                {success}
+              </div>
+            )}
+            
+            <div className="space-y-4">
+              {mode === "register" && (
+                <div className="space-y-2">
+                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Seu Nome</Label>
+                  <div className="relative">
+                    <User className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
+                    <Input className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50/50" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Como quer ser chamada?" />
+                  </div>
+                </div>
+              )}
+              <div className="space-y-2">
+                <Label className="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Seu E-mail</Label>
+                <div className="relative">
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
+                  <Input className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50/50" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="voce@exemplo.com" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label className="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Sua Senha</Label>
+                <div className="relative">
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
+                  <Input type="password" className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50/50" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="••••••••" />
+                </div>
               </div>
             </div>
-            <div>
-              <Label>Senha</Label>
-              <div className="relative mt-2">
-                <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                <Input className="pl-10" type="password" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="••••••••" />
-              </div>
-            </div>
-            <Button className="w-full rounded-2xl" onClick={onSubmit} disabled={loading}>
-              {loading ? "Aguarde..." : mode === "login" ? "Entrar na minha conta" : "Criar conta e continuar"}
+
+            <Button className="w-full h-16 rounded-2xl bg-secondary hover:bg-black font-bold text-lg shadow-xl shadow-black/5" onClick={onSubmit} disabled={loading}>
+              {loading ? "Processando..." : mode === "login" ? "Acessar Painel" : "Criar Meu Plano"}
             </Button>
-            <Button variant="ghost" className="w-full rounded-2xl" onClick={() => setMode(mode === "login" ? "register" : "login")}>
-              {mode === "login" ? "Ainda não tenho conta" : "Já tenho uma conta"}
-            </Button>
+
+            <button className="w-full text-sm font-semibold text-slate-400 hover:text-primary transition-colors py-2" onClick={() => setMode(mode === "login" ? "register" : "login")}>
+              {mode === "login" ? "Ainda não tem conta? Clique aqui" : "Já possui uma conta? Faça login"}
+            </button>
           </CardContent>
         </Card>
       </div>
@@ -1104,9 +1066,10 @@ function AuthScreen({
   );
 }
 
+
 // Link externo para compra do App Principal
-const APP_SALES_LINK = "https://sua-pagina-de-vendas.com/app";
-const BYPASS_PAYMENT = true; // DEFINIR COMO TRUE PARA TESTES: Desbloqueia app e calendário sem pagamento
+const APP_SALES_LINK = "https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8f39c46c17df";
+const BYPASS_PAYMENT = false; // DESATIVADO: Agora o acesso real do Supabase é o que vale
 
 
 export default function SlimDayApp() {
@@ -1486,8 +1449,8 @@ export default function SlimDayApp() {
           duracaoCiclo: data.duracao_ciclo || "28",
           duracaoMenstruacao: data.duracao_menstruacao || "5",
         });
-        setCycleUnlocked(BYPASS_PAYMENT || Boolean(data.cycle_unlocked));
-        setAppUnlocked(BYPASS_PAYMENT || Boolean(data.app_unlocked));
+        setCycleUnlocked(Boolean(data.has_cicloplus));
+        setAppUnlocked(Boolean(data.has_slimday));
         setStreak(data.streak || 0);
         setCompleted((data.completed as Record<string, boolean>) || {});
         setNotifications((data.notifications as NotificationItem[]) || []);
@@ -1738,139 +1701,88 @@ export default function SlimDayApp() {
           )}
         </AnimatePresence>
 
-        <div className="mx-auto max-w-7xl px-3 py-4 md:p-6">
-          <div className="mb-6 grid gap-4 lg:grid-cols-[1.2fr,0.8fr]">
-            <Card className="rounded-[20px] md:rounded-[28px] border-violet-100 shadow-lg lg:col-span-2">
-              <CardContent className="grid gap-4 p-4 md:p-6 md:grid-cols-[1fr,0.9fr] md:items-center">
-                <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-3 py-1 text-sm font-semibold text-violet-700">
-                    <Sparkles className="h-4 w-4" /> Mensagem do dia
+        <div className="mx-auto max-w-7xl px-4 py-8 md:py-12">
+          {/* Dashboard Header Section */}
+          <div className="mb-10 grid gap-6 lg:grid-cols-[1.4fr,0.6fr]">
+            {/* Mensagem do Dia - Premium Card */}
+            <Card className="rounded-[40px] border-none shadow-premium overflow-hidden bg-white group">
+              <CardContent className="p-0 flex flex-col md:flex-row h-full">
+                <div className="w-full md:w-1/3 bg-slate-900 p-8 flex flex-col justify-between text-white relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.2),transparent)]" />
+                  <div className="relative z-10">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] uppercase tracking-widest font-bold">
+                      <Sparkles className="h-3 w-3" /> Foco de Hoje
+                    </div>
+                    <div className="mt-6 text-4xl font-serif italic">{dayMessage.title}</div>
                   </div>
-                  <div className="mt-3 text-2xl font-black text-slate-900">{dayMessage.title}</div>
-                  <div className="mt-2 text-sm leading-6 text-slate-600">{dayMessage.body}</div>
-                </div>
-                <div className="rounded-3xl border bg-white p-5">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="text-sm font-semibold text-slate-500">Lembrete de constância</div>
-                    <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold border">
-                      {syncStatus === "saving" && <Cloud className="h-3.5 w-3.5 text-slate-500" />}
-                      {syncStatus === "synced" && <Cloud className="h-3.5 w-3.5 text-emerald-600" />}
-                      {syncStatus === "offline" && <CloudOff className="h-3.5 w-3.5 text-amber-600" />}
-                      {syncStatus === "error" && <CloudOff className="h-3.5 w-3.5 text-rose-600" />}
-                      <span>
-                        {syncStatus === "saving" && "Sincronizando"}
-                        {syncStatus === "synced" && "Salvo online"}
-                        {syncStatus === "offline" && "Salvo localmente"}
-                        {syncStatus === "error" && "Erro de sync"}
-                        {syncStatus === "idle" && "Pronto"}
-                      </span>
+                  <div className="mt-8 relative z-10">
+                    <p className="text-slate-400 text-xs uppercase tracking-widest font-bold mb-2">Constância</p>
+                    <div className="flex items-center gap-2 text-primary font-bold">
+                      <Zap className="h-4 w-4" /> {streak} Ganhando Ritmo
                     </div>
                   </div>
-                  <div className="mt-2 text-base font-bold text-slate-900">{getReengagementMessage(inactiveDays)}</div>
-                  <div className="mt-3 text-sm text-slate-600">
-                    Última atividade registrada: <span className="font-semibold">{lastActiveDate.toLocaleDateString("pt-BR")}</span>
+                </div>
+                <div className="flex-1 p-8 md:p-10 flex flex-col justify-center bg-white">
+                  <p className="text-slate-500 text-lg font-light leading-relaxed italic">
+                    "{dayMessage.body}"
+                  </p>
+                  <div className="mt-8 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center">
+                        {syncStatus === "synced" ? <Cloud className="h-5 w-5 text-emerald-500" /> : <RefreshCcw className="h-5 w-5 text-slate-300 animate-spin" />}
+                      </div>
+                      <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{syncStatus === "synced" ? "Sincronizado" : "Sincronizando..."}</span>
+                    </div>
+                    <div className="text-xs text-slate-400 font-medium">
+                      Atualizado agora
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-[20px] md:rounded-[28px] border-emerald-100 shadow-lg">
-              <CardContent className="flex flex-col gap-4 p-4 md:gap-6 md:p-6 md:flex-row md:items-center md:justify-between">
-                <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-sm font-semibold text-emerald-700">
-                    <Sparkles className="h-4 w-4" /> SlimDay App
+            {/* Daily Progress - Circle/Card */}
+            <Card className="rounded-[40px] border-none shadow-premium bg-white p-8 group hover:bg-primary transition-all duration-500">
+              <div className="h-full flex flex-col justify-between">
+                <div className="flex items-center justify-between">
+                  <div className="h-14 w-14 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-white/20 group-hover:text-white transition-colors">
+                    <BarChart3 className="h-7 w-7" />
                   </div>
-                  <h1 className="mt-3 text-2xl font-black tracking-tight text-slate-900 md:text-4xl">
-                    Seu app com treino, alimentação e motivação no mesmo lugar
-                  </h1>
-                  <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">
-                    Feito para mulheres com rotina corrida e também para quem tem mais tempo.
-                  </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-600">
-                    <span className="inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1 font-medium">
-                      <User className="h-4 w-4 text-slate-500" /> {profile.nome || userEmail}
-                    </span>
-                    <span className="inline-flex items-center gap-2 rounded-full border bg-white px-3 py-1 font-medium">
-                      <Mail className="h-4 w-4 text-slate-500" /> {userEmail}
-                    </span>
+                  <div className="text-right">
+                    <p className="text-[10px] uppercase tracking-widest font-bold text-slate-400 group-hover:text-white/60">Seu Progresso</p>
+                    <p className="text-3xl font-serif mt-1 group-hover:text-white transition-colors">{progress}%</p>
                   </div>
                 </div>
-                <div className="grid w-full max-w-sm gap-3">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="rounded-3xl bg-emerald-50 p-4">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-emerald-700">Treino base</div>
-                      <div className="mt-2 text-2xl font-black">até 20 min</div>
-                    </div>
-                    <div className="rounded-3xl bg-orange-50 p-4">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-orange-700">Refeições</div>
-                      <div className="mt-2 text-2xl font-black">simples</div>
-                    </div>
+                
+                <div className="mt-8 space-y-4">
+                  <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden group-hover:bg-white/20">
+                    <motion.div
+                      className="h-full rounded-full bg-primary group-hover:bg-white"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${progress}%` }}
+                      transition={{ duration: 1, ease: "circOut" }}
+                    />
                   </div>
-                  {/* Trial / promo banner */}
-                  {!cycleUnlocked && (
-                    <div className="rounded-2xl bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-200 p-3">
-                      {isTrialActive ? (
-                        <div className="flex items-center justify-between gap-2">
-                          <div>
-                            <div className="text-xs font-semibold text-emerald-700">✅ Teste grátis ativo: {trialDaysLeft} dia{trialDaysLeft !== 1 ? "s" : ""} restante{trialDaysLeft !== 1 ? "s" : ""}</div>
-                            <div className="text-xs text-slate-600 mt-0.5">Garanta acesso permanente por R$ {PROMO_PRICE.toFixed(2).replace(".", ",")}</div>
-                          </div>
-                          <a href={PROMO_LINK} target="_blank" rel="noopener noreferrer">
-                            <Button size="sm" className="rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs px-3">
-                              <ShoppingCart className="h-3 w-3 mr-1" /> R$ {PROMO_PRICE.toFixed(2).replace(".", ",")}
-                            </Button>
-                          </a>
-                        </div>
-                      ) : (
-                        <div className="flex items-center justify-between gap-2">
-                          <div>
-                            <div className="text-xs font-semibold text-rose-700">🔒 Calendário premium bloqueado</div>
-                            <div className="text-xs text-slate-600 mt-0.5">Seu teste grátis expirou</div>
-                          </div>
-                          <a href={currentPurchaseLink} target="_blank" rel="noopener noreferrer">
-                            <Button size="sm" className="rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs px-3">
-                              R$ {currentPrice.toFixed(2).replace(".", ",")}
-                            </Button>
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  <Button variant="outline" className="rounded-2xl" onClick={handleLogout}>
-                    <LogOut className="mr-2 h-4 w-4" /> Sair da conta
+                  <p className="text-sm font-light text-slate-500 group-hover:text-white/80 leading-relaxed">
+                    Você concluiu <span className="font-bold group-hover:text-white">{completedCount}</span> de {totalCount} atividades planejadas para hoje.
+                  </p>
+                </div>
+
+                <div className="mt-8 flex gap-3">
+                  <Button variant="outline" className="flex-1 h-12 rounded-xl border-slate-100 text-xs font-bold uppercase tracking-widest hover:bg-slate-50 group-hover:border-white/20 group-hover:bg-white group-hover:text-primary" onClick={resetDay}>
+                    <RefreshCcw className="mr-2 h-4 w-4" /> Reiniciar
                   </Button>
                 </div>
-              </CardContent>
+              </div>
             </Card>
+          </div>
 
-            <Card className="rounded-[20px] md:rounded-[28px] border-sky-100 shadow-lg">
-              <CardContent className="p-4 md:p-6">
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <div className="text-sm font-semibold text-slate-500">Progresso diário</div>
-                    <div className="mt-1 text-3xl font-black text-slate-900">{progress}%</div>
-                  </div>
-                  <div className="rounded-2xl bg-sky-50 p-3 text-sky-600"><BarChart3 className="h-6 w-6" /></div>
-                </div>
-                <Progress value={progress} className="mt-4 h-3 rounded-full" />
-                <div className="mt-4 text-sm text-slate-600">
-                  Você concluiu <span className="font-bold text-slate-900">{completedCount}</span> de {totalCount} etapas do dia.
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-amber-50 p-4">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-amber-700">Streak atual</div>
-                    <div className="mt-2 text-2xl font-black text-slate-900">{streak} dia{streak === 1 ? "" : "s"}</div>
-                  </div>
-                  <div className="rounded-2xl bg-violet-50 p-4">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-violet-700">Hoje</div>
-                    <div className="mt-2 text-sm font-bold text-slate-900">{todayKey}</div>
-                  </div>
-                </div>
-                <Button variant="outline" className="mt-4 w-full rounded-2xl" onClick={resetDay}>
-                  <RefreshCcw className="mr-2 h-4 w-4" /> Reiniciar meu dia
-                </Button>
-              </CardContent>
-            </Card>
+          {/* Headline Content */}
+          <div className="mb-12 space-y-4">
+            <h1 className="text-4xl md:text-5xl font-serif leading-tight">
+              Olá, <span className="text-primary italic">{profile.nome || "querida"}</span>. <br />
+              <span className="text-slate-400">Aqui está o seu plano para hoje.</span>
+            </h1>
           </div>
 
           <div className="grid gap-4 md:gap-6 lg:grid-cols-[340px,1fr]">
@@ -2015,68 +1927,48 @@ export default function SlimDayApp() {
             </div>
 
             <div className="space-y-4 md:space-y-6 min-w-0">
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
-                <Card className="rounded-[20px] md:rounded-[24px] border-rose-100 shadow-sm">
-                  <CardContent className="p-3 md:p-5">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <div className="rounded-xl md:rounded-2xl bg-rose-100 p-1.5 md:p-2 text-rose-600"><CalendarDays className="h-4 w-4 md:h-5 md:w-5" /></div>
-                      <div><div className="text-xs md:text-sm text-slate-500">Calendário</div><div className="text-base md:text-xl font-bold">ciclo pessoal</div></div>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                {[
+                  { icon: <CalendarDays />, label: "Ciclo Pessoal", value: "Calendário", color: "text-rose-500", bg: "bg-rose-50" },
+                  { icon: <Dumbbell />, label: "Até 20 min", value: "Treino Base", color: "text-emerald-500", bg: "bg-emerald-50" },
+                  { icon: <Utensils />, label: "Saudável e Rápido", value: "Refeições", color: "text-orange-500", bg: "bg-orange-50" },
+                  { icon: <Target />, label: profile.objetivo, value: "Objetivo", color: "text-violet-500", bg: "bg-violet-50" },
+                ].map((item, i) => (
+                  <Card key={i} className="rounded-[32px] border-none shadow-sm hover:shadow-md transition-all p-6 bg-white flex flex-col items-center text-center space-y-3">
+                    <div className={`h-12 w-12 rounded-2xl ${item.bg} ${item.color} flex items-center justify-center`}>
+                      {React.cloneElement(item.icon as React.ReactElement, { className: "h-6 w-6" })}
                     </div>
-                  </CardContent>
-                </Card>
-                <Card className="rounded-[20px] md:rounded-[24px] border-emerald-100 shadow-sm">
-                  <CardContent className="p-3 md:p-5">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <div className="rounded-xl md:rounded-2xl bg-emerald-100 p-1.5 md:p-2 text-emerald-600"><Clock3 className="h-4 w-4 md:h-5 md:w-5" /></div>
-                      <div><div className="text-xs md:text-sm text-slate-500">Treino base</div><div className="text-base md:text-xl font-bold">até 20 min</div></div>
+                    <div>
+                      <p className="text-[10px] uppercase tracking-widest font-bold text-slate-400">{item.label}</p>
+                      <p className="text-sm font-bold text-slate-900 mt-1 capitalize">{item.value}</p>
                     </div>
-                  </CardContent>
-                </Card>
-                <Card className="rounded-[20px] md:rounded-[24px] border-orange-100 shadow-sm">
-                  <CardContent className="p-3 md:p-5">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <div className="rounded-xl md:rounded-2xl bg-orange-100 p-1.5 md:p-2 text-orange-600"><Salad className="h-4 w-4 md:h-5 md:w-5" /></div>
-                      <div><div className="text-xs md:text-sm text-slate-500">Refeições</div><div className="text-base md:text-xl font-bold">simples e rápidas</div></div>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="rounded-[20px] md:rounded-[24px] border-sky-100 shadow-sm">
-                  <CardContent className="p-3 md:p-5">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <div className="rounded-xl md:rounded-2xl bg-sky-100 p-1.5 md:p-2 text-sky-600"><BadgeCheck className="h-4 w-4 md:h-5 md:w-5" /></div>
-                      <div><div className="text-xs md:text-sm text-slate-500">Check-list</div><div className="text-base md:text-xl font-bold">com motivação</div></div>
-                    </div>
-                  </CardContent>
-                </Card>
-                <Card className="col-span-2 md:col-span-1 rounded-[20px] md:rounded-[24px] border-pink-100 shadow-sm">
-                  <CardContent className="p-3 md:p-5">
-                    <div className="flex items-center gap-2 md:gap-3">
-                      <div className="rounded-xl md:rounded-2xl bg-pink-100 p-1.5 md:p-2 text-pink-600"><Target className="h-4 w-4 md:h-5 md:w-5" /></div>
-                      <div><div className="text-xs md:text-sm text-slate-500">Objetivo</div><div className="text-base md:text-xl font-bold capitalize">{profile.objetivo === "mais energia" ? "Energia" : profile.objetivo}</div></div>
-                    </div>
-                  </CardContent>
-                </Card>
+                  </Card>
+                ))}
               </div>
 
               <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <div className="relative">
-                  <div className="overflow-x-auto scrollbar-hide">
-                    <TabsList className="inline-flex w-max gap-1 rounded-2xl bg-muted p-1">
-                      <TabsTrigger value="hoje" className="whitespace-nowrap px-4">Hoje</TabsTrigger>
-                      <TabsTrigger value="semana" className="whitespace-nowrap px-4">Semana</TabsTrigger>
-                      <TabsTrigger value="treino" className="whitespace-nowrap px-4">Treino</TabsTrigger>
-                      <TabsTrigger value="alimentacao" className="whitespace-nowrap px-4">Alimentação</TabsTrigger>
-                      <TabsTrigger value="receitas" className="whitespace-nowrap px-4">Receitas</TabsTrigger>
-                      <TabsTrigger value="calendario" className="whitespace-nowrap px-4">Ciclo+</TabsTrigger>
-                      <TabsTrigger value="checklist" className="whitespace-nowrap px-4">Check-list</TabsTrigger>
-                      <TabsTrigger value="alertas" className="whitespace-nowrap px-4">Alertas</TabsTrigger>
-                      <TabsTrigger value="feedback" className="whitespace-nowrap px-4">Feedback</TabsTrigger>
-                      {!isPlanVisible && (
-                        <TabsTrigger value="editar-plano" className="whitespace-nowrap px-4">Editar plano</TabsTrigger>
-                      )}
+                <div className="mb-8">
+                  <div className="overflow-x-auto scrollbar-hide pb-4 -mx-4 px-4">
+                    <TabsList className="inline-flex w-max gap-3 bg-transparent h-auto p-0">
+                      {[
+                        { value: "hoje", label: "Hoje", icon: <Home /> },
+                        { value: "semana", label: "Agenda", icon: <CalendarDays /> },
+                        { value: "treino", label: "Treino", icon: <Dumbbell /> },
+                        { value: "alimentacao", label: "Menu", icon: <Utensils /> },
+                        { value: "calendario", label: "Ciclo+", icon: <Sparkles /> },
+                        { value: "checklist", label: "Tarefas", icon: <BadgeCheck /> },
+                      ].map((tab) => (
+                        <TabsTrigger
+                          key={tab.value}
+                          value={tab.value}
+                          className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-white border border-slate-100 shadow-sm data-[state=active]:bg-secondary data-[state=active]:text-white data-[state=active]:shadow-lg transition-all"
+                        >
+                          {React.cloneElement(tab.icon as React.ReactElement, { className: "h-4 w-4" })}
+                          <span className="font-bold text-sm tracking-tight">{tab.label}</span>
+                        </TabsTrigger>
+                      ))}
                     </TabsList>
                   </div>
-                  <div className="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-background to-transparent" />
                 </div>
 
                 {/* Editar plano tab (visible only when plan is hidden from sidebar) */}
@@ -2166,37 +2058,51 @@ export default function SlimDayApp() {
                   </TabsContent>
                 )}
 
-                <TabsContent value="hoje" className="mt-4 space-y-4">
-                  <Card className="rounded-[28px] border-emerald-100 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="text-2xl">Olá{profile.nome ? `, ${profile.nome}` : ""} 💚</CardTitle>
-                      <CardDescription>{started ? "Seu plano foi ajustado com base no seu momento atual." : "Preencha seus dados para ver um plano mais personalizado."}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-5">
-                      <div className="grid gap-4 md:grid-cols-2">
-                        <div className="rounded-3xl bg-emerald-50 p-5">
-                          <div className="flex items-center gap-2 text-emerald-700"><Dumbbell className="h-4 w-4" /><span className="text-sm font-semibold">Treino de hoje</span></div>
-                          <div className="mt-2 text-2xl font-black text-slate-900">{dailyMinutes} minutos</div>
-                          <div className="mt-2 text-sm text-slate-600">Começando no nível <span className="font-semibold capitalize">{profile.nivel}</span>, com evolução progressiva e foco em constância.</div>
-                          <Button className="mt-4 rounded-2xl" onClick={() => setActiveTab("treino")}><PlayCircle className="mr-2 h-4 w-4" /> Ver treino de hoje</Button>
-                        </div>
-                        <div className="rounded-3xl bg-orange-50 p-5">
-                          <div className="flex items-center gap-2 text-orange-700"><Apple className="h-4 w-4" /><span className="text-sm font-semibold">Alimentação do dia</span></div>
-                          <div className="mt-2 text-2xl font-black text-slate-900">4 sugestões</div>
-                          <div className="mt-2 text-sm text-slate-600">Refeições fáceis de preparar e coerentes com sua rotina <span className="font-semibold capitalize">{profile.refeicao}</span>.</div>
-                          <Button variant="outline" className="mt-4 rounded-2xl" onClick={() => setActiveTab("alimentacao")}><Utensils className="mr-2 h-4 w-4" /> Ver alimentação</Button>
-                        </div>
-                      </div>
-                      <div className="grid gap-3 md:grid-cols-4">
-                        {weekFocus.map((week, index) => (
-                          <div key={week} className="rounded-2xl border bg-white p-4">
-                            <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Fase {index + 1}</div>
-                            <div className="mt-2 font-bold text-slate-800">{week}</div>
+                <TabsContent value="hoje" className="mt-0 space-y-8 animate-in fade-in duration-500">
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <Card className="rounded-[40px] border-none shadow-premium bg-emerald-50/50 p-8">
+                      <div className="flex flex-col h-full justify-between">
+                        <div>
+                          <div className="h-12 w-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-6">
+                            <Dumbbell className="h-6 w-6" />
                           </div>
-                        ))}
+                          <h3 className="text-2xl font-serif italic mb-2">Seu Treino</h3>
+                          <p className="text-slate-500 font-light text-sm leading-relaxed">
+                            Apenas {dailyMinutes} minutos focados em evolução progressiva e queima eficiente.
+                          </p>
+                        </div>
+                        <Button className="mt-8 h-14 rounded-2xl bg-emerald-600 hover:bg-emerald-700 font-bold" onClick={() => setActiveTab("treino")}>
+                          Praticar Agora <PlayCircle className="ml-2 h-5 w-5" />
+                        </Button>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </Card>
+
+                    <Card className="rounded-[40px] border-none shadow-premium bg-orange-50/50 p-8">
+                      <div className="flex flex-col h-full justify-between">
+                        <div>
+                          <div className="h-12 w-12 rounded-2xl bg-orange-50 flex items-center justify-center text-orange-600 mb-6">
+                            <Utensils className="h-6 w-6" />
+                          </div>
+                          <h3 className="text-2xl font-serif italic mb-2">Sua Nutrição</h3>
+                          <p className="text-slate-500 font-light text-sm leading-relaxed">
+                            4 sugestões práticas baseadas no seu estilo <span className="font-bold capitalize">{profile.refeicao}</span>.
+                          </p>
+                        </div>
+                        <Button variant="outline" className="mt-8 h-14 rounded-2xl border-orange-200 text-orange-700 hover:bg-orange-50 font-bold" onClick={() => setActiveTab("alimentacao")}>
+                          Ver Cardápio <ChevronRight className="ml-2 h-5 w-5" />
+                        </Button>
+                      </div>
+                    </Card>
+                  </div>
+
+                  <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
+                    {weekFocus.map((week, index) => (
+                      <div key={week} className="bg-white p-6 rounded-[32px] border border-slate-50 shadow-sm flex flex-col items-center text-center">
+                        <span className="text-[10px] font-bold text-slate-300 uppercase tracking-[2px] mb-2">Fase {index + 1}</span>
+                        <span className="text-sm font-bold text-slate-700">{week}</span>
+                      </div>
+                    ))}
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="semana" className="mt-4">
@@ -2218,129 +2124,120 @@ export default function SlimDayApp() {
                   </Card>
                 </TabsContent>
 
-                <TabsContent value="treino" className="mt-4">
-                  <Card className="rounded-[28px] border-emerald-100 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="text-2xl">Cronograma de treino</CardTitle>
-                      <CardDescription>Com tutoriais, nível visual de dificuldade, cuidado de postura e explicação simples.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {workoutPlan.map((item, index) => (
-                        <motion.div key={item.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }} className="rounded-3xl border bg-white p-5">
-                          <div className="flex flex-wrap items-center justify-between gap-3">
-                            <div>
-                              <div className="flex flex-wrap items-center gap-2">
-                                <Badge className="rounded-full bg-emerald-100 text-emerald-700 hover:bg-emerald-100">{item.nivel}</Badge>
-                                <Badge variant="outline" className="rounded-full">{item.minutos} min</Badge>
-                                <Badge className={item.dificuldade === "leve" ? "rounded-full bg-sky-100 text-sky-700 hover:bg-sky-100" : item.dificuldade === "moderado" ? "rounded-full bg-amber-100 text-amber-700 hover:bg-amber-100" : "rounded-full bg-rose-100 text-rose-700 hover:bg-rose-100"}>{item.dificuldade}</Badge>
-                                {item.youtubeId && (
-                                  <Badge variant="secondary" className="rounded-full bg-rose-50 text-rose-600 border-rose-100">
-                                    <Video className="mr-1 h-3 w-3" /> Vídeo disponível
-                                  </Badge>
-                                )}
-                              </div>
-                              <div className="mt-3 text-lg font-bold text-slate-900">{item.titulo}</div>
-                              <div className="mt-1 text-sm text-slate-600">{item.descricao}</div>
+                <TabsContent value="treino" className="mt-0 animate-in fade-in duration-500">
+                  <div className="grid gap-6">
+                    {workoutPlan.map((item, index) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="group bg-white rounded-[40px] border-none shadow-premium overflow-hidden"
+                      >
+                        <div className="flex flex-col md:flex-row">
+                          <div className="w-full md:w-2/5 p-8 bg-slate-50 relative">
+                            <div className="inline-flex gap-2 mb-6">
+                              <Badge className="rounded-full bg-primary/10 text-primary border-none text-[10px] font-bold uppercase">{item.nivel}</Badge>
+                              <Badge className="rounded-full bg-slate-200 text-slate-500 border-none text-[10px] font-bold uppercase">{item.minutos} min</Badge>
                             </div>
-                            <Button variant={completed[item.id] ? "secondary" : "default"} className="rounded-2xl" onClick={() => toggleCheck(item.id, item.titulo)}>
-                              {completed[item.id] ? "Concluído" : "Marcar como feito"}
+                            <h4 className="text-3xl font-serif italic mb-4 leading-tight">{item.titulo}</h4>
+                            <p className="text-slate-500 text-sm font-light leading-relaxed mb-8">{item.descricao}</p>
+                            
+                            <Button
+                              variant={completed[item.id] ? "ghost" : "default"}
+                              className={`w-full h-14 rounded-2xl font-bold ${completed[item.id] ? "text-emerald-500" : "bg-secondary hover:bg-black"}`}
+                              onClick={() => toggleCheck(item.id, item.titulo)}
+                            >
+                              {completed[item.id] ? <><CheckCircle2 className="mr-2 h-5 w-5" /> Concluído</> : "Marcar como Feito"}
                             </Button>
                           </div>
-
-                          {item.youtubeId && (
-                            <div className="mt-4">
-                              <details className="group overflow-hidden rounded-2xl border border-rose-100 bg-rose-50/30 transition-all">
-                                <summary className="flex cursor-pointer list-none items-center justify-between p-4 text-sm font-bold text-rose-700 hover:bg-rose-50">
-                                  <div className="flex items-center gap-2">
-                                    <PlayCircle className="h-5 w-5" />
-                                    <span>🎥 Ver execução em vídeo</span>
-                                  </div>
-                                  <div className="text-xs font-medium uppercase opacity-60 group-open:rotate-180 transition-transform">▼</div>
-                                </summary>
-                                <div className="p-4 pt-0">
-                                  <div className="aspect-video w-full overflow-hidden rounded-xl border-2 border-white shadow-sm">
-                                    <iframe 
-                                      width="100%" 
-                                      height="100%" 
-                                      src={`https://www.youtube.com/embed/${item.youtubeId}`} 
-                                      title={item.titulo}
-                                      frameBorder="0" 
-                                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                      allowFullScreen
-                                      className="h-full w-full"
-                                    ></iframe>
-                                  </div>
+                          
+                          <div className="flex-1 p-8 md:p-10 space-y-8 bg-white">
+                            {item.youtubeId && (
+                              <div className="aspect-video rounded-[32px] overflow-hidden shadow-2xl border-4 border-white">
+                                <iframe
+                                  width="100%"
+                                  height="100%"
+                                  src={`https://www.youtube.com/embed/${item.youtubeId}`}
+                                  title={item.titulo}
+                                  frameBorder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowFullScreen
+                                />
+                              </div>
+                            )}
+                            
+                            <div className="grid md:grid-cols-2 gap-8">
+                              <div className="space-y-4">
+                                <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-300">Como Praticar</p>
+                                <div className="space-y-3">
+                                  {item.tutorial?.map((step, i) => (
+                                    <div key={i} className="flex gap-4 text-sm font-light text-slate-500">
+                                      <span className="text-primary font-serif italic font-bold">{i + 1}.</span>
+                                      <span>{step}</span>
+                                    </div>
+                                  ))}
                                 </div>
-                              </details>
-                            </div>
-                          )}
-                          <div className="mt-4 grid gap-4 md:grid-cols-[1fr,0.9fr]">
-                            <div className="rounded-2xl bg-slate-50 p-4">
-                              <div className="mb-3 flex items-center gap-2 text-slate-700"><BookOpen className="h-4 w-4" /><span className="text-sm font-semibold">Como fazer</span></div>
-                              <div className="grid gap-2">
-                                {item.tutorial?.map((step, stepIndex) => (
-                                  <div key={`${item.id}-step-${stepIndex}`} className="flex gap-3 text-sm text-slate-600">
-                                    <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[11px] font-bold text-emerald-700">{stepIndex + 1}</div>
-                                    <div>{step}</div>
-                                  </div>
-                                ))}
                               </div>
-                            </div>
-                            <div className="space-y-3">
-                              <div className="rounded-2xl border bg-white p-4">
-                                <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Explicação simples</div>
-                                <div className="mt-2 text-sm font-medium leading-6 text-slate-700">{item.explicacaoSimples}</div>
-                              </div>
-                              <div className="rounded-2xl border bg-white p-4">
-                                <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Cuidado importante</div>
-                                <div className="mt-2 text-sm font-medium leading-6 text-slate-700">{item.cuidado}</div>
+                              <div className="space-y-6">
+                                <div>
+                                  <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-300 mb-2">Ponto de Foco</p>
+                                  <p className="text-sm font-medium text-slate-700 italic">"{item.explicacaoSimples}"</p>
+                                </div>
+                                <div className="p-4 rounded-2xl bg-rose-50 border border-rose-100">
+                                  <p className="text-[10px] uppercase font-bold tracking-[3px] text-rose-400 mb-2">Atenção</p>
+                                  <p className="text-xs text-rose-700 leading-relaxed">{item.cuidado}</p>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </motion.div>
-                      ))}
-                    </CardContent>
-                  </Card>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
                 </TabsContent>
 
-                <TabsContent value="alimentacao" className="mt-4">
-                  <Card className="rounded-[28px] border-orange-100 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="text-2xl">Cronograma de alimentação</CardTitle>
-                      <CardDescription>Sugestões fáceis, rápidas e melhores para encaixar no dia a dia.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {mealPlan.map((item, index) => (
-                        <motion.div key={item.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }} className="rounded-3xl border bg-white p-5">
-                          {recipeImages[item.id] && (
-                            <img src={recipeImages[item.id]} alt={item.titulo} loading="lazy" width={512} height={512} className="w-full h-40 object-cover rounded-2xl mb-4" />
-                          )}
-                          <div className="flex flex-wrap items-center justify-between gap-3">
-                            <div>
-                              <Badge variant="outline" className="rounded-full">{item.categoria}</Badge>
-                              <div className="mt-3 text-lg font-bold text-slate-900">{item.titulo}</div>
-                              <div className="mt-1 text-sm text-slate-600">{item.descricao}</div>
+                <TabsContent value="alimentacao" className="mt-0 animate-in fade-in duration-500">
+                  <div className="grid gap-8 md:grid-cols-2">
+                    {mealPlan.map((item, index) => (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="bg-white rounded-[48px] border-none shadow-premium p-8 flex flex-col justify-between group"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between mb-8">
+                            <Badge variant="outline" className="rounded-full border-slate-100 text-slate-400 font-bold uppercase tracking-widest text-[9px] px-3">{item.categoria}</Badge>
+                            <div className={`h-10 w-10 rounded-xl flex items-center justify-center ${completed[item.id] ? "bg-emerald-50 text-emerald-500" : "bg-slate-50 text-slate-300"}`}>
+                              <Utensils className="h-5 w-5" />
                             </div>
-                            <Button variant={completed[item.id] ? "secondary" : "default"} className="rounded-2xl" onClick={() => toggleCheck(item.id, item.titulo)}>
-                              {completed[item.id] ? "Feito" : "Adicionar ao meu dia"}
-                            </Button>
                           </div>
+                          
+                          <h4 className="text-2xl font-serif italic mb-4">{item.titulo}</h4>
+                          <p className="text-slate-500 text-sm font-light leading-relaxed mb-8">{item.descricao}</p>
+                          
                           {item.receita && (
-                            <details className="mt-4">
-                              <summary className="cursor-pointer text-sm font-semibold text-emerald-700">📖 Ver receita completa</summary>
-                              <div className="mt-3 rounded-2xl border bg-emerald-50 p-4 space-y-3">
+                            <details className="mb-8">
+                              <summary className="cursor-pointer text-xs font-bold uppercase tracking-widest text-primary hover:text-secondary transition-colors">Ver Receita Completa</summary>
+                              <div className="mt-6 space-y-6 pt-6 border-t border-slate-50">
                                 <div>
-                                  <div className="font-semibold text-slate-800 text-sm">🛒 Ingredientes</div>
-                                  <ul className="mt-1 list-disc pl-4 text-sm text-slate-600 space-y-1">
-                                    {item.receita.ingredientes.map((ing, i) => <li key={i}>{ing}</li>)}
+                                  <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-300 mb-3">Ingredientes</p>
+                                  <ul className="grid grid-cols-1 gap-2">
+                                    {item.receita.ingredientes.map((ing, i) => (
+                                      <li key={i} className="text-sm font-light text-slate-500 flex items-center gap-2">
+                                        <div className="h-1 w-1 rounded-full bg-primary" /> {ing}
+                                      </li>
+                                    ))}
                                   </ul>
                                 </div>
                                 <div>
-                                  <div className="font-semibold text-slate-800 text-sm">👩‍🍳 Modo de preparo</div>
-                                  <div className="mt-1 space-y-2">
+                                  <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-300 mb-3">Preparo</p>
+                                  <div className="space-y-3">
                                     {item.receita.preparo.map((step, i) => (
-                                      <div key={i} className="flex gap-2 text-sm text-slate-600">
-                                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-200 text-[11px] font-bold text-emerald-800">{i + 1}</span>
+                                      <div key={i} className="flex gap-4 text-sm font-light text-slate-500">
+                                        <span className="text-primary italic font-serif">{i + 1}.</span>
                                         <span>{step}</span>
                                       </div>
                                     ))}
@@ -2349,10 +2246,18 @@ export default function SlimDayApp() {
                               </div>
                             </details>
                           )}
-                        </motion.div>
-                      ))}
-                    </CardContent>
-                  </Card>
+                        </div>
+
+                        <Button
+                          variant={completed[item.id] ? "secondary" : "default"}
+                          className={`w-full h-14 rounded-2xl font-bold transition-all ${completed[item.id] ? "bg-emerald-50 text-emerald-600 hover:bg-emerald-100" : "bg-secondary hover:bg-black"}`}
+                          onClick={() => toggleCheck(item.id, item.titulo)}
+                        >
+                          {completed[item.id] ? "Sincronizado ✓" : "Adicionar ao Planejamento"}
+                        </Button>
+                      </motion.div>
+                    ))}
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="receitas" className="mt-4">
@@ -2413,7 +2318,7 @@ export default function SlimDayApp() {
                       <CardDescription>Um bônus opcional para acompanhar ciclo, ovulação estimada, janela fértil, fase do momento e docinhos fit.</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-5">
-                      {!canAccessCalendar ? (
+                      {!cycleUnlocked  ? (
                         <div className="grid gap-5 lg:grid-cols-[1.1fr,0.9fr]">
                           <div className="rounded-3xl border bg-[linear-gradient(135deg,#fff7f9_0%,#ffffff_100%)] p-6">
                             <div className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-sm font-semibold text-rose-700">
@@ -2521,89 +2426,81 @@ export default function SlimDayApp() {
                                     ))}
                                     {(() => {
                                       if (cycleCalendar.length === 0) return null;
-                                      const firstDayKey = cycleCalendar[0]?.dateKey;
-                                      if (!firstDayKey) return null;
-                                      
-                                      const firstDate = new Date(`${firstDayKey}T12:00:00`);
-                                      if (isNaN(firstDate.getTime())) return null;
-                                      
-                                      const startDow = firstDate.getDay();
-                                      const blanks = Array.from({ length: startDow }, (_, i) => (
-                                        <div key={`blank-${i}`} className="aspect-square" />
-                                      ));
-                                      const days = cycleCalendar.map((day) => {
-                                        const isToday = day.dateKey === todayKey;
-                                        return (
-                                          <div key={day.dateKey} className={`aspect-square rounded-xl border flex flex-col items-center justify-center relative ${isToday ? "" : getPhaseColor(day.phase)}`}
-                                            style={isToday ? {
-                                              background: "linear-gradient(135deg, #f9a8d4 0%, #fbcfe8 50%, #fce7f3 100%)",
-                                              border: "2px solid #ec4899",
-                                              color: "#831843",
-                                            } : undefined}
-                                          >
-                                            <div className="text-base font-bold leading-none">{day.dayNumber}</div>
-                                            {isToday && <div className="text-[8px] font-bold mt-0.5">HOJE</div>}
-                                          </div>
-                                        );
-                                      });
-                                      return [...blanks, ...days];
-                                    })()}
+                            <div className="space-y-8 min-w-0">
+                              <Card className="rounded-[40px] border-none shadow-premium bg-white p-8">
+                                <div className="flex items-center justify-between mb-8">
+                                  <h3 className="text-2xl font-serif italic">Seu Calendário</h3>
+                                  <div className="flex gap-2">
+                                    <Button variant="ghost" size="icon" className="rounded-xl border border-slate-50" onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() - 1)))}>
+                                      <ChevronLeft className="h-4 w-4" />
+                                    </Button>
+                                    <Button variant="ghost" size="icon" className="rounded-xl border border-slate-50" onClick={() => setCurrentDate(new Date(currentDate.setMonth(currentDate.getMonth() + 1)))}>
+                                      <ChevronRight className="h-4 w-4" />
+                                    </Button>
                                   </div>
-                                )}
-                              </div>
-
-                              <div className="rounded-3xl border bg-white p-5">
-                                <div className="text-sm font-semibold text-slate-500">Fase de hoje</div>
-                                <div className="mt-2 text-xl font-bold text-slate-900">{currentCycleDay ? getPhaseTitle(currentCycleDay.phase) : "Aguardando dados"}</div>
-                                <div className="mt-2 text-sm text-slate-600">{currentCycleDay ? currentCycleDay.label : "Adicione seus dados para ver a estimativa do seu ciclo."}</div>
-                                <div className="mt-3 rounded-2xl bg-slate-50 p-4 text-sm text-slate-600">Atualizando seu ciclo com frequência, o calendário se ajusta melhor ao seu padrão.</div>
-                              </div>
-
-                              <div className="rounded-3xl border bg-white p-5">
-                                <div className="text-sm font-semibold text-slate-500">TPM e previsão</div>
-                                <div className="mt-2 text-sm leading-6 text-slate-600">O app usa a média do seu ciclo para estimar fases. Essas previsões servem como apoio e não substituem avaliação médica.</div>
-                              </div>
-                            </div>
-
-                            <div className="space-y-4">
-                              <div className="rounded-3xl border bg-white p-5">
-                                <div className="text-sm font-semibold text-slate-500">Docinhos fit para essa fase</div>
-                                <div className="mt-3 space-y-3">
-                                  {cycleTreats.map((item, index) => (
-                                    <div key={`${item.titulo}-${index}`} className="rounded-2xl bg-emerald-50 overflow-hidden">
-                                      {recipeImages[item.titulo] && (
-                                        <img src={recipeImages[item.titulo]} alt={item.titulo} loading="lazy" width={512} height={512} className="w-full h-32 object-cover" />
-                                      )}
-                                      <div className="p-4">
-                                        <div className="font-semibold text-slate-900">{item.titulo}</div>
-                                        <div className="mt-1 text-sm leading-6 text-slate-600">{item.descricao}</div>
-                                        {(item as any).receita && (
-                                          <details className="mt-2">
-                                            <summary className="cursor-pointer text-sm font-semibold text-emerald-700">📖 Ver receita</summary>
-                                            <div className="mt-2 rounded-xl bg-white p-3 space-y-2 border">
-                                              <div>
-                                                <div className="font-semibold text-slate-800 text-xs">🛒 Ingredientes</div>
-                                                <ul className="mt-1 list-disc pl-4 text-xs text-slate-600 space-y-0.5">
-                                                  {((item as any).receita as RecipeDetail).ingredientes.map((ing: string, i: number) => <li key={i}>{ing}</li>)}
-                                                </ul>
-                                              </div>
-                                              <div>
-                                                <div className="font-semibold text-slate-800 text-xs">👩‍🍳 Preparo</div>
-                                                <div className="mt-1 space-y-1">
-                                                  {((item as any).receita as RecipeDetail).preparo.map((step: string, i: number) => (
-                                                    <div key={i} className="flex gap-2 text-xs text-slate-600">
-                                                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-emerald-200 text-[10px] font-bold text-emerald-800">{i + 1}</span>
-                                                      <span>{step}</span>
-                                                    </div>
-                                                  ))}
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </details>
-                                        )}
-                                      </div>
-                                    </div>
+                                </div>
+                                
+                                <div className="grid grid-cols-7 gap-1 md:gap-4">
+                                  {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((d) => (
+                                    <div key={d} className="text-center text-[10px] font-bold text-slate-300 uppercase tracking-widest pb-4">{d}</div>
                                   ))}
+                                  {(() => {
+                                    const firstDayKey = cycleCalendar[0]?.dateKey;
+                                    if (!firstDayKey) return null;
+                                    
+                                    const firstDate = new Date(`${firstDayKey}T12:00:00`);
+                                    const startDow = firstDate.getDay();
+                                    const blanks = Array.from({ length: startDow }, (_, i) => (
+                                      <div key={`blank-${i}`} className="aspect-square" />
+                                    ));
+                                    const days = cycleCalendar.map((day) => {
+                                      const isToday = day.dateKey === todayKey;
+                                      return (
+                                        <div key={day.dateKey} className={`aspect-square rounded-2xl flex flex-col items-center justify-center relative transition-all ${
+                                          isToday ? "bg-primary text-white shadow-lg ring-4 ring-primary/10" : "hover:bg-slate-50"
+                                        }`}>
+                                          <span className={`text-sm font-bold ${isToday ? "text-white" : "text-slate-700"}`}>{day.dayNumber}</span>
+                                          {day.phase !== "neutro" && (
+                                            <div className={`absolute bottom-2 h-1.5 w-1.5 rounded-full ${
+                                              day.phase === "menstruação" ? "bg-rose-400" : 
+                                              day.phase === "ovulação" ? "bg-emerald-400" : "bg-violet-400"
+                                            }`} />
+                                          )}
+                                        </div>
+                                      );
+                                    });
+                                    return [...blanks, ...days];
+                                  })()}
+                                </div>
+                              </Card>
+
+                              <div className="grid gap-8 md:grid-cols-2">
+                                <Card className="rounded-[40px] border-none shadow-premium bg-slate-900 text-white p-8 overflow-hidden relative">
+                                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 blur-3xl rounded-full -mr-16 -mt-16" />
+                                  <div className="relative z-10">
+                                    <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-500 mb-4">Fase Hormonal de Hoje</p>
+                                    <h4 className="text-3xl font-serif italic mb-2 capitalize">{currentCycleDay ? getPhaseTitle(currentCycleDay.phase) : "Fase Neutra"}</h4>
+                                    <p className="text-slate-400 text-sm font-light leading-relaxed">
+                                      {currentCycleDay ? currentCycleDay.label : "Suas previsões hormonais aparecem aqui."}
+                                    </p>
+                                  </div>
+                                </Card>
+
+                                <div className="space-y-4">
+                                  <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-400 ml-4">Docinho Fit do Dia</p>
+                                  <div className="grid gap-4">
+                                    {cycleTreats.slice(0, 2).map((item, i) => (
+                                      <div key={i} className="bg-white p-5 rounded-[32px] border border-slate-50 shadow-sm flex items-center gap-4">
+                                        <div className="h-12 w-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center shrink-0">
+                                          <Sparkles className="h-6 w-6" />
+                                        </div>
+                                        <div>
+                                          <p className="font-bold text-slate-900 text-sm">{item.titulo}</p>
+                                          <p className="text-[10px] text-slate-400 mt-0.5 uppercase tracking-widest font-bold">Ideal para {currentCycleDay?.phase}</p>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -2614,144 +2511,143 @@ export default function SlimDayApp() {
                   </Card>
                 </TabsContent>
 
-                <TabsContent value="checklist" className="mt-4">
-                  <Card className="rounded-[28px] border-sky-100 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="text-2xl">Check-list diário</CardTitle>
-                      <CardDescription>Cada etapa concluída gera uma pequena comemoração para manter motivação.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {checklistItems.map((item) => (
-                        <div key={item.id} className="flex items-center justify-between rounded-2xl border bg-white p-4">
-                          <div className="flex items-center gap-3">
-                            <Checkbox checked={!!completed[item.id]} onCheckedChange={() => toggleCheck(item.id, item.titulo)} />
-                            <div>
-                              <div className="font-semibold text-slate-900">{item.titulo}</div>
-                              <div className="text-sm capitalize text-slate-500">{item.tipo}</div>
-                            </div>
-                          </div>
-                          {completed[item.id] ? <CheckCircle2 className="h-5 w-5 text-emerald-500" /> : null}
-                        </div>
-                      ))}
-                      <div className="grid gap-4 md:grid-cols-3">
-                        <div className="rounded-3xl bg-[linear-gradient(135deg,#fff7ed_0%,#ffffff_100%)] p-5">
-                          <div className="flex items-center gap-2 text-orange-600"><Flame className="h-4 w-4" /><span className="text-sm font-semibold">Mensagem do dia</span></div>
-                          <div className="mt-2 text-lg font-bold text-slate-900">{getCongratsMessage(completedCount)}</div>
-                          <div className="mt-2 text-sm text-slate-600">Você concluiu {completedCount} de {totalCount} etapas hoje.</div>
-                        </div>
-                        <div className="rounded-3xl bg-sky-50 p-5">
-                          <div className="flex items-center gap-2 text-sky-700"><Waves className="h-4 w-4" /><span className="text-sm font-semibold">Hábito de água</span></div>
-                          <div className="mt-2 text-2xl font-black text-slate-900">8 copos</div>
-                          <div className="mt-2 text-sm text-slate-600">Meta visual para o dia todo.</div>
-                        </div>
-                        <div className="rounded-3xl bg-violet-50 p-5">
-                          <div className="flex items-center gap-2 text-violet-700"><Moon className="h-4 w-4" /><span className="text-sm font-semibold">Recuperação</span></div>
-                          <div className="mt-2 text-2xl font-black text-slate-900">sono + pausa</div>
-                          <div className="mt-2 text-sm text-slate-600">Seu progresso também depende de descanso.</div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-
-                <TabsContent value="alertas" className="mt-4">
-                  <Card className="rounded-[28px] border-violet-100 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="text-2xl">Alertas e lembretes</CardTitle>
-                      <CardDescription>Mensagens internas para motivar retomada, constância e conquistas.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {notifications.length === 0 ? (
-                        <div className="rounded-3xl border bg-white p-5 text-sm text-slate-600">Seus alertas vão aparecer aqui conforme você usa o app e conclui etapas.</div>
-                      ) : (
-                        notifications.map((item) => (
-                          <div key={item.id} className="rounded-3xl border bg-white p-5">
-                            <div className="flex items-center justify-between gap-3">
-                              <Badge className="rounded-full bg-violet-100 text-violet-700 hover:bg-violet-100">{item.tone}</Badge>
-                              <span className="text-xs font-semibold text-slate-500">{new Date(item.createdAt).toLocaleString("pt-BR")}</span>
-                            </div>
-                            <div className="mt-3 font-bold text-slate-900">{item.title}</div>
-                            <div className="mt-1 text-sm leading-6 text-slate-600">{item.body}</div>
-                          </div>
-                        ))
-                      )}
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-
-                <TabsContent value="feedback" className="mt-4">
-                  <Card className="rounded-[28px] border-pink-100 shadow-lg">
-                    <CardHeader>
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-100">
-                          <MessageCircle className="h-6 w-6 text-pink-600" />
-                        </div>
-                        <div>
-                          <CardTitle className="text-2xl">Fale com a gente 💕</CardTitle>
-                          <CardDescription>Sua opinião é muito importante para nós!</CardDescription>
-                        </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-5">
-                      <div className="rounded-3xl bg-gradient-to-br from-pink-50 to-rose-50 p-5">
-                        <div className="text-sm leading-6 text-slate-700">
-                          Queremos ouvir você! 🌸 Tem alguma sugestão, ideia nova ou encontrou algo que não funcionou bem?
-                          Mande pra gente — cada feedback nos ajuda a melhorar o SlimDay pra você.
-                        </div>
-                      </div>
-
-                      <FeedbackForm userEmail={profile?.nome || ""} />
-
-                      <div className="rounded-3xl border bg-white p-5">
-                        <div className="flex items-center gap-2 text-sm font-semibold text-slate-500">
-                          <Mail className="h-4 w-4" /> Contato direto
-                        </div>
-                        <div className="mt-2 text-sm text-slate-600">
-                          Se preferir, envie um e-mail diretamente para:
-                        </div>
-                        <a
-                          href="mailto:atendimentoslimday@gmail.com"
-                          className="mt-2 inline-flex items-center gap-2 rounded-2xl bg-pink-50 px-4 py-2 text-sm font-semibold text-pink-700 transition-colors hover:bg-pink-100"
+                <TabsContent value="checklist" className="mt-0 animate-in fade-in duration-500">
+                  <div className="grid gap-8 lg:grid-cols-[1.5fr,1fr]">
+                    <div className="space-y-4">
+                      {checklistItems.map((item, i) => (
+                        <motion.div
+                          key={item.id}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.05 }}
+                          className={`flex items-center justify-between p-6 rounded-[32px] border-none shadow-premium bg-white group hover:bg-slate-50 transition-colors ${completed[item.id] ? "opacity-60" : ""}`}
                         >
-                          <Mail className="h-4 w-4" />
-                          atendimentoslimday@gmail.com
-                        </a>
+                          <div className="flex items-center gap-6">
+                            <div
+                              onClick={() => toggleCheck(item.id, item.titulo)}
+                              className={`h-8 w-8 rounded-xl border-2 flex items-center justify-center cursor-pointer transition-all ${
+                                completed[item.id] ? "bg-primary border-primary text-white" : "border-slate-200 group-hover:border-primary"
+                              }`}
+                            >
+                              {completed[item.id] && <Check className="h-5 w-5" />}
+                            </div>
+                            <div>
+                              <p className={`text-lg font-serif italic ${completed[item.id] ? "line-through text-slate-400" : "text-slate-900"}`}>{item.titulo}</p>
+                              <p className="text-[10px] uppercase font-bold tracking-widest text-slate-300 mt-1">{item.tipo}</p>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    <div className="space-y-6">
+                      <Card className="rounded-[40px] border-none shadow-premium bg-emerald-50/50 p-10 text-center">
+                        <div className="h-16 w-16 rounded-3xl bg-emerald-50 mx-auto flex items-center justify-center text-emerald-500 mb-6">
+                          <Trophy className="h-8 w-8" />
+                        </div>
+                        <h3 className="text-2xl font-serif italic mb-4">Meta Diária</h3>
+                        <p className="text-emerald-700 font-bold text-4xl mb-4">{progress}%</p>
+                        <p className="text-slate-500 text-sm font-light leading-relaxed">
+                          "{getCongratsMessage(completedCount)}"
+                        </p>
+                      </Card>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="bg-white p-6 rounded-[32px] border border-slate-50 shadow-sm flex flex-col items-center text-center">
+                          <div className="h-10 w-10 rounded-xl bg-sky-50 text-sky-500 flex items-center justify-center mb-4">
+                            <Waves className="h-5 w-5" />
+                          </div>
+                          <span className="text-[10px] uppercase font-bold text-slate-300 mb-1">Hábitos</span>
+                          <span className="text-sm font-bold">8 Copos Água</span>
+                        </div>
+                        <div className="bg-white p-6 rounded-[32px] border border-slate-50 shadow-sm flex flex-col items-center text-center">
+                          <div className="h-10 w-10 rounded-xl bg-violet-50 text-violet-500 flex items-center justify-center mb-4">
+                            <Moon className="h-5 w-5" />
+                          </div>
+                          <span className="text-[10px] uppercase font-bold text-slate-300 mb-1">Descanso</span>
+                          <span className="text-sm font-bold">Sono Profundo</span>
+                        </div>
                       </div>
-                    </CardContent>
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="alertas" className="mt-0 animate-in fade-in duration-500">
+                  <div className="space-y-6">
+                    {notifications.length === 0 ? (
+                      <Card className="rounded-[40px] border-dashed border-slate-200 bg-transparent p-12 text-center">
+                        <div className="h-16 w-16 rounded-full bg-slate-50 mx-auto flex items-center justify-center text-slate-300 mb-6">
+                          <BellOff className="h-8 w-8" />
+                        </div>
+                        <p className="text-slate-400 font-light italic">Seus alertas e conquistas serão listados aqui.</p>
+                      </Card>
+                    ) : (
+                      <div className="grid gap-4">
+                        {notifications.map((item, i) => (
+                          <motion.div
+                            key={item.id}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.05 }}
+                            className="bg-white p-6 rounded-[32px] border-none shadow-premium flex items-start gap-6 group"
+                          >
+                            <div className="h-12 w-12 rounded-2xl bg-violet-50 text-violet-500 flex items-center justify-center shrink-0 group-hover:bg-violet-500 group-hover:text-white transition-all">
+                              <Bell className="h-6 w-6" />
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between mb-2">
+                                <Badge className="rounded-full bg-slate-100 text-slate-400 border-none text-[8px] font-bold uppercase tracking-widest">{item.tone}</Badge>
+                                <span className="text-[10px] font-bold text-slate-300 uppercase">{new Date(item.createdAt).toLocaleDateString("pt-BR")}</span>
+                              </div>
+                              <h5 className="text-lg font-serif italic text-slate-900">{item.title}</h5>
+                              <p className="mt-2 text-sm text-slate-500 font-light leading-relaxed">{item.body}</p>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="feedback" className="mt-0 animate-in fade-in duration-500">
+                  <Card className="rounded-[40px] border-none shadow-premium bg-white p-10 overflow-hidden relative">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-pink-50 blur-3xl rounded-full -mr-32 -mt-32" />
+                    
+                    <div className="relative z-10">
+                      <div className="flex flex-col md:flex-row gap-10">
+                        <div className="flex-1">
+                          <h3 className="text-4xl font-serif italic mb-6">Sua voz importa.</h3>
+                          <p className="text-slate-500 font-light leading-relaxed mb-8">
+                            O SlimDay é construído para mulheres reais. Suas sugestões, críticas e ideias são o que nos faz crescer. Digite abaixo o que você está achando da sua experiência.
+                          </p>
+                          <FeedbackForm userEmail={profile?.nome || ""} />
+                        </div>
+                        
+                        <div className="w-full md:w-80 space-y-6 pt-10 border-t md:border-t-0 md:pt-0 md:pl-10 md:border-l border-slate-50">
+                          <div className="space-y-4">
+                            <p className="text-[10px] uppercase font-bold tracking-[3px] text-slate-300">Contato Direto</p>
+                            <div className="bg-pink-50 p-6 rounded-3xl border border-pink-100">
+                              <div className="flex items-center gap-4 mb-4">
+                                <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center text-pink-500 shadow-sm">
+                                  <Mail className="h-5 w-5" />
+                                </div>
+                                <span className="font-bold text-sm text-slate-900">E-mail Suporte</span>
+                              </div>
+                              <a href="mailto:atendimentoslimday@gmail.com" className="text-sm font-medium text-pink-700 hover:underline">
+                                atendimentoslimday@gmail.com
+                              </a>
+                            </div>
+                            <p className="text-xs text-slate-400 font-light px-2 italic">
+                              Respondemos em até 24h úteis para ajudar você em sua jornada.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </Card>
                 </TabsContent>
               </Tabs>
 
-              <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-                <Card className="rounded-[20px] md:rounded-[28px] border-indigo-100 shadow-lg">
-                  <CardContent className="p-4 md:p-6">
-                    <div className="flex items-center gap-2 text-indigo-700"><Sparkles className="h-4 w-4" /><span className="text-sm font-semibold">Motivação diária</span></div>
-                    <div className="mt-2 font-bold text-slate-900">{dayMessage.title}</div>
-                    <div className="mt-1 text-sm text-slate-600">{dayMessage.body}</div>
-                  </CardContent>
-                </Card>
-                <Card className="rounded-[20px] md:rounded-[28px] border-yellow-100 shadow-lg">
-                  <CardContent className="p-4 md:p-6">
-                    <div className="flex items-center gap-2 text-yellow-700"><Sun className="h-4 w-4" /><span className="text-sm font-semibold">Manhã</span></div>
-                    <div className="mt-2 font-bold text-slate-900">Comece leve</div>
-                    <div className="mt-1 text-sm text-slate-600">Café da manhã simples + ativação curta para entrar no ritmo.</div>
-                  </CardContent>
-                </Card>
-                <Card className="rounded-[20px] md:rounded-[28px] border-emerald-100 shadow-lg">
-                  <CardContent className="p-4 md:p-6">
-                    <div className="flex items-center gap-2 text-emerald-700"><CalendarDays className="h-4 w-4" /><span className="text-sm font-semibold">Constância</span></div>
-                    <div className="mt-2 font-bold text-slate-900">Melhor que perfeição</div>
-                    <div className="mt-1 text-sm text-slate-600">Mesmo nos dias corridos, seu plano continua possível.</div>
-                  </CardContent>
-                </Card>
-                <Card className="rounded-[20px] md:rounded-[28px] border-pink-100 shadow-lg">
-                  <CardContent className="p-4 md:p-6">
-                    <div className="flex items-center gap-2 text-pink-600"><Heart className="h-4 w-4" /><span className="text-sm font-semibold">Lembrete SlimDay</span></div>
-                    <div className="mt-2 font-bold text-slate-900">Você não precisa ter um dia perfeito para continuar.</div>
-                    <div className="mt-1 text-sm text-slate-600">Seu plano foi pensado para funcionar nos dias corridos e também quando você tiver mais tempo.</div>
-                  </CardContent>
-                </Card>
-              </div>
             </div>
           </div>
         </div>
