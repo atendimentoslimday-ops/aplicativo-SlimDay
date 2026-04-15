@@ -955,9 +955,25 @@ function OnboardingQuiz({
                       <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-rose-500" /> Fases menstruais visuais</li>
                       <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-rose-500" /> Previsão de TPM e janela fértil</li>
                       <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-rose-500" /> Docinhos fit fáceis para aliviar a TPM</li>
+                    </ul>
+                    <a href="https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8f39c46c17df" target="_blank" rel="noopener noreferrer">
+                      <Button className="w-full mt-6 rounded-2xl h-14 text-lg font-bold bg-rose-600 hover:bg-rose-700 shadow-lg shadow-rose-200">
+                        Quero Desbloquear Agora
+                      </Button>
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   function AuthScreen({
-  mode, setMode, nome, setNome, email, setEmail, senha, setSenha, onSubmit, loading, error, success,
-}: {
+    mode, setMode, nome, setNome, email, setEmail, senha, setSenha, onSubmit, loading, error, success,
+  }: {
   mode: "login" | "register";
   setMode: (value: "login" | "register") => void;
   nome: string;
