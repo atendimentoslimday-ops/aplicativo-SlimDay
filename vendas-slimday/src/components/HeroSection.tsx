@@ -1,53 +1,77 @@
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const HeroSection = () => (
-  <section className="py-10 md:py-14 relative">
-    <div className="absolute inset-0 pointer-events-none" style={{
-      background: "radial-gradient(circle at 15% 20%, hsl(16 100% 60% / 0.08), transparent 24%), radial-gradient(circle at 85% 10%, hsl(145 82% 38% / 0.07), transparent 22%)"
-    }} />
-    <div className="container grid md:grid-cols-[1.2fr_0.8fr] gap-7 items-center relative">
-      <div className="bg-card/95 border border-border shadow-card rounded-3xl p-8 md:p-10 animate-fade-in-up">
-        <div className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-primary-soft text-primary font-bold text-sm border border-primary/15 mb-5">
-          ✨ Teste rápido gratuito · leva menos de 2 minutos
+  <section className="py-12 md:py-24 relative overflow-hidden bg-sand/30">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full -mr-64 -mt-64" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/10 blur-[120px] rounded-full -ml-64 -mb-64" />
+    </div>
+    
+    <div className="container grid lg:grid-cols-[1.2fr,0.8fr] gap-16 items-center relative z-10">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white border border-slate-100 text-primary font-bold text-[10px] uppercase tracking-[3px] mb-10 shadow-sm">
+          <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+          Diagnóstico Gratuito · 2 Minutos
         </div>
-        <h1 className="text-3xl md:text-5xl font-extrabold leading-[0.96] tracking-tight text-secondary mb-4">
-          Descubra o plano <span className="text-gradient">SlimDay</span> com treinos de até 15 minutos para mulheres com rotina corrida
+        
+        <h1 className="text-5xl md:text-8xl font-serif leading-[1] tracking-tight text-slate-900 mb-8">
+          Sua melhor versão em <span className="text-primary italic">15 minutos</span> por dia
         </h1>
-        <p className="text-lg text-muted-foreground leading-relaxed mb-5 max-w-2xl">
-          Responda algumas perguntas e veja uma recomendação personalizada com base na sua fase atual, no seu objetivo e no tempo que você realmente tem no dia.
+        
+        <p className="text-xl text-slate-500 leading-relaxed mb-12 max-w-2xl font-light">
+          Descubra o plano personalizado SlimDay. Criado para mulheres reais que buscam resultados reais, sem complicar a rotina.
         </p>
-        <div className="flex flex-wrap gap-3 mb-6">
-          {["Treinos de até 15 minutos", "Ideal para dias corridos", "Comece de forma leve", "Mais clareza para manter constância"].map((chip) => (
-            <span key={chip} className="px-3.5 py-2.5 rounded-full bg-gradient-to-b from-card to-primary-soft border border-primary/10 text-sm font-bold text-secondary shadow-sm">
+        
+        <div className="flex flex-wrap gap-4 mb-12">
+          {["Público Feminino", "Treinos Rápidos", "Alimentação Prática", "Foco em Constância"].map((chip) => (
+            <div key={chip} className="px-6 py-2.5 rounded-full bg-white border border-slate-50 text-[10px] font-bold text-slate-400 uppercase tracking-widest shadow-sm">
               {chip}
-            </span>
+            </div>
           ))}
         </div>
-        <div className="flex flex-col md:flex-row gap-3 mb-3">
+        
+        <div className="flex flex-col sm:flex-row gap-5">
           <a href="#quiz">
-            <Button variant="cta" size="lg" className="w-full md:w-auto">Começar meu diagnóstico</Button>
+            <Button variant="cta" size="lg" className="w-full sm:w-auto px-12 h-16 text-lg rounded-[24px] shadow-premium hover:scale-105 transition-transform bg-primary hover:bg-slate-900">
+              Iniciar meu diagnóstico
+            </Button>
           </a>
           <a href="#como-funciona">
-            <Button variant="outline" size="lg" className="w-full md:w-auto rounded-xl font-bold">Ver como funciona</Button>
+            <Button variant="outline" size="lg" className="w-full sm:w-auto px-12 h-16 text-lg rounded-[24px] border-slate-200 font-bold hover:bg-white transition-colors bg-white/50 backdrop-blur-sm">
+              Ver como funciona
+            </Button>
           </a>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Criado para quem quer começar de um jeito mais leve, prático e possível de manter.
-        </p>
-      </div>
+      </motion.div>
 
-      <div className="bg-card/95 border border-border shadow-card rounded-3xl p-5 grid gap-4 animate-fade-in-up" style={{ animationDelay: "0.2s", opacity: 0 }}>
-        {[
-          { title: "15 min", desc: "Treinos pensados para caber na sua rotina, inclusive em dias corridos." },
-          { title: "Plano adaptado", desc: "O quiz cria uma experiência mais relevante com base em idade, altura, peso, meta e disponibilidade." },
-          { title: "Foco em consistência", desc: "Em vez de complicar, o método prioriza adesão, simplicidade e evolução progressiva." },
-        ].map((stat) => (
-          <div key={stat.title} className="p-5 rounded-2xl bg-gradient-to-b from-card to-primary-soft border border-border">
-            <strong className="block text-2xl text-secondary mb-1">{stat.title}</strong>
-            <span className="text-sm text-muted-foreground leading-relaxed">{stat.desc}</span>
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, delay: 0.2 }}
+        className="relative lg:block hidden"
+      >
+        <div className="absolute -inset-10 bg-primary/5 rounded-[60px] blur-[80px] -z-10" />
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[50px] border-[12px] border-white shadow-premium-dark rotate-2 hover:rotate-0 transition-transform duration-700">
+          <img 
+            src="/images/model_hero.png" 
+            alt="SlimDay Life" 
+            className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700"
+          />
+        </div>
+        
+        <div className="absolute -left-16 bottom-24 bg-white/90 backdrop-blur-xl p-8 rounded-[40px] shadow-premium border border-white/50 max-w-[240px] -rotate-3">
+          <div className="h-10 w-10 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4">
+            <Sparkles className="h-6 w-6" />
           </div>
-        ))}
-      </div>
+          <div className="text-[10px] font-bold text-primary mb-2 uppercase tracking-[3px]">Elite Standard</div>
+          <div className="text-base font-serif italic text-slate-800 leading-tight">"Finalmente algo que eu realmente consigo manter."</div>
+        </div>
+      </motion.div>
     </div>
   </section>
 );

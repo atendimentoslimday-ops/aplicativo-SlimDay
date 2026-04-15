@@ -1,34 +1,60 @@
+import { motion } from "framer-motion";
+import { CheckCircle2, Heart, Zap, Sparkles } from "lucide-react";
+
 const benefits = [
-  { icon: "📝", title: "Plano personalizado", desc: "Descubra uma recomendação pensada para o seu momento atual, com base no seu objetivo e na sua rotina." },
-  { icon: "🧠", title: "Recomendação exclusiva", desc: "Receba um direcionamento que combina mais com você e facilita o início sem complicação." },
-  { icon: "📱", title: "Treinos que cabem no seu dia", desc: "Uma proposta prática para você começar mesmo com pouco tempo disponível." },
-  { icon: "🔥", title: "Comece com mais leveza", desc: "Uma experiência criada para facilitar o início, aumentar a constância e ajudar você a dar o primeiro passo hoje." },
+  { 
+    icon: <Sparkles className="h-6 w-6" />, 
+    title: "Plano Personalizado", 
+    desc: "Descubra uma recomendação pensada para o seu momento atual, com base no seu objetivo e na sua rotina." 
+  },
+  { 
+    icon: <Heart className="h-6 w-6" />, 
+    title: "Feminino & Exclusivo", 
+    desc: "Receba um direcionamento que combina mais com você e facilita o início sem qualquer tipo de complicação." 
+  },
+  { 
+    icon: <Zap className="h-6 w-6" />, 
+    title: "Treinos de 15 Minutos", 
+    desc: "Uma proposta real para você conseguir resultados mesmo nos dias mais corridos e sem tempo." 
+  },
+  { 
+    icon: <CheckCircle2 className="h-6 w-6" />, 
+    title: "Hábito Construído", 
+    desc: "Uma experiência criada para aumentar a constância e ajudar você a dar o primeiro passo hoje mesmo." 
+  },
 ];
 
 const BenefitsSection = ({ id }: { id?: string }) => (
-  <section className="py-8 md:py-10" id={id}>
+  <section className="py-20 md:py-32 bg-white" id={id}>
     <div className="container">
-      <div className="text-center max-w-3xl mx-auto mb-8">
-        <div className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-primary-soft text-primary font-bold text-sm border border-primary/15 mb-3">
+      <div className="text-center max-w-4xl mx-auto mb-20 px-4">
+        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-slate-50 text-slate-400 font-bold text-[10px] uppercase tracking-[3px] border border-slate-100 mb-8 shadow-sm">
           Como funciona
         </div>
-        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-secondary leading-none mb-3">
-          Um método pensado para se encaixar na sua rotina
+        <h2 className="text-4xl md:text-6xl font-serif text-slate-900 leading-tight mb-8">
+          Um método pensado para se <span className="text-primary italic">encaixar na sua rotina</span>
         </h2>
-        <p className="text-muted-foreground text-lg leading-relaxed">
-          Conheça os pilares que tornam a experiência SlimDay mais leve, prática e fácil de seguir no dia a dia.
+        <p className="text-lg text-slate-500 leading-relaxed font-light">
+          Conheça os pilares que tornam a experiência SlimDay mais leve, prática e fácil de seguir no dia a dia, focando no que realmente traz resultado.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {benefits.map((b) => (
-          <div key={b.title} className="p-6 rounded-3xl bg-gradient-to-b from-card to-background border border-border shadow-card hover:-translate-y-1 hover:shadow-lg transition-all duration-200">
-            <div className="w-[52px] h-[52px] grid place-items-center rounded-2xl bg-primary-soft text-2xl mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {benefits.map((b, idx) => (
+          <motion.div 
+            key={b.title}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1 }}
+            className="group p-10 rounded-[40px] bg-slate-50/50 border border-slate-100/50 hover:bg-white hover:shadow-premium hover:-translate-y-2 transition-all duration-500"
+          >
+            <div className="w-16 h-16 grid place-items-center rounded-2xl bg-white text-primary mb-8 shadow-sm group-hover:bg-primary group-hover:text-white transition-colors duration-500">
               {b.icon}
             </div>
-            <h3 className="text-lg font-bold text-secondary mb-2">{b.title}</h3>
-            <p className="text-muted-foreground leading-relaxed text-sm">{b.desc}</p>
-          </div>
+            <h3 className="text-xl font-serif text-slate-800 mb-4">{b.title}</h3>
+            <p className="text-slate-500 leading-relaxed text-sm font-light">{b.desc}</p>
+          </motion.div>
         ))}
       </div>
     </div>
