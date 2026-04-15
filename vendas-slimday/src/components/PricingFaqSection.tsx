@@ -48,7 +48,7 @@ const PricingFaqSection = () => (
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-serif italic mb-3 text-white">{item.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed font-light">{item.desc}</p>
+                <p className="text-slate-300 text-sm leading-relaxed font-light">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -61,7 +61,7 @@ const PricingFaqSection = () => (
               </div>
               <div className="text-center md:text-left">
                 <h4 className="text-2xl font-serif italic text-white mb-2">Garantia Blindada de 7 Dias</h4>
-                <p className="text-slate-400 text-base font-light leading-relaxed">
+                <p className="text-slate-300 text-base font-light leading-relaxed">
                   Se em uma semana você não amar o SlimDay, devolvemos 100% do seu investimento sem qualquer burocracia.
                 </p>
               </div>
@@ -110,11 +110,6 @@ const PricingFaqSection = () => (
               </Button>
             </a>
 
-            <div className="mt-8 flex items-center justify-center gap-6 opacity-40 grayscale">
-              <img src="https://logodownload.org/wp-content/uploads/2014/07/visa-logo-1.png" alt="Visa" className="h-4" />
-              <img src="https://logodownload.org/wp-content/uploads/2014/07/mastercard-logo.png" alt="Mastercard" className="h-6" />
-              <img src="https://logodownload.org/wp-content/uploads/2020/02/pix-logo-1.png" alt="Pix" className="h-5" />
-            </div>
           </motion.div>
           
           <p className="text-center mt-8 text-slate-500 text-[10px] flex items-center justify-center gap-2 uppercase tracking-[2px] font-bold">

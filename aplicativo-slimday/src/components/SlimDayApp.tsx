@@ -969,7 +969,8 @@ function OnboardingQuiz({
                 </CardContent>
               </Card>
             )}
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     );
@@ -1727,8 +1728,8 @@ export default function SlimDayApp() {
             {/* Mensagem do Dia - Premium Card */}
             <Card className="rounded-[40px] border-none shadow-premium overflow-hidden bg-white group">
               <CardContent className="p-0 flex flex-col md:flex-row h-full">
-                <div className="w-full md:w-1/3 bg-slate-900 p-8 flex flex-col justify-between text-white relative overflow-hidden">
-                  <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.2),transparent)]" />
+                <div className="w-full md:w-1/3 bg-emerald-600 p-8 flex flex-col justify-between text-white relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent)]" />
                   <div className="relative z-10">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-[10px] uppercase tracking-widest font-bold">
                       <Sparkles className="h-3 w-3" /> Foco de Hoje
@@ -1736,7 +1737,6 @@ export default function SlimDayApp() {
                     <div className="mt-6 text-4xl font-serif italic">{dayMessage.title}</div>
                   </div>
                   <div className="mt-8 relative z-10">
-                    <p className="text-slate-400 text-xs uppercase tracking-widest font-bold mb-2">Constância</p>
                     <div className="flex items-center gap-2 text-primary font-bold">
                       <Zap className="h-4 w-4" /> {streak} Ganhando Ritmo
                     </div>
@@ -2667,11 +2667,8 @@ export default function SlimDayApp() {
                   </Card>
                 </TabsContent>
               </Tabs>
-
             </div>
           </div>
-        </div>
-      </div>
-    </>
-  );
-}
+        </>
+      );
+    }

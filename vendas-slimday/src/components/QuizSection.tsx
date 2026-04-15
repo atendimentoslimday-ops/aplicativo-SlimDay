@@ -176,7 +176,7 @@ const QuizSection = () => {
   const { bmi, profile, focus } = getProfileData(answers);
 
   return (
-    <section className="w-full py-20 px-4 bg-sand/20" id="quiz">
+    <section className="w-full py-20 px-4 bg-emerald-50/30" id="quiz">
       <div className="max-w-2xl mx-auto">
         <AnimatePresence mode="wait">
           {step === "quiz" && (
@@ -185,7 +185,7 @@ const QuizSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-[40px] shadow-premium p-8 md:p-12 border border-slate-50"
+              className="bg-white rounded-[40px] shadow-premium p-8 md:p-12 border border-emerald-100 shadow-emerald-900/5"
             >
               <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-[3px] mb-6">
                 <span>Passo {currentQuestion + 1} de {questions.length}</span>
@@ -273,11 +273,11 @@ const QuizSection = () => {
                 Estamos processando seus dados para criar a melhor experiência possível.
               </p>
               
-              <div className="h-2 w-full bg-slate-100 rounded-full mb-10 overflow-hidden">
+              <div className="h-2 w-full bg-emerald-100 rounded-full mb-10 overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: `${processingProgress}%` }}
-                  className="h-full bg-primary"
+                  className="h-full bg-primary shadow-[0_0_15px_rgba(16,185,129,0.3)]"
                 />
               </div>
 
@@ -319,8 +319,8 @@ const QuizSection = () => {
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-                <div className="p-6 rounded-[30px] bg-slate-50/50 border border-slate-100">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Perfil Elite</span>
+                <div className="p-6 rounded-[30px] bg-emerald-50/50 border border-emerald-100/50">
+                  <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block mb-2">Perfil Elite</span>
                   <strong className="text-slate-900 text-lg font-serif italic">{profile}</strong>
                 </div>
                 <div className="p-6 rounded-[30px] bg-slate-50/50 border border-slate-100">
