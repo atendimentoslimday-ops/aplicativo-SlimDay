@@ -58,6 +58,44 @@ import {
 
 const ADMIN_EMAILS = ["atendimentoslimday@gmail.com"];
 const DEV_MASTER_KEY = "-=x22450-.çA=-//\\"; 
+
+// --- HELPERS DE VALIDA├ç├âO INTELIGENTE ---
+
+const sanitizeDecimal = (val: string) => {
+  // Remove tudo que n├úo for n├║mero, v├¡rgula ou ponto
+  let cleaned = val.replace(/[^0-9,.]/g, "");
+  // Padroniza para v├¡rgula para consist├¬ncia visual
+  cleaned = cleaned.replace(/\./g, ",");
+  
+  // Se houver mais de uma v├¡rgula, reseta o campo conforme pedido
+  const commaCount = (cleaned.match(/,/g) || []).length;
+  if (commaCount > 1) return "";
+  
+  return cleaned;
+};
+
+const sanitizeName = (val: string) => {
+  // Permite apenas letras (incluindo acentos), espa├ºos e h├¡fens
+  return val.replace(/[^a-zA-Z├á├á├ó├ú├⌐├¬├¡├│├┤├Á├║├º├ü├Ç├é├ﾃ├ë├ﾊ├ﾍ├ﾓ├ﾔ├ﾕ├ﾚ├ç\s-]/g, "");
+};
+
+const isGibberish = (name: string): string | null => {
+  const n = name.trim();
+  if (n.length === 0) return null;
+  if (n.length < 2) return "O nome ├® muito curto.";
+  
+  // Heur├¡stica: n├úo pode ter 4 letras iguais seguidas (ex: aaaa)
+  if (/(.)\1{3,}/.test(n.toLowerCase())) return "O nome parece inv├ílido (repeti├º├Áes excessivas).";
+  
+  // Heur├¡stica: nomes reais geralmente t├¬m pelo menos uma vogal
+  const hasVowels = /[aeiou├á├á├ó├ú├⌐├¬├¡├│├┤├Á├║├ü├Ç├é├ﾃ├ë├ﾊ├ﾍ├ﾓ├ﾔ├ﾕ├ﾚ]/i.test(n);
+  if (!hasVowels && n.length > 3) return "O nome n├úo parece real (falta de vogais).";
+  
+  // Heur├¡stica: sequ├¬ncias de consoantes imposs├¡veis (ex: qwrtyp)
+  if (/[bcdfghjklmnpqrstvwxyz]{5,}/i.test(n)) return "O nome cont├®m sequ├¬ncias de letras inv├ílidas.";
+
+  return null;
+};
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -185,7 +223,7 @@ const dailyMessages: DailyMessage[] = [
   { title: "Come├ºar leve ainda ├® come├ºar", body: "Treinos curtos e refei├º├Áes simples tamb├®m constroem resultado quando viram h├íbito." },
   { title: "Seu progresso gosta de repeti├º├úo", body: "Quanto mais voc├¬ volta, mais natural sua nova rotina fica." },
   { title: "Hoje ├® uma nova chance", body: "Retomar o plano hoje ajuda a manter o progresso mais vivo e consistente." },
-  { title: "Pequenas vit├│rias acumulam", body: "Cada etapa conclu├¡da fortalece sua confian├ºa e facilita o pr├│ximo passo." },
+  { title: "Pequenas vit├│rias acumulam", body: "Cada etapa conclúída fortalece sua confian├ºa e facilita o pr├│ximo passo." },
   { title: "Voltar faz diferen├ºa", body: "Ficar muitos dias sem abrir o plano pode enfraquecer seu ritmo. Recome├ºar hoje j├í recoloca voc├¬ no eixo." },
 ];
 
@@ -524,9 +562,9 @@ function buildWeekSchedule(profile: Profile): DayPlan[] {
 }
 
 function getCongratsMessage(count: number) {
-  if (count < 3) return "Boa! Cada etapa conclu├¡da fortalece sua nova rotina.";
+  if (count < 3) return "Boa! Cada etapa conclúída fortalece sua nova rotina.";
   if (count < 6) return "Voc├¬ est├í indo muito bem. O importante ├® manter o ritmo.";
-  if (count < 10) return "Parab├®ns! Sua const├óncia j├í est├í fazendo diferen├ºa.";
+  if (count < 10) return "Parabéns! Sua const├óncia j├í est├í fazendo diferen├ºa.";
   return "Incr├¡vel! Voc├¬ est├í construindo uma rotina de verdade.";
 }
 
@@ -1030,18 +1068,18 @@ function AuthScreen({
         <div className="space-y-8">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-bold uppercase tracking-widest">
-              <Sparkles className="h-4 w-4" /> Boutique de Sa├║de
+              <Sparkles className="h-4 w-4" /> Boutique de Saúde
             </div>
             <h1 className="text-5xl md:text-7xl font-serif leading-[1.1]">Evolua no <span className="text-primary italic">seu tempo.</span></h1>
             <p className="text-lg text-slate-500 font-light max-w-md leading-relaxed">
-              O ecossistema definitivo para mulheres que buscam equil├¡brio entre rotina corrida e bem-estar real.
+              O ecossistema definitivo para mulheres que buscam equilíbrio entre rotina corrida e bem-estar real.
             </p>
           </div>
 
           <div className="grid gap-4">
             {[
               { icon: <Lock className="h-5 w-5" />, title: "Seus dados seguros", desc: "Privacidade absoluta no seu acompanhamento." },
-              { icon: <RefreshCcw className="h-5 w-5" />, title: "Sincroniza├º├úo Nuvem", desc: "Acesse de qualquer lugar, sempre de onde parou." },
+              { icon: <RefreshCcw className="h-5 w-5" />, title: "Sincronização Nuvem", desc: "Acesse de qualquer lugar, sempre de onde parou." },
             ].map((feature, i) => (
               <div key={i} className="flex gap-4 p-5 rounded-3xl bg-white border border-slate-100 shadow-sm">
                 <div className="h-10 w-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 shrink-0">
@@ -1060,7 +1098,7 @@ function AuthScreen({
           <CardHeader className="p-0 mb-8 space-y-2">
             <CardTitle className="text-3xl font-serif">{mode === "login" ? "Entrar" : "Criar Conta"}</CardTitle>
             <CardDescription className="font-light">
-              {mode === "login" ? "Bem-vinda de volta ao seu espa├ºo." : "Comece hoje sua nova fase."}
+              {mode === "login" ? "Bem-vinda de volta ao seu espaço." : "Comece hoje sua nova fase."}
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0 space-y-6">
@@ -1175,6 +1213,7 @@ function SlimDayApp() {
   const [profileLoaded, setProfileLoaded] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingDismissed, setOnboardingDismissed] = useState(false);
+  const [nameError, setNameError] = useState<string | null>(null); // Erro de intelig├¬ncia de nome
 
   const syncTimeoutRef = useRef<number | null>(null);
   const profileLoadedRef = useRef(false);
@@ -1305,7 +1344,7 @@ function SlimDayApp() {
         setShowCongrats(true);
         setLastActiveDate(now);
         setNotifications((prevN) => [
-          buildNotification("Etapa conclu├¡da", `Voc├¬ concluiu: ${title}`, "conquista"),
+          buildNotification("Etapa conclúída", `Você concluiu: ${title}`, "conquista"),
           ...prevN,
         ].slice(0, 8));
         setStreak((prevStreak) => {
@@ -1340,7 +1379,7 @@ function SlimDayApp() {
     setLastCompletedTitle("");
     setLastActiveDate(new Date());
     setNotifications((prev) => [
-      buildNotification("Novo come├ºo", "Seu dia foi reiniciado. Recome├ºar tamb├®m faz parte do processo.", "motivacao"),
+      buildNotification("Novo começo", "Seu dia foi reiniciado. Recome├ºar também faz parte do processo.", "motivacao"),
       ...prev,
     ].slice(0, 8));
   }
@@ -1384,7 +1423,7 @@ function SlimDayApp() {
         setCycleUnlocked(false);
       }
     } catch {
-      // Silently handle ÔÇö o estado permanece n├úo desbloqueado por seguran├ºa
+      // Silently handle ÔÇö o estado permanece n├úo desbloqueado por segurança
     }
   }, [userId]);
 
@@ -1728,8 +1767,8 @@ function SlimDayApp() {
                   <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20">
                     <Star className="h-6 w-6 text-white" />
                   </div>
-                  <h2 className="text-2xl font-black">├Ültima chance! ÔÅ░</h2>
-                  <p className="mt-2 text-sm opacity-90">Seu per├¡odo de teste acabou, mas voc├¬ ainda pode manter o acesso premium com desconto exclusivo.</p>
+                  <h2 className="text-2xl font-black">Última chance! ⏰</h2>
+                  <p className="mt-2 text-sm opacity-90">Seu período de teste acabou, mas você ainda pode manter o acesso premium com desconto exclusivo.</p>
                 </div>
                 <CardContent className="p-6 space-y-4 text-center">
                   <div className="text-5xl font-black text-rose-600">R$ 29,90</div>
@@ -1793,8 +1832,8 @@ function SlimDayApp() {
               <div className="flex items-start gap-3">
                 <div className="rounded-2xl bg-emerald-100 p-2 text-emerald-600"><Trophy className="h-5 w-5" /></div>
                 <div>
-                  <div className="font-bold text-slate-900">Parab├®ns!</div>
-                  <div className="text-sm text-slate-600">Voc├¬ concluiu: {lastCompletedTitle}</div>
+                  <div className="font-bold text-slate-900">Parabéns!</div>
+                  <div className="text-sm text-slate-600">Você concluiu: {lastCompletedTitle}</div>
                   <div className="mt-1 text-sm font-medium text-emerald-600">{getCongratsMessage(completedCount + 1)}</div>
                 </div>
               </div>
@@ -1890,8 +1929,8 @@ function SlimDayApp() {
           {/* Headline Content */}
           <div className="mb-12 space-y-4">
             <h1 className="text-4xl md:text-5xl font-serif leading-tight">
-              Ol├í, <span className="text-primary italic">{profile.nome || "querida"}</span>. <br />
-              <span className="text-slate-400">Aqui est├í o seu plano para hoje.</span>
+              Olá, <span className="text-primary italic">{profile.nome || "querida"}</span>. <br />
+              <span className="text-slate-400">Aqui está o seu plano para hoje.</span>
             </h1>
           </div>
 
@@ -1940,18 +1979,49 @@ function SlimDayApp() {
                 <Card className="rounded-[28px] border-orange-100 shadow-lg">
                   <CardHeader>
                     <CardTitle className="text-xl">Personalize seu plano</CardTitle>
-                    <CardDescription>Altere os campos e o app reorganiza treino, refei├º├Áes e foco semanal.</CardDescription>
+                    <CardDescription>Altere os campos e o app reorganiza treino, refeições e foco semanal.</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="grid gap-4">
                       <div>
                         <Label>Seu nome</Label>
-                        <Input value={profile.nome} onChange={(e) => updateProfile("nome", e.target.value)} placeholder="Digite seu nome" />
+                        <Input 
+                          value={profile.nome} 
+                          onChange={(e) => {
+                            const val = sanitizeName(e.target.value);
+                            updateProfile("nome", val);
+                            setNameError(isGibberish(val));
+                          }} 
+                          placeholder="Digite seu nome" 
+                          className={nameError ? "border-rose-500 focus-visible:ring-rose-500" : ""}
+                        />
+                        {nameError && <p className="text-[10px] text-rose-500 font-bold mt-1 uppercase tracking-wider">{nameError}</p>}
                       </div>
                       <div className="grid grid-cols-3 gap-3">
-                        <div><Label>Idade</Label><Input value={profile.idade} onChange={(e) => updateProfile("idade", e.target.value)} placeholder="28" /></div>
-                        <div><Label>Altura</Label><Input value={profile.altura} onChange={(e) => updateProfile("altura", e.target.value)} placeholder="165" /></div>
-                        <div><Label>Peso</Label><Input value={profile.peso} onChange={(e) => updateProfile("peso", e.target.value)} placeholder="72" /></div>
+                        <div>
+                          <Label>Idade</Label>
+                          <Input 
+                            value={profile.idade} 
+                            onChange={(e) => updateProfile("idade", e.target.value.replace(/[^0-9]/g, ""))} 
+                            placeholder="28" 
+                          />
+                        </div>
+                        <div>
+                          <Label>Altura</Label>
+                          <Input 
+                            value={profile.altura} 
+                            onChange={(e) => updateProfile("altura", sanitizeDecimal(e.target.value))} 
+                            placeholder="1,65" 
+                          />
+                        </div>
+                        <div>
+                          <Label>Peso</Label>
+                          <Input 
+                            value={profile.peso} 
+                            onChange={(e) => updateProfile("peso", sanitizeDecimal(e.target.value))} 
+                            placeholder="72,5" 
+                          />
+                        </div>
                       </div>
                       <div>
                         <Label>Objetivo principal</Label>
@@ -1967,13 +2037,13 @@ function SlimDayApp() {
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <Label>N├¡vel atual</Label>
+                          <Label>Nível atual</Label>
                           <Select value={profile.nivel} onValueChange={(v: FitnessLevel) => updateProfile("nivel", v)}>
                             <SelectTrigger><SelectValue /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="iniciante">Iniciante</SelectItem>
-                              <SelectItem value="intermediaria">Intermedi├íria</SelectItem>
-                              <SelectItem value="avancada">Avan├ºada</SelectItem>
+                              <SelectItem value="intermediaria">Intermediária</SelectItem>
+                              <SelectItem value="avancada">Avançada</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -1992,13 +2062,13 @@ function SlimDayApp() {
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <Label>Como ├® sua rotina?</Label>
+                          <Label>Como é sua rotina?</Label>
                           <Select value={profile.rotina} onValueChange={(v: RoutineStyle) => updateProfile("rotina", v)}>
                             <SelectTrigger><SelectValue /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="corrida">Muito corrida</SelectItem>
                               <SelectItem value="moderada">Moderada</SelectItem>
-                              <SelectItem value="flexivel">Mais flex├¡vel</SelectItem>
+                              <SelectItem value="flexivel">Mais flexível</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -2007,7 +2077,7 @@ function SlimDayApp() {
                           <Select value={profile.refeicao} onValueChange={(v: MealStyle) => updateProfile("refeicao", v)}>
                             <SelectTrigger><SelectValue /></SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="pratico">Pr├ítico</SelectItem>
+                              <SelectItem value="pratico">Prático</SelectItem>
                               <SelectItem value="equilibrado">Equilibrado</SelectItem>
                               <SelectItem value="sem tempo">Sem tempo</SelectItem>
                               <SelectItem value="caseiro">Mais caseiro</SelectItem>
@@ -2016,7 +2086,11 @@ function SlimDayApp() {
                         </div>
                       </div>
                     </div>
-                    <Button className="w-full rounded-2xl" onClick={applyPlan}>
+                    <Button 
+                      className="w-full rounded-2xl h-14 bg-emerald-600 hover:bg-emerald-700 font-bold disabled:opacity-50" 
+                      onClick={applyPlan}
+                      disabled={Boolean(nameError) || !profile.nome.trim()}
+                    >
                       Atualizar meu plano <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
                   </CardContent>
