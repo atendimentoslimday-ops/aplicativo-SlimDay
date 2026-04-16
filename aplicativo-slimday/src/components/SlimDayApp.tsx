@@ -1104,7 +1104,7 @@ const APP_SALES_LINK = "https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8f39c46c
 const BYPASS_PAYMENT = false; // DESATIVADO: Agora o acesso real do Supabase ├® o que vale
 
 
-export default function SlimDayApp() {
+function SlimDayApp() {
   const [userId, setUserId] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState("");
   const [authMode, setAuthMode] = useState<"login" | "register">("login");
