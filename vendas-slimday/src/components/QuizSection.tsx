@@ -385,18 +385,25 @@ const QuizSection = () => {
                 </p>
               </div>
 
-              <div className="rounded-[28px] border-2 border-emerald-200 bg-emerald-50 p-6 mb-10 flex items-center justify-between flex-wrap gap-6">
-                <div>
-                  <div className="text-[10px] font-bold text-emerald-600 uppercase tracking-[2px] mb-2">Acesso Completo · Oferta Única</div>
-                  <div className="text-4xl font-serif text-slate-900 leading-none">
-                    R$ 29,90 <span className="text-sm font-light line-through text-slate-400 ml-2">R$ 89,90</span>
+              <div className="rounded-[32px] bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 mb-10 text-white shadow-xl relative overflow-hidden group transition-all">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl rounded-full -mr-16 -mt-16" />
+                
+                <div className="relative z-10 flex items-center justify-between flex-wrap gap-6">
+                  <div>
+                    <div className="inline-flex px-3 py-1 rounded-full bg-emerald-400 text-emerald-950 font-black text-[10px] uppercase tracking-[2px] mb-3 shadow-sm">
+                      Oferta Única · Pagamento Único
+                    </div>
+                    <div className="flex items-baseline gap-3">
+                      <span className="text-4xl md:text-5xl font-serif text-white leading-none">R$ 29,90</span>
+                      <span className="text-lg font-bold text-emerald-300/60 line-through">R$ 89,90</span>
+                    </div>
                   </div>
-                </div>
-                <div className="flex -space-x-3">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="h-10 w-10 rounded-full border-2 border-white bg-emerald-200" />
-                  ))}
-                  <div className="h-10 w-10 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold text-white" style={{ background: "#059669" }}>+8K</div>
+                  <div className="flex -space-x-3">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="h-10 w-10 rounded-full border-2 border-emerald-100 bg-emerald-200/20 backdrop-blur-md" />
+                    ))}
+                    <div className="h-10 w-10 rounded-full border-2 border-emerald-100 flex items-center justify-center text-[10px] font-black text-emerald-950" style={{ background: "#4ade80" }}>+8K</div>
+                  </div>
                 </div>
               </div>
 
