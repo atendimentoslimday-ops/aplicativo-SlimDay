@@ -9,6 +9,8 @@
         "./src/*"
       ]
     },
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "strictNullChecks": false
   },

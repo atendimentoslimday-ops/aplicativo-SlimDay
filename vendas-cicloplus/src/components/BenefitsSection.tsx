@@ -1,3 +1,6 @@
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+
 const benefits = [
   { icon: "📝", title: "Plano personalizado", desc: "Descubra uma recomendação pensada para o seu momento atual, com base no seu objetivo e na sua rotina." },
   { icon: "🧠", title: "Recomendação exclusiva", desc: "Receba um direcionamento que combina mais com você e facilita o início sem complicação." },

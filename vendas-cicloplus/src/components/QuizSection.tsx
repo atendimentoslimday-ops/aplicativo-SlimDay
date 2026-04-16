@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -201,7 +201,15 @@ const QuizSection = () => {
                 type="number"
                 inputMode="decimal"
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  // Se for peso ou altura, permitir apenas números
+                  if (q.key === "weight" || q.key === "height") {
+                    setInputValue(val.replace(/\D/g, "").slice(0, 3));
+                  } else {
+                    setInputValue(val);
+                  }
+                }}
                 placeholder={q.placeholder}
                 className="rounded-xl text-base py-4 h-auto"
                 onKeyDown={(e) => e.key === "Enter" && handleNext()}
@@ -324,7 +332,11 @@ const QuizSection = () => {
               <label className="text-sm font-extrabold text-secondary mb-2 block">Seu primeiro nome *</label>
               <Input
                 value={name}
-                onChange={(e) => { setName(e.target.value); setLeadErrors((p) => ({ ...p, name: undefined })); }}
+                onChange={(e) => { 
+                  const val = e.target.value.replace(/[^a-zA-Z\sÀ-ÿ]/g, "");
+                  setName(val); 
+                  setLeadErrors((p) => ({ ...p, name: undefined })); 
+                }}
                 placeholder="Digite seu nome"
                 className={`rounded-xl text-base py-4 h-auto ${leadErrors.name ? "border-red-400 focus-visible:ring-red-400" : ""}`}
               />
@@ -334,7 +346,11 @@ const QuizSection = () => {
               <label className="text-sm font-extrabold text-secondary mb-2 block">WhatsApp *</label>
               <Input
                 value={phone}
-                onChange={(e) => { setPhone(e.target.value); setLeadErrors((p) => ({ ...p, phone: undefined })); }}
+                onChange={(e) => { 
+                  const val = e.target.value.replace(/\D/g, "").slice(0, 11);
+                  setPhone(val); 
+                  setLeadErrors((p) => ({ ...p, phone: undefined })); 
+                }}
                 placeholder="(31) 99879-8876"
                 type="tel"
                 className={`rounded-xl text-base py-4 h-auto ${leadErrors.phone ? "border-red-400 focus-visible:ring-red-400" : ""}`}

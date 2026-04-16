@@ -198,21 +198,19 @@ function FeedbackForm({ userEmail }: { userEmail: string }) {
           <Label className="text-sm font-semibold text-slate-700">Seu nome (opcional)</Label>
           <Input
             className="mt-1 rounded-2xl"
-            placeholder="Como quer ser chamada?"
             value={feedbackName}
-            onChange={(e) => setFeedbackName(e.target.value)}
-            maxLength={100}
+            onChange={(e) => setFeedbackName(sanitizeName(e.target.value))}
+            placeholder="Seu nome"
           />
         </div>
         <div>
           <Label className="text-sm font-semibold text-slate-700">Seu e-mail (opcional)</Label>
           <Input
             className="mt-1 rounded-2xl"
-            placeholder="Para podermos te responder"
-            type="email"
             value={feedbackEmail}
-            onChange={(e) => setFeedbackEmail(e.target.value)}
-            maxLength={255}
+            onChange={(e) => setFeedbackEmail(sanitizeEmail(e.target.value))}
+            placeholder="seu@email.com"
+            type="email"
           />
         </div>
         <div>
@@ -607,7 +605,12 @@ const FULL_PRICE = 89.90;
 // Replace with your real payment links
 const PROMO_LINK = "https://pay.kirvano.com/a44cda1b-153b-4e9c-85bc-438f8c014322";
 const FULL_LINK = "https://pay.kirvano.com/3d0f4079-243d-413d-b5e0-dfde69bb123b";
-
+ 
+// Auxiliares de sanitização
+const sanitizeName = (val: string) => val.replace(/[^a-zA-Z\sÀ-ÿ]/g, "").slice(0, 100);
+const sanitizeNumber = (val: string, maxLen = 3) => val.replace(/\D/g, "").slice(0, maxLen);
+const sanitizeEmail = (val: string) => val.trim().toLowerCase().slice(0, 255);
+ 
 // ──────────────────────────────
 // Onboarding Quiz for new users
 // ──────────────────────────────
@@ -1073,7 +1076,12 @@ function AuthScreen({
                 <Label>Seu nome</Label>
                 <div className="relative mt-2">
                   <User className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <Input className="pl-10" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Digite seu nome" />
+                  <Input 
+                    className="pl-10" 
+                    value={nome} 
+                    onChange={(e) => setNome(sanitizeName(e.target.value))} 
+                    placeholder="Digite seu nome" 
+                  />
                 </div>
               </div>
             )}
@@ -1081,7 +1089,12 @@ function AuthScreen({
               <Label>E-mail</Label>
               <div className="relative mt-2">
                 <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                <Input className="pl-10" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="voce@email.com" />
+                <Input 
+                  className="pl-10" 
+                  value={email} 
+                  onChange={(e) => setEmail(sanitizeEmail(e.target.value))} 
+                  placeholder="voce@email.com" 
+                />
               </div>
             </div>
             <div>
@@ -1213,7 +1226,12 @@ export default function SlimDayApp() {
   }, [planHiddenUntil, currentDate]);
 
   function updateProfile<K extends keyof Profile>(key: K, value: Profile[K]) {
-    setProfile((prev) => ({ ...prev, [key]: value }));
+    let sanitizedValue = value;
+    if (key === "nome") sanitizedValue = sanitizeName(value as string) as Profile[K];
+    if (key === "idade" || key === "altura" || key === "peso") {
+      sanitizedValue = sanitizeNumber(value as string, key === "idade" ? 2 : 3) as Profile[K];
+    }
+    setProfile((prev) => ({ ...prev, [key]: sanitizedValue }));
   }
 
   // Save profile to Supabase

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -165,11 +165,15 @@ const QuizSection = () => {
       errors.email = "E-mail inválido";
     }
 
+    // Additional sanitization before final check
+    const sanitizedEmail = email.trim().toLowerCase();
+    const sanitizedPhone = phone.replace(/\D/g, "");
+
     setLeadErrors(errors);
 
     if (Object.keys(errors).length > 0) return;
 
-    saveLead(name.trim(), phone.trim(), email.trim(), answers);
+    saveLead(name.trim(), sanitizedPhone, sanitizedEmail, answers);
     window.open(CHECKOUT_URL, "_blank");
   };
 
@@ -265,7 +269,14 @@ const QuizSection = () => {
                       type="number"
                       inputMode="decimal"
                       value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (q.key === "weight" || q.key === "height") {
+                          setInputValue(val.replace(/\D/g, "").slice(0, 3));
+                        } else {
+                          setInputValue(val);
+                        }
+                      }}
                       placeholder={q.placeholder}
                       className="rounded-[20px] text-xl py-8 px-6 border-2 border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400 h-auto transition-all"
                       onKeyDown={(e) => e.key === "Enter" && handleNext()}
@@ -440,7 +451,11 @@ const QuizSection = () => {
                   <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-400" />
                   <Input
                     value={name}
-                    onChange={(e) => { setName(e.target.value); setLeadErrors((p) => ({ ...p, name: undefined })); }}
+                    onChange={(e) => { 
+                      const val = e.target.value.replace(/[^a-zA-Z\sÀ-ÿ]/g, "");
+                      setName(val); 
+                      setLeadErrors((p) => ({ ...p, name: undefined })); 
+                    }}
                     placeholder="Seu primeiro nome"
                     className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.name ? "border-red-400 focus-visible:ring-red-400" : "border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400"}`}
                   />
@@ -450,7 +465,11 @@ const QuizSection = () => {
                   <Phone className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-400" />
                   <Input
                     value={phone}
-                    onChange={(e) => { setPhone(e.target.value); setLeadErrors((p) => ({ ...p, phone: undefined })); }}
+                    onChange={(e) => { 
+                      const val = e.target.value.replace(/\D/g, "").slice(0, 11);
+                      setPhone(val); 
+                      setLeadErrors((p) => ({ ...p, phone: undefined })); 
+                    }}
                     placeholder="WhatsApp"
                     type="tel"
                     className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.phone ? "border-red-400 focus-visible:ring-red-400" : "border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400"}`}

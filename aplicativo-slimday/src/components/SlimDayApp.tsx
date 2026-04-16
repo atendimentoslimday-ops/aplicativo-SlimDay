@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { recipeImages } from "@/assets/recipes";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
@@ -35,6 +35,12 @@ import {
   MessageCircle,
   Send,
   Video,
+  Star,
+  Zap,
+  Home,
+  Bell,
+  BellOff,
+  Check,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -47,13 +53,27 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 
+// --- Helpers de Sanitização e Segurança ---
+function sanitizeName(name: string): string {
+  return name.replace(/[^a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ\s]/g, "").slice(0, 50);
+}
+
+function sanitizeNumber(val: string, maxLen: number): string {
+  return val.replace(/\D/g, "").slice(0, maxLen);
+}
+
+function sanitizeEmail(email: string): string {
+  return email.toLowerCase().trim().slice(0, 100);
+}
+
+
 type FitnessLevel = "iniciante" | "intermediaria" | "avancada";
 type Goal = "emagrecer" | "definir" | "mais energia" | "criar constancia";
 type TimePerDay = "10" | "15" | "20" | "30";
 type MealStyle = "pratico" | "equilibrado" | "sem tempo" | "caseiro";
 type RoutineStyle = "corrida" | "moderada" | "flexivel";
 type SyncStatus = "idle" | "saving" | "synced" | "offline" | "error";
-type CyclePhase = "menstruacao_forte" | "menstruacao_final" | "ovulacao" | "fertil" | "neutro";
+type CyclePhase = "menstruação" | "menstruação_final" | "ovulação" | "fértil" | "neutro";
 
 type Profile = {
   ultimoCiclo?: string;
@@ -298,78 +318,64 @@ const mealBase: Record<string, PlanItemWithRecipe[]> = {
     { id: "c2", titulo: "Omelete simples + tomate", descricao: "Boa op├º├úo para mais saciedade e preparo r├ípido.", categoria: "Caf├® da manh├ú", receita: { ingredientes: ["2 ovos", "1 tomate pequeno fatiado", "1 colher de ch├í de azeite", "Sal e or├®gano a gosto", "Queijo branco a gosto (opcional)"], preparo: ["Bata os ovos com sal em uma tigela.", "Aque├ºa o azeite em frigideira antiaderente.", "Despeje os ovos e distribua tomate e queijo.", "Quando firmar, dobre ao meio.", "Sirva com o restante do tomate ao lado."] } },
   ],
   almoco: [
-    { id: "a1", titulo: "Frango grelhado + arroz + salada", descricao: "Combina├º├úo simples, f├ícil de repetir na rotina.", categoria: "Almo├ºo", receita: { ingredientes: ["1 fil├® de peito de frango (150g)", "1/2 x├¡cara de arroz cozido", "Salada verde (alface, r├║cula, tomate)", "1 colher de sopa de azeite", "Sal, alho e lim├úo a gosto"], preparo: ["Tempere o frango com sal e alho.", "Grelhe em frigideira com azeite por 4-5 min de cada lado.", "Sirva com arroz e salada temperada com azeite e lim├úo.", "Dica: deixe o frango temperado desde a noite anterior."] } },
-    { id: "a2", titulo: "Carne mo├¡da + legumes + batata", descricao: "Prato pr├ítico, acess├¡vel e f├ícil de deixar pronto.", categoria: "Almo├ºo", receita: { ingredientes: ["150g de carne mo├¡da magra", "1 batata m├®dia cozida", "1/2 cenoura picada", "1/2 abobrinha picada", "1/2 cebola e 2 dentes de alho", "Sal, pimenta e cheiro-verde a gosto"], preparo: ["Refogue cebola e alho em azeite.", "Adicione a carne mo├¡da e mexa at├® dourar.", "Acrescente cenoura e abobrinha, cozinhe 5 min.", "Sirva com a batata cozida ao lado.", "Finalize com cheiro-verde."] } },
+    { id: "a1", titulo: "Frango grelhado + arroz + salada", descricao: "Combinação simples, fácil de repetir na rotina.", categoria: "Almoço", receita: { ingredientes: ["1 filé de peito de frango (150g)", "1/2 xícara de arroz cozido", "Salada verde (alface, rúcula, tomate)", "1 colher de sopa de azeite", "Sal, alho e limão a gosto"], preparo: ["Tempere o frango com sal e alho.", "Grelhe em frigideira com azeite por 4-5 min de cada lado.", "Sirva com arroz e salada temperada com azeite e limão.", "Dica: deixe o frango temperado desde a noite anterior."] } },
+    { id: "a2", titulo: "Carne moída + legumes + batata", descricao: "Prato prático, acessível e fácil de deixar pronto.", categoria: "Almoço", receita: { ingredientes: ["150g de carne moída magra", "1 batata média cozida", "1/2 cenoura picada", "1/2 abobrinha picada", "1/2 cebola e 2 dentes de alho", "Sal, pimenta e cheiro-verde a gosto"], preparo: ["Refogue cebola e alho em azeite.", "Adicione a carne moída e mexa até dourar.", "Acrescente cenoura e abobrinha, cozinhe 5 min.", "Sirva com a batata cozida ao lado.", "Finalize com cheiro-verde."] } },
   ],
   lanche: [
-    { id: "l1", titulo: "Fruta + castanhas", descricao: "Lanche r├ípido para n├úo sair da rotina.", categoria: "Lanche", receita: { ingredientes: ["1 fruta da esta├º├úo (ma├º├ú, pera ou banana)", "5 a 8 castanhas (caju, par├í ou nozes)"], preparo: ["Lave a fruta e corte se preferir.", "Separe a por├º├úo de castanhas.", "Coma junto para maior saciedade.", "Ideal para levar na bolsa."] } },
-    { id: "l2", titulo: "Iogurte proteico ou sandu├¡che leve", descricao: "Ajuda a manter energia e praticidade.", categoria: "Lanche", receita: { ingredientes: ["Op├º├úo 1: 1 iogurte proteico pronto", "Op├º├úo 2: 2 fatias de p├úo integral + queijo branco + alface", "Temperos a gosto"], preparo: ["Op├º├úo 1: abra o iogurte e consuma direto.", "Op├º├úo 2: monte o sandu├¡che com queijo e alface.", "Escolha a op├º├úo que for mais pr├ítica no dia."] } },
+    { id: "l1", titulo: "Fruta + castanhas", descricao: "Lanche rápido para não sair da rotina.", categoria: "Lanche", receita: { ingredientes: ["1 fruta da estação (maçã, pera ou banana)", "5 a 8 castanhas (caju, pará ou nozes)"], preparo: ["Lave a fruta e corte se preferir.", "Separe a porção de castanhas.", "Coma junto para maior saciedade.", "Ideal para levar na bolsa."] } },
+    { id: "l2", titulo: "Iogurte proteico ou sanduíche leve", descricao: "Ajuda a manter energia e praticidade.", categoria: "Lanche", receita: { ingredientes: ["Opção 1: 1 iogurte proteico pronto", "Opção 2: 2 fatias de pão integral + queijo branco + alface", "Temperos a gosto"], preparo: ["Opção 1: abra o iogurte e consuma direto.", "Opção 2: monte o sanduíche com queijo e alface.", "Escolha a opção que for mais prática no dia."] } },
   ],
   jantar: [
-    { id: "j1", titulo: "Sopa leve com prote├¡na", descricao: "Boa para a noite e f├ícil de preparar.", categoria: "Jantar", receita: { ingredientes: ["100g de frango desfiado ou carne mo├¡da", "1 batata pequena picada", "1/2 cenoura picada", "1/2 chuchu picado", "1/2 cebola e alho", "500ml de ├ígua", "Sal e salsinha a gosto"], preparo: ["Refogue cebola e alho em azeite.", "Adicione a prote├¡na e refogue.", "Acrescente os legumes e a ├ígua.", "Cozinhe por 25 minutos em fogo m├®dio.", "Finalize com salsinha e ajuste o sal."] } },
-    { id: "j2", titulo: "Omelete + salada + legumes", descricao: "Jantar r├ípido para dias corridos.", categoria: "Jantar", receita: { ingredientes: ["2 ovos", "Legumes: br├│colis ou abobrinha refogada", "Salada verde", "1 colher de ch├í de azeite", "Sal e temperos a gosto"], preparo: ["Bata os ovos com sal.", "Fa├ºa a omelete em frigideira com azeite.", "Refogue os legumes separadamente.", "Monte o prato com omelete, legumes e salada.", "Pronto em 10 minutos."] } },
+    { id: "j1", titulo: "Sopa leve com proteína", descricao: "Boa para a noite e fácil de preparar.", categoria: "Jantar", receita: { ingredientes: ["100g de frango desfiado ou carne moída", "1 batata pequena picada", "1/2 cenoura picada", "1/2 chuchu picada", "1/2 cebola e alho", "500ml de água", "Sal e salsinha a gosto"], preparo: ["Refogue cebola e alho em azeite.", "Adicione a proteína e refogue.", "Acrescente os legumes e a água.", "Cozinhe por 25 minutos em fogo médio.", "Finalize com salsinha e ajuste o sal."] } },
+    { id: "j2", titulo: "Omelete + salada + legumes", descricao: "Jantar rápido para dias corridos.", categoria: "Jantar", receita: { ingredientes: ["2 ovos", "Legumes: brócolis ou abobrinha refogada", "Salada verde", "1 colher de chá de azeite", "Sal e temperos a gosto"], preparo: ["Bata os ovos com sal.", "Faça a omelete em frigideira com azeite.", "Refogue os legumes separadamente.", "Monte o prato com omelete, legumes e salada.", "Pronto em 10 minutos."] } },
   ],
 };
 
 const phaseTreats: Record<CyclePhase, { titulo: string; descricao: string; receita?: RecipeDetail }[]> = {
-  menstruacao_forte: [
-    { titulo: "Brigadeiro fit de cacau", descricao: "Feito com cacau, aveia e toque de pasta de amendoim. Ajuda a matar a vontade de doce com por├º├úo menor.", receita: { ingredientes: ["2 colheres de sopa de cacau em p├│", "2 colheres de sopa de aveia em flocos finos", "1 colher de sopa de pasta de amendoim", "1 colher de sopa de mel ou ado├ºante", "1 colher de sopa de leite (ou bebida vegetal)"], preparo: ["Misture todos os ingredientes secos em uma tigela.", "Adicione a pasta de amendoim e o mel.", "Acrescente o leite aos poucos at├® formar uma massa.", "Fa├ºa bolinhas com as m├úos.", "Passe no cacau em p├│ e leve ├á geladeira por 30 min."] } },
-    { titulo: "Banana morna com canela e cacau", descricao: "Doce r├ípido e acolhedor para os dias de fluxo mais intenso.", receita: { ingredientes: ["1 banana madura", "1 colher de ch├í de canela em p├│", "1 colher de ch├í de cacau em p├│", "1 colher de ch├í de mel (opcional)"], preparo: ["Corte a banana ao meio no sentido do comprimento.", "Coloque em uma frigideira antiaderente em fogo m├®dio.", "Aque├ºa por 2 minutos de cada lado.", "Salpique canela e cacau por cima.", "Finalize com mel se desejar."] } },
+  menstruação: [
+    { titulo: "Brigadeiro fit de cacau", descricao: "Feito com cacau, aveia e toque de pasta de amendoim. Ajuda a matar a vontade de doce com porção menor.", receita: { ingredientes: ["2 colheres de sopa de cacau em pó", "2 colheres de sopa de aveia em flocos finos", "1 colher de sopa de pasta de amendoim", "1 colher de sopa de mel ou adoçante", "1 colher de sopa de leite (ou bebida vegetal)"], preparo: ["Misture todos os ingredientes secos em uma tigela.", "Adicione a pasta de amendoim e o mel.", "Acrescente o leite aos poucos até formar uma massa.", "Faça bolinhas com as mãos.", "Passe no cacau em pó e leve à geladeira por 30 min."] } },
+    { titulo: "Banana morna com canela e cacau", descricao: "Doce rápido e acolhedor para os dias de fluxo mais intenso.", receita: { ingredientes: ["1 banana madura", "1 colher de chá de canela em pó", "1 colher de chá de cacau em pó", "1 colher de chá de mel (opcional)"], preparo: ["Corte a banana ao meio no sentido do comprimento.", "Coloque em uma frigideira antiaderente em fogo médio.", "Aqueça por 2 minutos de cada lado.", "Salpique canela e cacau por cima.", "Finalize com mel se desejar."] } },
   ],
-  menstruacao_final: [
-    { titulo: "Mousse fit de iogurte com cacau", descricao: "Sobremesa leve para o final do per├¡odo, com boa saciedade.", receita: { ingredientes: ["1 pote de iogurte natural (170g)", "1 colher de sopa de cacau em p├│", "1 colher de ch├í de mel ou ado├ºante", "Frutas vermelhas para decorar (opcional)"], preparo: ["Misture o iogurte com o cacau e o mel.", "Bata com um garfo at├® ficar homog├¬neo.", "Coloque em um copinho.", "Decore com frutas vermelhas.", "Leve ├á geladeira por 15 min para firmar."] } },
-    { titulo: "Morango com chocolate 70%", descricao: "Pequena por├º├úo para aliviar a vontade de doce sem exagerar.", receita: { ingredientes: ["6 morangos grandes", "30g de chocolate 70% cacau"], preparo: ["Lave e seque bem os morangos.", "Derreta o chocolate em banho-maria ou micro-ondas (em intervalos de 15s).", "Mergulhe cada morango at├® a metade no chocolate.", "Coloque em papel manteiga.", "Leve ├á geladeira por 20 min at├® firmar."] } },
+  menstruação_final: [
+    { titulo: "Mousse fit de iogurte com cacau", descricao: "Sobremesa leve para o final do período, com boa saciedade.", receita: { ingredientes: ["1 pote de iogurte natural (170g)", "1 colher de sopa de cacau em pó", "1 colher de chá de mel ou adoçante", "Frutas vermelhas para decorar (opcional)"], preparo: ["Misture o iogurte com o cacau e o mel.", "Bata com um garfo até ficar homogêneo.", "Coloque em um copinho.", "Decore com frutas vermelhas.", "Leve à geladeira por 15 min para firmar."] } },
+    { titulo: "Morango com chocolate 70%", descricao: "Pequena porção para aliviar a vontade de doce sem exagerar.", receita: { ingredientes: ["6 morangos grandes", "30g de chocolate 70% cacau"], preparo: ["Lave e seque bem os morangos.", "Derreta o chocolate em banho-maria ou micro-ondas (em intervalos de 15s).", "Mergulhe cada morango até a metade no chocolate.", "Coloque em papel manteiga.", "Leve à geladeira por 20 min até firmar."] } },
   ],
-  ovulacao: [
-    { titulo: "Frozen de frutas vermelhas", descricao: "Refrescante, leve e f├ícil de encaixar no plano de emagrecimento.", receita: { ingredientes: ["1 x├¡cara de frutas vermelhas congeladas (morango, mirtilo, framboesa)", "1/2 banana congelada", "2 colheres de sopa de iogurte natural"], preparo: ["Bata tudo no liquidificador ou processador.", "Raspe as laterais e bata novamente at├® ficar cremoso.", "Sirva imediatamente em uma tigela.", "Decore com frutas frescas ou granola se desejar."] } },
-    { titulo: "Iogurte proteico com chia", descricao: "Doce equilibrado para manter saciedade e energia.", receita: { ingredientes: ["1 pote de iogurte proteico (170g)", "1 colher de sopa de chia", "Frutas picadas a gosto", "Canela a gosto"], preparo: ["Misture o iogurte com a chia.", "Deixe descansar por 10 minutos para a chia hidratar.", "Adicione as frutas picadas.", "Salpique canela por cima.", "Pronto!"] } },
+  ovulação: [
+    { titulo: "Frozen de frutas vermelhas", descricao: "Refrescante, leve e fácil de encaixar no plano de emagrecimento.", receita: { ingredientes: ["1 xícara de frutas vermelhas congeladas (morango, mirtilo, framboesa)", "1/2 banana congelada", "2 colheres de sopa de iogurte natural"], preparo: ["Bata tudo no liquidificador ou processador.", "Raspe as laterais e bata novamente até ficar cremoso.", "Sirva imediatamente em uma tigela.", "Decore com frutas frescas ou granola se desejar."] } },
+    { titulo: "Iogurte proteico com chia", descricao: "Doce equilibrado para manter saciedade e energia.", receita: { ingredientes: ["1 pote de iogurte proteico (170g)", "1 colher de sopa de chia", "Frutas picadas a gosto", "Canela a gosto"], preparo: ["Misture o iogurte com la chia.", "Deixe descansar por 10 minutos para a chia hidratar.", "Adicione as frutas picadas.", "Salpique canela por cima.", "Pronto!"] } },
   ],
-  fertil: [
-    { titulo: "Ma├º├ú assada com canela", descricao: "Doce simples e controlado para um lanche mais leve.", receita: { ingredientes: ["1 ma├º├ú", "Canela em p├│ a gosto", "1 colher de ch├í de mel (opcional)", "Cravo (opcional)"], preparo: ["Retire o miolo da ma├º├ú sem cortar a base.", "Polvilhe canela por dentro e por fora.", "Adicione mel e cravo se desejar.", "Asse no forno a 180┬░C por 25-30 min.", "Sirva morna."] } },
-    { titulo: "Creme fit de abacate com cacau", descricao: "Textura cremosa e boa saciedade em pequena por├º├úo.", receita: { ingredientes: ["1/2 abacate maduro", "1 colher de sopa de cacau em p├│", "1 colher de ch├í de mel ou ado├ºante", "1 colher de sopa de leite (opcional para cremosidade)"], preparo: ["Amasse o abacate com um garfo at├® ficar cremoso.", "Adicione o cacau e o mel.", "Misture bem at├® ficar homog├¬neo.", "Adicione leite se quiser mais cremoso.", "Sirva gelado em um copinho."] } },
+  fértil: [
+    { titulo: "Maçã assada com canela", descricao: "Doce simples e controlado para um lanche mais leve.", receita: { ingredientes: ["1 maçã", "Canela em pó a gosto", "1 colher de chá de mel (opcional)", "Cravo (opcional)"], preparo: ["Retire o miolo da maçã sem cortar a base.", "Polvilhe canela por dentro e por fora.", "Adicione mel e cravo se desejar.", "Asse no forno a 180°C por 25-30 min.", "Sirva morna."] } },
+    { titulo: "Creme fit de abacate com cacau", descricao: "Textura cremosa e boa saciedade em pequena porção.", receita: { ingredientes: ["1/2 abacate maduro", "1 colher de sopa de cacau em pó", "1 colher de chá de mel ou adoçante", "1 colher de sopa de leite (opcional para cremosidade)"], preparo: ["Amasse o abacate com um garfo até ficar cremoso.", "Adicione o cacau e o mel.", "Misture bem até ficar homogêneo.", "Adicione leite se quiser mais cremoso.", "Sirva gelado em um copinho."] } },
   ],
   neutro: [
-    { titulo: "Cookie fit de banana e aveia", descricao: "F├ícil de preparar e ├│timo para controlar a por├º├úo.", receita: { ingredientes: ["2 bananas maduras", "1 x├¡cara de aveia em flocos", "1 colher de sopa de cacau em p├│ (opcional)", "Gotas de chocolate 70% (opcional)", "Canela a gosto"], preparo: ["Amasse as bananas com um garfo.", "Misture com a aveia, cacau e canela.", "Adicione gotas de chocolate se desejar.", "Fa├ºa bolinhas e achate em forma de cookie.", "Asse a 180┬░C por 15-20 min."] } },
-    { titulo: "Pudim fit de chia", descricao: "Boa op├º├úo de docinho com sensa├º├úo de sobremesa.", receita: { ingredientes: ["3 colheres de sopa de chia", "200ml de leite (ou bebida vegetal)", "1 colher de ch├í de ess├¬ncia de baunilha", "1 colher de ch├í de mel ou ado├ºante", "Frutas para decorar"], preparo: ["Misture chia, leite, baunilha e mel.", "Mexa bem para distribuir as sementes.", "Tampe e leve ├á geladeira por 4 horas ou de um dia pro outro.", "Mexa uma vez ap├│s 30 min para evitar grumos.", "Sirva com frutas por cima."] } },
+    { titulo: "Cookie fit de banana e aveia", descricao: "Fácil de preparar e ótimo para controlar a porção.", receita: { ingredientes: ["2 bananas maduras", "1 xícara de aveia em flocos", "1 colher de sopa de cacau em pó (opcional)", "Gotas de chocolate 70% (opcional)", "Canela a gosto"], preparo: ["Amasse as bananas com um garfo.", "Misture com a aveia, cacau e canela.", "Adicione gotas de chocolate se desejar.", "Faça bolinhas e achate em forma de cookie.", "Asse a 180°C por 15-20 min."] } },
+    { titulo: "Pudim fit de chia", descricao: "Boa opção de docinho com sensação de sobremesa.", receita: { ingredientes: ["3 colheres de sopa de chia", "200ml de leite (ou bebida vegetal)", "1 colher de chá de essência de baunilha", "1 colher de chá de mel ou adoçante", "Frutas para decorar"], preparo: ["Misture chia, leite, baunilha e mel.", "Mexa bem para distribuir as sementes.", "Tampe e leve à geladeira por 4 horas ou de um dia pro outro.", "Mexa uma vez após 30 min para evitar grumos.", "Sirva com frutas por cima."] } },
   ],
 };
 
 const tutorialMap: Record<string, string[]> = {
-  "Caminhada no lugar + mobilidade": ["Fique em p├® e caminhe sem sair do lugar por 30 a 60 segundos.", "Mexa os bra├ºos naturalmente e mantenha o abd├┤men levemente firme.", "Depois fa├ºa c├¡rculos com ombros e quadril para soltar o corpo."],
-  "Agachamento assistido": ["Afaste os p├®s na largura do quadril.", "Segure em uma cadeira ou apoio se precisar.", "Des├ºa devagar como se fosse sentar e suba empurrando o ch├úo."],
-  "Bra├ºo com garrafa": ["Segure uma garrafa em cada m├úo ou use apenas uma se preferir.", "Mantenha os cotovelos pr├│ximos ao corpo.", "Suba e des├ºa os bra├ºos com controle, sem pressa."],
-  "Abdominal leve em p├®": ["Fique em p├® com o abd├┤men levemente contra├¡do.", "Leve o joelho em dire├º├úo ao tronco alternando os lados.", "Expire ao subir o joelho e mantenha postura reta."],
-  "Alongamento guiado": ["Respire fundo e alongue pesco├ºo, bra├ºos e pernas sem for├ºar.", "Segure cada posi├º├úo por alguns segundos.", "Mantenha movimento confort├ível e relaxado."],
-  "Aquecimento din├ómico": ["Fa├ºa movimentos leves com bra├ºos, pernas e tronco por 1 minuto.", "Aumente o ritmo aos poucos sem perder o controle.", "O objetivo ├® aquecer, n├úo cansar j├í no come├ºo."],
-  "Agachamento + eleva├º├úo de joelho": ["Fa├ºa um agachamento curto e ao subir eleve um joelho.", "Repita alternando os lados.", "Mantenha o tronco firme e o movimento confort├ível."],
-  "Afundo alternado": ["D├¬ um passo para tr├ís e flexione os joelhos com cuidado.", "Suba e troque a perna.", "Use apoio se sentir necessidade no come├ºo."],
-  "Prancha curta": ["Apoie antebra├ºos ou m├úos e alinhe o corpo.", "Contraia levemente abd├┤men e gl├║teos.", "Segure poucos segundos com boa postura."],
-  "Finaliza├º├úo metab├│lica": ["Fa├ºa movimentos simples em ritmo um pouco mais acelerado.", "Mantenha respira├º├úo constante.", "Pare ou diminua se perder a t├®cnica."],
-  "Aquecimento ativo": ["Inicie com movimentos amplos de bra├ºos e pernas.", "Ative o corpo sem ir ao limite.", "Prepare-se para a parte mais forte do treino."],
-  "Agachamento com salto leve": ["Agache curto e suba com salto pequeno ou apenas na ponta dos p├®s.", "Aterrisse suave e com joelhos alinhados.", "Se preferir, retire o salto e fa├ºa s├│ a subida r├ípida."],
-  "Circuito de pernas e core": ["Alterne exerc├¡cios de pernas com pausas curtas.", "Mantenha abd├┤men firme durante o circuito.", "Controle o ritmo para sustentar a execu├º├úo at├® o fim."],
-  "Prancha com varia├º├úo": ["Monte a prancha e acrescente toque no ombro ou abertura lateral simples.", "Mantenha quadril est├ível.", "Reduza a varia├º├úo se sentir perda de postura."],
-  "Finisher SlimDay": ["Feche o treino com um bloco curto e mais intenso.", "Mantenha movimentos simples e respira├º├úo ativa.", "Termine sentindo esfor├ºo, mas sem perder a t├®cnica."],
-  // Novos exerc├¡cios - Iniciante
-  "Eleva├º├úo p├®lvica": ["Deite-se de costas com joelhos dobrados.", "Suba o quadril contraindo bem os gl├║teos.", "Des├ºa devagar e repita."],
-  "Prancha de joelhos": ["Apoie os antebra├ºos e os joelhos no ch├úo.", "Mantenha o corpo reto e abd├┤men firme.", "Segure o tempo indicado."],
-  "Polichinelo adaptado": ["Abra uma perna para o lado enquanto sobe os bra├ºos.", "Feche e repita para o outro lado.", "Mantenha um ritmo constante sem impacto."],
-  "4 apoios (Gl├║teos)": ["Fique na posi├º├úo de 4 apoios.", "Suba uma perna dobrada em dire├º├úo ao teto.", "Contraia o gl├║teo no topo e des├ºa sem encostar o joelho."],
-  "Mobilidade de esc├ípulas": ["Fique em 4 apoios.", "Afunde o peito unindo as esc├ípulas.", "Empurre o ch├úo arredondando as costas."],
-  // Novos exerc├¡cios - Intermedi├írio
-  "Mountain Climber": ["Na posi├º├úo de prancha alta.", "Leve um joelho em dire├º├úo ao peito rapidamente.", "Alterne as pernas como se estivesse correndo."],
-  "Tr├¡ceps no banco": ["Apoie as m├úos em um banco ou cadeira est├ível.", "Des├ºa o corpo dobrando os cotovelos para tr├ís.", "Suba empurrando com for├ºa."],
-  "Stiff": ["P├®s na largura do quadril, segurando peso (garrafa).", "Des├ºa o tronco com as costas retas e joelhos quase esticados.", "Sinta alongar atr├ís da coxa e suba."],
-  "Prancha Lateral": ["Deite-se de lado apoiando um antebra├ºo.", "Suba o quadril mantendo o corpo reto.", "Segure sem deixar o quadril cair."],
-  "Agachamento Sum├┤": ["P├®s afastados al├®m do quadril, pontas para fora.", "Des├ºa mantendo as costas retas e joelhos para fora.", "Suba contraindo gl├║teos e coxas."],
-  "Remada alta": ["Segure uma garrafa ou peso com as duas m├úos.", "Puxe em dire├º├úo ao queixo com os cotovelos para cima.", "Des├ºa com controle."],
-  // Novos exerc├¡cios - Avan├ºado
-  "Burpee completo": ["Agache, coloque as m├úos no ch├úo e pule para tr├ís.", "Des├ºa o peito no ch├úo, suba, pule para frente.", "Finalize com um salto batendo as m├úos acima da cabe├ºa."],
-  "Afundo B├║lgaro": ["Um p├® apoiado atr├ís em um banco ou cadeira.", "Des├ºa a perna da frente at├® o joelho quase tocar o ch├úo.", "Suba com for├ºa total no calcanhar da frente."],
-  "V-ups": ["Deite-se de costas com pernas e bra├ºos esticados.", "Suba o tronco e as pernas ao mesmo tempo tentando tocar os p├®s.", "Des├ºa devagar voltando ├á posi├º├úo inicial."],
-  "Agachamento com Salto Sum├┤": ["Fa├ºa o agachamento sum├┤ e suba com um salto explosivo.", "Pouse suave e j├í inicie a pr├│xima repeti├º├úo.", "Mantenha o controle do movimento."],
-  "Flex├úo de bra├ºos": ["M├úos no ch├úo al├®m dos ombros, pernas esticadas.", "Des├ºa o peito at├® quase encostar no ch├úo.", "Suba empurrando o ch├úo com firmeza."],
-  "Prancha sobe e desce": ["Inicie na prancha de antebra├ºos.", "Suba para a prancha alta uma m├úo de cada vez.", "Des├ºa novamente para os antebra├ºos e repita."],
+  "Finisher SlimDay": ["Feche o treino com um bloco curto e mais intenso.", "Mantenha movimentos simples e respiração ativa.", "Termine sentindo esforço, mas sem perder a técnica."],
+  // Novos exercícios - Iniciante
+  "Elevação pélvica": ["Deite-se de costas com joelhos dobrados.", "Suba o quadril contraindo bem os glúteos.", "Desça devagar e repita."],
+  "Prancha de joelhos": ["Apoie os antebraços e os joelhos no chão.", "Mantenha o corpo reto e abdômen firme.", "Segure o tempo indicado."],
+  "Polichinelo adaptado": ["Abra uma perna para o lado enquanto sobe os braços.", "Feche e repita para o outro lado.", "Mantenha um ritmo constante sem impacto."],
+  "4 apoios (Glúteos)": ["Fique na posição de 4 apoios.", "Suba uma perna dobrada em direção ao teto.", "Contraia o glúteo no topo e desça sem encostar o joelho."],
+  "Mobilidade de escápulas": ["Fique em 4 apoios.", "Afunde o peito unindo as escápulas.", "Empurre o chão arredondando as costas."],
+  // Novos exercícios - Intermediário
+  "Mountain Climber": ["Na posição de prancha alta.", "Leve um joelho em direção ao peito rapidamente.", "Alterne as pernas como se estivesse correndo."],
+  "Tríceps no banco": ["Apoie as mãos em um banco ou cadeira estável.", "Desça o corpo dobrando os cotovelos para trás.", "Suba empurrando com força."],
+  "Stiff": ["Pés na largura do quadril, segurando peso (garrafa).", "Desça o tronco com as costas retas e joelhos quase esticados.", "Sinta alongar atrás da coxa e suba."],
+  "Prancha Lateral": ["Deite-se de lado apoiando um antebraço.", "Suba o quadril mantendo o corpo reto.", "Segure sem deixar o quadril cair."],
+  "Agachamento Sumô": ["Pés afastados além do quadril, pontas para fora.", "Desça mantendo as costas retas e joelhos para fora.", "Suba contraindo glúteos e coxas."],
+  "Remada alta": ["Segure uma garrafa ou peso com as duas mãos.", "Puxe em direção ao queixo com os cotovelos para cima.", "Desça com controle."],
+  // Novos exercícios - Avançado
+  "Burpee completo": ["Agache, coloque as mãos no chão e pule para trás.", "Desça o peito no chão, suba, pule para frente.", "Finalize com um salto batendo as mãos acima da cabeça."],
+  "Afundo Búlgaro": ["Um pé apoiado atrás em um banco ou cadeira.", "Desça a perna da frente até o joelho quase tocar o chão.", "Suba com força total no calcanhar da frente."],
+  "V-ups": ["Deite-se de costas com pernas e braços esticados.", "Suba o tronco e as pernas ao mesmo tempo tentando tocar os pés.", "Desça devagar voltando à posição inicial."],
+  "Agachamento com Salto Sumô": ["Faça o agachamento sumô e suba com um salto explosivo.", "Pouse suave e já inicie a próxima repetição.", "Mantenha o controle do movimento."],
+  "Flexão de braços": ["Mãos no chão além dos ombros, pernas esticadas.", "Desça o peito até quase encostar no chão.", "Suba empurrando o chão com firmeza."],
+  "Prancha sobe e desce": ["Inicie na prancha de antebraços.", "Suba para a prancha alta uma mão de cada vez.", "Desça novamente para os antebraços e repita."],
 };
 
 const exerciseMeta: Record<string, Partial<PlanItem>> = {
@@ -568,10 +574,10 @@ function buildCycleCalendar(profile: Profile, baseDate: Date): CycleDay[] {
     const dayInCycle = ((diffDays % cycleLength) + cycleLength) % cycleLength;
     let phase: CyclePhase = "neutro";
     let label = "Fase neutra";
-    if (dayInCycle < Math.ceil(periodLength / 2)) { phase = "menstruacao_forte"; label = "Menstrua├º├úo"; }
-    else if (dayInCycle < periodLength) { phase = "menstruacao_final"; label = "Final da menstrua├º├úo"; }
-    else if (dayInCycle >= cycleLength - 16 && dayInCycle <= cycleLength - 13) { phase = "fertil"; label = "Janela f├®rtil"; }
-    if (dayInCycle === cycleLength - 14) { phase = "ovulacao"; label = "Ovula├º├úo estimada"; }
+    if (dayInCycle < Math.ceil(periodLength / 2)) { phase = "menstruação"; label = "Menstruação"; }
+    else if (dayInCycle < periodLength) { phase = "menstruação_final"; label = "Final da menstruação"; }
+    else if (dayInCycle >= cycleLength - 16 && dayInCycle <= cycleLength - 13) { phase = "fértil"; label = "Janela fértil"; }
+    if (dayInCycle === cycleLength - 14) { phase = "ovulação"; label = "Ovulação estimada"; }
     days.push({ dateKey: toDateKey(current), dayNumber: current.getDate(), phase, label });
   }
   return days;
@@ -579,21 +585,21 @@ function buildCycleCalendar(profile: Profile, baseDate: Date): CycleDay[] {
 
 function getPhaseColor(phase: CyclePhase) {
   switch (phase) {
-    case "menstruacao_forte": return "bg-rose-500 text-white border-rose-500";
-    case "menstruacao_final": return "bg-sky-400 text-white border-sky-400";
-    case "ovulacao": return "bg-violet-500 text-white border-violet-500";
-    case "fertil": return "bg-fuchsia-100 text-fuchsia-700 border-fuchsia-200";
+    case "menstruação": return "bg-rose-500 text-white border-rose-500";
+    case "menstruação_final": return "bg-sky-400 text-white border-sky-400";
+    case "ovulação": return "bg-violet-500 text-white border-violet-500";
+    case "fértil": return "bg-fuchsia-100 text-fuchsia-700 border-fuchsia-200";
     default: return "bg-white text-slate-700 border-slate-200";
   }
 }
 
 function getPhaseTitle(phase: CyclePhase) {
   switch (phase) {
-    case "menstruacao_forte": return "Menstrua├º├úo";
-    case "menstruacao_final": return "Final da menstrua├º├úo";
-    case "ovulacao": return "Ovula├º├úo estimada";
-    case "fertil": return "Janela f├®rtil";
-    default: return "Fase neutra";
+    case "menstruação": return "Menstruação";
+    case "menstruação_final": return "Final da menstruação";
+    case "ovulação": return "Ovulação estimada";
+    case "fértil": return "Janela fértil";
+    default: return "Fase Neutra";
   }
 }
 
@@ -955,7 +961,32 @@ function OnboardingQuiz({
                       <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-rose-500" /> Fases menstruais visuais</li>
                       <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-rose-500" /> Previs├úo de TPM e janela f├®rtil</li>
                       <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-rose-500" /> Docinhos fit f├íceis para aliviar a TPM</li>
-  function AuthScreen({
+                    </ul>
+                  </div>
+
+                  <a href={APP_SALES_LINK} target="_blank" rel="noopener noreferrer">
+                    <Button className="w-full h-16 rounded-2xl text-lg font-bold bg-rose-600 hover:bg-rose-700 shadow-xl shadow-rose-200 animate-pulse-slow">
+                      Quero Acesso Vitalício <ChevronRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </a>
+
+                  <button 
+                    className="w-full py-4 text-slate-400 font-bold hover:text-slate-600 transition-colors"
+                    onClick={() => setStep("done")}
+                  >
+                    Continuar para o Aplicativo
+                  </button>
+                </CardContent>
+              </Card>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
+
+function AuthScreen({
   mode, setMode, nome, setNome, email, setEmail, senha, setSenha, onSubmit, loading, error, success,
 }: {
   mode: "login" | "register";
@@ -1449,8 +1480,8 @@ export default function SlimDayApp() {
           duracaoCiclo: data.duracao_ciclo || "28",
           duracaoMenstruacao: data.duracao_menstruacao || "5",
         });
-        setCycleUnlocked(Boolean(data.has_cicloplus));
-        setAppUnlocked(Boolean(data.has_slimday));
+        setCycleUnlocked(Boolean(data.cycle_unlocked));
+        setAppUnlocked(Boolean(data.app_unlocked));
         setStreak(data.streak || 0);
         setCompleted((data.completed as Record<string, boolean>) || {});
         setNotifications((data.notifications as NotificationItem[]) || []);

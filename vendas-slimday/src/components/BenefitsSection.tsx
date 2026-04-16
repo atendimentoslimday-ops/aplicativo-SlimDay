@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, Heart, Zap, Sparkles } from "lucide-react";
 
+import React from "react";
 const benefits = [
   { 
     icon: <Sparkles className="h-6 w-6" />, 
