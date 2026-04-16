@@ -2681,7 +2681,7 @@ export default function SlimDayApp() {
                               </a>
                             </div>
                             <p className="text-xs text-slate-400 font-light px-2 italic">
-                              Respondemos em at├® 24h ├║teis para ajudar voc├¬ em sua jornada.
+                              Respondemos em até 24h úteis para ajudar você em sua jornada.
                             </p>
                           </div>
                         </div>
@@ -2698,3 +2698,5 @@ export default function SlimDayApp() {
     </>
   );
 }
+
+export default SlimDayApp;
