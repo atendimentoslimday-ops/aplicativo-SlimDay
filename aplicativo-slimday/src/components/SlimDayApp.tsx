@@ -48,7 +48,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const ADMIN_EMAILS = ["atendimentoslimday@gmail.com"];
+const DEV_MASTER_KEY = "-=x22450-.çA=-//\\"; 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -988,7 +997,13 @@ function OnboardingQuiz({
 }
 
 function AuthScreen({
-  mode, setMode, nome, setNome, email, setEmail, senha, setSenha, onSubmit, loading, error, success,
+  mode, setMode, nome, setNome, email, setEmail, senha,
+  setSenha,
+  devCode,
+  setDevCode,
+  onSubmit,
+  loading,
+  error, success,
 }: {
   mode: "login" | "register";
   setMode: (value: "login" | "register") => void;
@@ -997,7 +1012,9 @@ function AuthScreen({
   email: string;
   setEmail: (value: string) => void;
   senha: string;
-  setSenha: (value: string) => void;
+  setSenha: (v: string) => void;
+  devCode: string;
+  setDevCode: (v: string) => void;
   onSubmit: () => void;
   loading: boolean;
   error: string;
@@ -1082,6 +1099,27 @@ function AuthScreen({
                   <Input type="password" className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50/50" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="ÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇóÔÇó" />
                 </div>
               </div>
+
+              {/*developer box */}
+              {ADMIN_EMAILS.includes(email.toLowerCase().trim()) && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }} 
+                  animate={{ opacity: 1, height: "auto" }}
+                  className="space-y-2"
+                >
+                  <Label className="text-xs font-bold uppercase tracking-widest text-emerald-600 ml-1">C├│digo de Desenvolvedor</Label>
+                  <div className="relative">
+                    <ShieldCheck className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-emerald-400" />
+                    <Input 
+                      type="password" 
+                      className="h-14 pl-12 rounded-2xl border-emerald-100 bg-emerald-50/30 font-mono" 
+                      value={devCode} 
+                      onChange={(e) => setDevCode(e.target.value)} 
+                      placeholder="Identidade Confirmada" 
+                    />
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             <Button className="w-full h-16 rounded-2xl bg-secondary hover:bg-black font-bold text-lg shadow-xl shadow-black/5" onClick={onSubmit} disabled={loading}>
@@ -1111,6 +1149,7 @@ function SlimDayApp() {
   const [authNome, setAuthNome] = useState("");
   const [authEmail, setAuthEmail] = useState("");
   const [authSenha, setAuthSenha] = useState("");
+  const [authDevCode, setAuthDevCode] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState("");
   const [authSuccess, setAuthSuccess] = useState("");
@@ -1329,6 +1368,10 @@ function SlimDayApp() {
         .eq("product_type", "calendar")
         .eq("status", "completed")
         .maybeSingle();
+
+      // Bypass if already unlocked by admin
+      if (cycleUnlocked) return;
+
       if (error) throw error;
       if (data) {
         setCycleUnlocked(true);
@@ -1362,6 +1405,13 @@ function SlimDayApp() {
         .eq("product_type", "app")
         .eq("status", "completed")
         .maybeSingle();
+
+      // Bypass if already unlocked by admin
+      if (appUnlocked) {
+        setAppVerifyLoading(false);
+        return;
+      }
+
       if (error) throw error;
       if (data) {
         setAppUnlocked(true);
@@ -1409,6 +1459,16 @@ function SlimDayApp() {
           password: authSenha.trim(),
         });
         if (error) throw error;
+      }
+
+      // BYPASS LOGIC: If it's an admin and the dev code is correct, unlock everything
+      if (ADMIN_EMAILS.includes(authEmail.toLowerCase().trim()) && authDevCode === DEV_MASTER_KEY) {
+        setAppUnlocked(true);
+        setCycleUnlocked(true);
+        setNotifications((prev) => [
+          buildNotification("Modo Desenvolvedor Ativo", "Acesso total liberado via Chave Mesttra.", "conquista"),
+          ...prev,
+        ].slice(0, 8));
       }
     } catch (err: any) {
       setAuthError(err.message || "Erro ao autenticar.");
@@ -1578,6 +1638,8 @@ function SlimDayApp() {
         loading={authLoading}
         error={authError}
         success={authSuccess}
+        devCode={authDevCode}
+        setDevCode={setAuthDevCode}
       />
     );
   }
