@@ -57,6 +57,10 @@
     --slim-violet: 263 70% 50%;
     --slim-violet-light: 263 85% 96%;
     --slim-gradient-bg: linear-gradient(180deg, hsl(152 76% 97%) 0%, hsl(25 100% 98%) 45%, hsl(0 0% 100%) 100%);
+
+    /* WhatsApp Colors */
+    --whatsapp: 142 70% 49%;
+    --whatsapp-foreground: 0 0% 100%;
   }
 
   .dark {
