@@ -1,4 +1,4 @@
-﻿import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -176,9 +176,9 @@ const QuizSection = () => {
   const { bmi, profile, focus } = getProfileData(answers);
 
   return (
-    <section
-      className="w-full py-24 px-4 relative overflow-hidden"
-      id="quiz"
+    <div
+      className="w-full py-16 md:py-24 px-4 relative overflow-hidden rounded-[2.5rem] shadow-xl"
+      id="quiz-container"
       style={{
         background: "linear-gradient(160deg, #064e3b 0%, #065f46 35%, #047857 60%, #10b981 100%)",
       }}
@@ -478,7 +478,7 @@ const QuizSection = () => {
           )}
         </AnimatePresence>
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -92,7 +92,7 @@ export default function Sales() {
       <header className="sticky top-0 z-50 border-b border-pink-100 bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-1.5">
-            <span className="text-xl font-extrabold text-slate-900">SlimDay</span>
+            <span className="text-xl font-extrabold text-primary">SlimDay</span>
             <span className="rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-2 py-0.5 text-[11px] font-bold text-white">Ciclo+</span>
           </div>
           <Button
