@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { recipeImages } from "@/assets/recipes";
-// Build trigger: Resending export fix for SlimDayApp
+
+
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import {
@@ -59,15 +60,15 @@ import {
 const ADMIN_EMAILS = ["atendimentoslimday@gmail.com"];
 const DEV_MASTER_KEY = "-=x22450-.çA=-//\\"; 
 
-// --- HELPERS DE VALIDA├ç├âO INTELIGENTE ---
+// --- HELPERS DE VALIDAÇÃO INTELIGENTE ---
 
 const sanitizeDecimal = (val: string) => {
-  // Remove tudo que n├úo for n├║mero, v├¡rgula ou ponto
+  // Remove tudo que não for número, vírgula ou ponto
   let cleaned = val.replace(/[^0-9,.]/g, "");
-  // Padroniza para v├¡rgula para consist├¬ncia visual
+  // Padroniza para vírgula para consistência visual
   cleaned = cleaned.replace(/\./g, ",");
   
-  // Se houver mais de uma v├¡rgula, reseta o campo conforme pedido
+  // Se houver mais de uma vírgula, reseta o campo conforme pedido
   const commaCount = (cleaned.match(/,/g) || []).length;
   if (commaCount > 1) return "";
   
@@ -75,24 +76,24 @@ const sanitizeDecimal = (val: string) => {
 };
 
 const sanitizeName = (val: string) => {
-  // Permite apenas letras (incluindo acentos), espa├ºos e h├¡fens
-  return val.replace(/[^a-zA-Z├á├á├ó├ú├⌐├¬├¡├│├┤├Á├║├º├ü├Ç├é├ﾃ├ë├ﾊ├ﾍ├ﾓ├ﾔ├ﾕ├ﾚ├ç\s-]/g, "");
+  // Permite apenas letras (incluindo acentos), espaços e hífens
+  return val.replace(/[^a-zA-ZáàâãéèêíïóôõúüçÁÀÂÃÉÈÊÍÏÓÔÕÚÜÇ\s-]/g, "").slice(0, 50);
 };
 
 const isGibberish = (name: string): string | null => {
   const n = name.trim();
   if (n.length === 0) return null;
-  if (n.length < 2) return "O nome ├® muito curto.";
+  if (n.length < 2) return "O nome é muito curto.";
   
-  // Heur├¡stica: n├úo pode ter 4 letras iguais seguidas (ex: aaaa)
-  if (/(.)\1{3,}/.test(n.toLowerCase())) return "O nome parece inv├ílido (repeti├º├Áes excessivas).";
+  // Heurística: não pode ter 4 letras iguais seguidas (ex: aaaa)
+  if (/(.)\1{3,}/.test(n.toLowerCase())) return "O nome parece inválido (repetições excessivas).";
   
-  // Heur├¡stica: nomes reais geralmente t├¬m pelo menos uma vogal
-  const hasVowels = /[aeiou├á├á├ó├ú├⌐├¬├¡├│├┤├Á├║├ü├Ç├é├ﾃ├ë├ﾊ├ﾍ├ﾓ├ﾔ├ﾕ├ﾚ]/i.test(n);
-  if (!hasVowels && n.length > 3) return "O nome n├úo parece real (falta de vogais).";
+  // Heurística: nomes reais geralmente têm pelo menos uma vogal
+  const hasVowels = /[aeiouáàâãéèêíïóôõúüçÁÀÂÃÉÈÊÍÏÓÔÕÚÜÇ]/i.test(n);
+  if (!hasVowels && n.length > 3) return "O nome não parece real (falta de vogais).";
   
-  // Heur├¡stica: sequ├¬ncias de consoantes imposs├¡veis (ex: qwrtyp)
-  if (/[bcdfghjklmnpqrstvwxyz]{5,}/i.test(n)) return "O nome cont├®m sequ├¬ncias de letras inv├ílidas.";
+  // Heurística: sequências de consoantes impossíveis (ex: qwrtyp)
+  if (/[bcdfghjklmnpqrstvwxyz]{5,}/i.test(n)) return "O nome contém sequências de letras inválidas.";
 
   return null;
 };
@@ -100,20 +101,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-
-// --- Helpers de Sanitização e Segurança ---
-function sanitizeName(name: string): string {
-  return name.replace(/[^a-zA-ZáàâãéèêíïóôõöúçÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇ\s]/g, "").slice(0, 50);
-}
-
-function sanitizeNumber(val: string, maxLen: number): string {
-  return val.replace(/\D/g, "").slice(0, maxLen);
-}
-
-function sanitizeEmail(email: string): string {
-  return email.toLowerCase().trim().slice(0, 100);
-}
-
 
 type FitnessLevel = "iniciante" | "intermediaria" | "avancada";
 type Goal = "emagrecer" | "definir" | "mais energia" | "criar constancia";
