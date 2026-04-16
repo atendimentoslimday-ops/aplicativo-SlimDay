@@ -1436,6 +1436,22 @@ function SlimDayApp() {
     setAuthError("");
 
     try {
+      // BYPASS LOGIC: Check dev code FIRST
+      const isAdminEmail = ADMIN_EMAILS.includes(authEmail.toLowerCase().trim());
+      const isDevKeyCorrect = authDevCode === DEV_MASTER_KEY;
+
+      if (isAdminEmail && isDevKeyCorrect) {
+        setUserId("admin-dev-id"); // ID temporário para o desenvolvedor
+        setAppUnlocked(true);
+        setCycleUnlocked(true);
+        setAuthReady(true);
+        setNotifications((prev) => [
+          buildNotification("Modo Desenvolvedor Ativo", "Acesso total liberado via Chave Mestra.", "conquista"),
+          ...prev,
+        ].slice(0, 8));
+        return; // Pula a autenticação normal
+      }
+
       if (authMode === "register") {
         const { data, error } = await supabase.auth.signUp({
           email: authEmail.trim(),
