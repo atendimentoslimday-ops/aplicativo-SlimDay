@@ -2,6 +2,7 @@ import React from "react";
 import { ShieldCheck, Sparkles, Zap, Heart, Calendar, Check, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { trackFacebookEvent } from "@/utils/facebook";
 
 const faqs = [
   { q: "Preciso ter experiência com exercícios?", a: "Não. A SlimDay é desenhada para quem quer começar do zero, com algo simples e real." },
@@ -104,7 +105,14 @@ const PricingFaqSection = () => (
               ))}
             </div>
 
-            <a href="https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8f39c46c17df">
+            <a 
+              href="https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8f39c46c17df"
+              onClick={() => trackFacebookEvent('InitiateCheckout', { 
+                content_name: 'SlimDay Elite Main Offer',
+                value: 29.90,
+                currency: 'BRL'
+              })}
+            >
               <Button className="w-full h-20 bg-slate-900 text-white text-lg font-bold rounded-[30px] hover:bg-primary transition-all shadow-premium flex items-center justify-center gap-3 active:scale-95">
                 Ativar Meu Plano Agora
               </Button>

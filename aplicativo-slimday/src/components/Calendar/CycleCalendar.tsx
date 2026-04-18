@@ -33,6 +33,7 @@ import {
   PROMO_PRICE 
 } from "../../constants/slimdayData";
 import { detectCycleDelay } from "../../utils/slimdayLogic";
+import { trackFacebookEvent } from "../../utils/facebook";
 
 interface CycleCalendarProps {
   profile: Profile;
@@ -215,12 +216,20 @@ export function CycleCalendar({
               </div>
               
               <div className="space-y-4">
-                <a href={currentPurchaseLink} target="_blank" rel="noopener noreferrer">
-                  <Button className="w-full h-16 rounded-2xl bg-rose-500 hover:bg-rose-600 font-bold text-lg shadow-lg shadow-rose-500/20">
-                    <ShoppingCart className="mr-3 h-5 w-5" /> 
-                    {cycleOfferState === "trial_offer" ? "Comprar por R$ 9,90" : "Adquirir Ciclo+"}
-                  </Button>
-                </a>
+                <Button 
+                  onClick={() => {
+                    trackFacebookEvent('InitiateCheckout', {
+                      content_name: 'Ciclo+ Premium Upsell',
+                      value: currentPrice,
+                      currency: 'BRL'
+                    });
+                    window.open(currentPurchaseLink, "_blank");
+                  }}
+                  className="w-full h-16 rounded-2xl bg-rose-500 hover:bg-rose-600 font-bold text-lg shadow-lg shadow-rose-500/20"
+                >
+                  <ShoppingCart className="mr-3 h-5 w-5" /> 
+                  {cycleOfferState === "trial_offer" ? "Comprar por R$ 9,90" : "Adquirir Ciclo+"}
+                </Button>
 
                 {cycleOfferState === "initial" && (
                   <button onClick={onRefuseOffer} className="w-full text-xs text-slate-500 hover:text-white transition-colors">

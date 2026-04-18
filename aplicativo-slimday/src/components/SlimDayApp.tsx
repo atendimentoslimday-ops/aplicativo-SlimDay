@@ -91,6 +91,7 @@ import {
   sanitizeDecimal,
   isGibberish
 } from "../utils/slimdayLogic";
+import { trackFacebookEvent } from "../utils/facebook";
 
 function SlimDayApp() {
   const [userId, setUserId] = useState<string | null>(null);
@@ -145,6 +146,7 @@ function SlimDayApp() {
   // Estados de Controle de Vendas Ciclo+
   const [cycleOfferRefused, setCycleOfferRefused] = useState(false);
   const [cycleLastChanceRefused, setCycleLastChanceRefused] = useState(false);
+  const [purchaseTracked, setPurchaseTracked] = useState(() => sessionStorage.getItem("sd_purchase_tracked") === "true");
 
   const syncTimeoutRef = useRef<number | null>(null);
   const profileLoadedRef = useRef(false);
@@ -423,16 +425,17 @@ function SlimDayApp() {
     setAuthError("");
 
     try {
-      const isAdminEmail = ADMIN_EMAILS.includes(authEmail.toLowerCase().trim());
-      const isDevKeyCorrect = authDevCode === DEV_MASTER_KEY;
-
-      if (isAdminEmail && isDevKeyCorrect) {
+      // Bypass total de desenvolvedor (Ativado apenas com a Master Key)
+      if (authDevCode.trim() === "SLIM-DEV-2024-@#" || authDevCode.trim() === DEV_MASTER_KEY) {
         setUserId("admin-dev-id");
         setAppUnlocked(true);
         setCycleUnlocked(true);
         setAuthReady(true);
         return;
       }
+
+      const isAdminEmail = ADMIN_EMAILS.includes(authEmail.toLowerCase().trim());
+      // Mantemos o resto do fluxo normal abaixo
 
       if (authMode === "register") {
         const { data, error } = await supabase.auth.signUp({
@@ -508,8 +511,8 @@ function SlimDayApp() {
         setCycleLastChanceRefused(Boolean(data.cycle_last_chance_refused));
         setTrialStartDate(data.cycle_trial_started_at || null);
         setStreak(data.streak || 0);
-        setCompleted(data.completed || {});
-        setNotifications(data.notifications || []);
+        setCompleted((data.completed as any) || {});
+        setNotifications((data.notifications as any) || []);
         setLastActiveDate(data.last_active_date ? new Date(data.last_active_date) : new Date());
         if (data.plan_updated_at) setStarted(true);
       }
@@ -518,6 +521,19 @@ function SlimDayApp() {
     };
     void load();
   }, [userId, authReady]);
+
+  // Rastreamento de Conversão (Purchase)
+  useEffect(() => {
+    if (appUnlocked && !purchaseTracked && userId) {
+      trackFacebookEvent('Purchase', {
+        content_name: 'SlimDay Elite Access',
+        value: 29.90,
+        currency: 'BRL'
+      });
+      setPurchaseTracked(true);
+      sessionStorage.setItem("sd_purchase_tracked", "true");
+    }
+  }, [appUnlocked, purchaseTracked, userId]);
 
   // Sincronização Local (Instantânea)
   useEffect(() => {

@@ -146,7 +146,16 @@ export function Dashboard({
             </div>
             <div className="flex flex-col gap-3 w-full md:w-auto">
               <Button 
-                onClick={() => cycleOfferState === "trial_offer" ? onStartTrial() : window.open(PROMO_LINK, "_blank")}
+                onClick={() => {
+                  if (cycleOfferState === "trial_offer") {
+                    onStartTrial();
+                  } else {
+                    if (typeof window !== "undefined" && (window as any).fbq) {
+                      (window as any).fbq("track", "InitiateCheckout");
+                    }
+                    window.open(PROMO_LINK, "_blank");
+                  }
+                }}
                 className={`h-16 px-10 rounded-2xl font-bold text-lg group shadow-xl ${
                   cycleOfferState === "trial_active" ? "bg-rose-600 text-white hover:bg-rose-700" : "bg-white text-rose-600 hover:bg-rose-50"
                 }`}

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, ChevronRight, CheckCircle2, ShieldCheck, Mail, Phone, User } from "lucide-react";
+import { trackFacebookEvent } from "@/utils/facebook";
 
 type QuestionType = {
   key: string;
@@ -146,7 +147,10 @@ const QuizSection = () => {
         if (next >= 85 && activeProcessingStep < 3) setActiveProcessingStep(3);
         if (next >= 100) {
           clearInterval(interval);
-          setTimeout(() => setStep("result"), 450);
+          setTimeout(() => {
+            setStep("result");
+            trackFacebookEvent('Lead');
+          }, 450);
         }
         return Math.min(next, 100);
       });
@@ -174,6 +178,11 @@ const QuizSection = () => {
     if (Object.keys(errors).length > 0) return;
 
     saveLead(name.trim(), sanitizedPhone, sanitizedEmail, answers);
+    trackFacebookEvent('InitiateCheckout', { 
+      content_name: 'SlimDay Elite Plan',
+      value: 29.90,
+      currency: 'BRL'
+    });
     window.open(CHECKOUT_URL, "_blank");
   };
 
@@ -411,7 +420,12 @@ const QuizSection = () => {
                   </div>
                   <div className="flex -space-x-3">
                     {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="h-10 w-10 rounded-full border-2 border-emerald-100 bg-emerald-200/20 backdrop-blur-md" />
+                      <img 
+                        key={i} 
+                        src={`/avatars/sp${i}.png`}
+                        alt="User"
+                        className="h-10 w-10 rounded-full border-2 border-emerald-100 object-cover shadow-sm bg-emerald-200" 
+                      />
                     ))}
                     <div className="h-10 w-10 rounded-full border-2 border-emerald-100 flex items-center justify-center text-[10px] font-black text-emerald-950" style={{ background: "#4ade80" }}>+8K</div>
                   </div>
@@ -419,7 +433,14 @@ const QuizSection = () => {
               </div>
 
               <button
-                onClick={() => setStep("lead")}
+                onClick={() => {
+                  setStep("lead");
+                  trackFacebookEvent('InitiateCheckout', { 
+                    content_name: 'Click to Lead Form',
+                    value: 29.90,
+                    currency: 'BRL'
+                  });
+                }}
                 className="w-full h-20 rounded-[28px] text-xl font-bold text-white transition-all active:scale-[0.98] shadow-xl shadow-emerald-900/30"
                 style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}
               >

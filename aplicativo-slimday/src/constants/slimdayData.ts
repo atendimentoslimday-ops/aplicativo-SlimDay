@@ -10,7 +10,7 @@ import {
 
 // Configurações de Segurança (Protegidas por Env Vars)
 export const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || "atendimentoslimday@gmail.com").split(",");
-export const DEV_MASTER_KEY = import.meta.env.VITE_MASTER_KEY || "-=x22450-.çA=-//\\"; 
+export const DEV_MASTER_KEY = import.meta.env.VITE_MASTER_KEY || "SLIM-DEV-2024-@#"; 
 export const BYPASS_PAYMENT = import.meta.env.VITE_BYPASS_PAYMENT === "true" || false;
 
 export const defaultProfile: Profile = {

@@ -82,6 +82,9 @@ export default function Sales() {
 
   const handlePurchase = () => {
     setPurchasing(true);
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq("track", "InitiateCheckout");
+    }
     window.open("https://pay.kirvano.com/a44cda1b-153b-4e9c-85bc-438f8c014322", "_blank");
     setTimeout(() => setPurchasing(false), 3000);
   };

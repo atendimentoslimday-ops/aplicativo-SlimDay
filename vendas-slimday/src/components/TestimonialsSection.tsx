@@ -60,9 +60,11 @@ const TestimonialsSection = () => (
             </p>
             
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-400 border border-slate-200">
-                {t.initials}
-              </div>
+              <img 
+                src={`/avatars/${t.name.split(' ')[0].toLowerCase()}.png`} 
+                alt={t.name}
+                className="h-12 w-12 rounded-full object-cover border border-slate-200 shadow-sm"
+              />
               <div>
                 <strong className="text-slate-900 block font-bold">{t.name}</strong>
                 <span className="text-xs text-slate-400 block uppercase tracking-wider">{t.role}</span>
