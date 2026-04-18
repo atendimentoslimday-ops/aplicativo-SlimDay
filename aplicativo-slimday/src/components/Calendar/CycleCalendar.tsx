@@ -42,6 +42,10 @@ interface CycleCalendarProps {
   isTrialExpired: boolean;
   currentPrice: number;
   currentPurchaseLink: string;
+  cycleOfferState: string;
+  onRefuseOffer: () => void;
+  onStartTrial: () => void;
+  onRefuseLastChance: () => void;
   cycleCalendar: CycleDay[];
   todayKey: string;
   currentDate: Date;
@@ -60,6 +64,10 @@ export function CycleCalendar({
   isTrialExpired,
   currentPrice,
   currentPurchaseLink,
+  cycleOfferState,
+  onRefuseOffer,
+  onStartTrial,
+  onRefuseLastChance,
   cycleCalendar,
   todayKey,
   currentDate,
@@ -163,7 +171,7 @@ export function CycleCalendar({
       </CardHeader>
       
       <CardContent className="p-8 pt-0 space-y-10">
-        {!cycleUnlocked ? (
+        {(!cycleUnlocked && !isTrialActive) ? (
           <div className="grid gap-8 lg:grid-cols-[1.1fr,0.9fr]">
             <div className="rounded-[40px] border border-rose-100 bg-white p-10 space-y-6">
               <div className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-rose-600">
@@ -189,22 +197,53 @@ export function CycleCalendar({
             <div className="rounded-[40px] bg-slate-900 p-10 text-white flex flex-col justify-center text-center">
               {isTrialActive && (
                 <div className="mb-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-4">
-                  <p className="text-xs font-bold uppercase tracking-widest text-rose-400">🎁 Período de teste</p>
+                  <p className="text-xs font-bold uppercase tracking-widest text-emerald-400">🎁 Teste Ativo</p>
                   <p className="text-lg font-serif italic mt-1">{trialDaysLeft} dias restantes</p>
                 </div>
               )}
-              <p className="text-rose-400 text-sm font-bold uppercase tracking-[4px] mb-2">Acesso Vitalício</p>
+              {cycleOfferState === "trial_offer" && (
+                <div className="mb-6 rounded-2xl bg-rose-500/10 border border-rose-500/20 p-4">
+                  <p className="text-xs font-bold text-rose-400 uppercase tracking-widest mb-1">Oferta Especial</p>
+                  <p className="text-sm font-light text-slate-300">Você recusou o desconto. Que tal testar por 7 dias grátis?</p>
+                </div>
+              )}
+              <p className="text-rose-400 text-sm font-bold uppercase tracking-[4px] mb-2">
+                {cycleOfferState === "last_chance" ? "Última Chance" : "Acesso Vitalício"}
+              </p>
               <div className="text-5xl font-serif italic mb-8">
                 R$ {currentPrice.toFixed(2).replace(".", ",")}
               </div>
-              <a href={currentPurchaseLink} target="_blank" rel="noopener noreferrer">
-                <Button className="w-full h-16 rounded-2xl bg-rose-500 hover:bg-rose-600 font-bold text-lg shadow-lg shadow-rose-500/20">
-                  <ShoppingCart className="mr-3 h-5 w-5" /> Adquirir Ciclo+
-                </Button>
-              </a>
+              
+              <div className="space-y-4">
+                <a href={currentPurchaseLink} target="_blank" rel="noopener noreferrer">
+                  <Button className="w-full h-16 rounded-2xl bg-rose-500 hover:bg-rose-600 font-bold text-lg shadow-lg shadow-rose-500/20">
+                    <ShoppingCart className="mr-3 h-5 w-5" /> 
+                    {cycleOfferState === "trial_offer" ? "Comprar por R$ 9,90" : "Adquirir Ciclo+"}
+                  </Button>
+                </a>
+
+                {cycleOfferState === "initial" && (
+                  <button onClick={onRefuseOffer} className="w-full text-xs text-slate-500 hover:text-white transition-colors">
+                    Agora não, obrigado
+                  </button>
+                )}
+
+                {cycleOfferState === "trial_offer" && (
+                  <Button onClick={onStartTrial} variant="outline" className="w-full h-14 rounded-2xl border-white/20 text-white hover:bg-white/10 font-bold">
+                    Testar 7 dias grátis
+                  </Button>
+                )}
+
+                {cycleOfferState === "last_chance" && (
+                  <button onClick={onRefuseLastChance} className="w-full text-xs text-slate-500 hover:text-white transition-colors">
+                    Não quero, pode subir o preço
+                  </button>
+                )}
+              </div>
+
               <button 
                 onClick={verifyAndRefreshCyclePurchase}
-                className="mt-6 text-sm text-slate-400 hover:text-white transition-colors underline underline-offset-4"
+                className="mt-8 text-sm text-slate-400 hover:text-white transition-colors underline underline-offset-4"
               >
                 Já comprei — verificar acesso
               </button>

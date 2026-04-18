@@ -142,6 +142,10 @@ function SlimDayApp() {
   const [onboardingDismissed, setOnboardingDismissed] = useState(false);
   const [nameError, setNameError] = useState<string | null>(null);
 
+  // Estados de Controle de Vendas Ciclo+
+  const [cycleOfferRefused, setCycleOfferRefused] = useState(false);
+  const [cycleLastChanceRefused, setCycleLastChanceRefused] = useState(false);
+
   const syncTimeoutRef = useRef<number | null>(null);
   const profileLoadedRef = useRef(false);
 
@@ -198,6 +202,50 @@ function SlimDayApp() {
   const isTrialActive = trialDaysLeft > 0;
   const isTrialExpired = trialStartDate && trialDaysLeft === 0;
 
+  // Lógica de Preço Dinâmico
+  const { currentPrice, currentPurchaseLink, cycleOfferState } = useMemo(() => {
+    // Se o teste expirou – Preço R$ 9,90 (Última Chance) ou R$ 12,90 (Penalidade)
+    if (isTrialExpired) {
+      if (cycleLastChanceRefused) {
+        return { 
+          currentPrice: FULL_PRICE, 
+          currentPurchaseLink: FULL_LINK,
+          cycleOfferState: "post_trial_refused" 
+        };
+      }
+      return { 
+        currentPrice: PROMO_PRICE, 
+        currentPurchaseLink: PROMO_LINK,
+        cycleOfferState: "last_chance" 
+      };
+    }
+    
+    // Se o teste está ativo -> Estado especial para o Dashboard
+    if (isTrialActive) {
+      return {
+        currentPrice: PROMO_PRICE,
+        currentPurchaseLink: PROMO_LINK,
+        cycleOfferState: "trial_active"
+      };
+    }
+
+    // Se recusou a oferta inicial -> Oferta de Trial + 9,90
+    if (cycleOfferRefused && !isTrialActive && !isTrialExpired) {
+      return { 
+        currentPrice: PROMO_PRICE, 
+        currentPurchaseLink: PROMO_LINK,
+        cycleOfferState: "trial_offer" 
+      };
+    }
+
+    // Oferta padrão inicial -> 9,90
+    return { 
+      currentPrice: PROMO_PRICE, 
+      currentPurchaseLink: PROMO_LINK,
+      cycleOfferState: "initial" 
+    };
+  }, [isTrialActive, isTrialExpired, cycleOfferRefused, cycleLastChanceRefused]);
+
   const isPlanVisible = useMemo(() => {
     if (!planHiddenUntil) return true;
     return new Date() >= new Date(planHiddenUntil);
@@ -227,6 +275,9 @@ function SlimDayApp() {
           ultimo_ciclo: profile.ultimoCiclo || "",
           duracao_ciclo: profile.duracaoCiclo || "28",
           duracao_menstruacao: profile.duracaoMenstruacao || "5",
+          cycle_trial_started_at: trialStartDate,
+          cycle_offer_refused: cycleOfferRefused,
+          cycle_last_chance_refused: cycleLastChanceRefused,
           streak,
           completed: completed as any,
           notifications: notifications as any,
@@ -239,7 +290,7 @@ function SlimDayApp() {
     } catch {
       setSyncStatus("error");
     }
-  }, [userId, profile, streak, completed, notifications, lastActiveDate, planHiddenUntil, userEmail]);
+  }, [userId, profile, streak, completed, notifications, lastActiveDate, planHiddenUntil, userEmail, trialStartDate, cycleOfferRefused, cycleLastChanceRefused]);
 
   function scheduleSync() {
     if (!userId) return;
@@ -296,6 +347,26 @@ function SlimDayApp() {
       buildNotification("Novo começo", "Seu dia foi reiniciado.", "motivacao"),
       ...prev,
     ].slice(0, 8));
+  }
+
+  function handleRefuseInitialOffer() {
+    setCycleOfferRefused(true);
+    scheduleSync();
+  }
+
+  function handleStartTrial() {
+    const now = new Date().toISOString();
+    setTrialStartDate(now);
+    scheduleSync();
+    setNotifications((prev) => [
+      buildNotification("Teste Grátis Ativado", "Você tem 7 dias para explorar o Ciclo+.", "conquista"),
+      ...prev,
+    ].slice(0, 8));
+  }
+
+  function handleRefuseLastChance() {
+    setCycleLastChanceRefused(true);
+    scheduleSync();
   }
 
   async function handleLogout() {
@@ -433,12 +504,14 @@ function SlimDayApp() {
         });
         setCycleUnlocked(Boolean(data.cycle_unlocked));
         setAppUnlocked(Boolean(data.app_unlocked));
+        setCycleOfferRefused(Boolean(data.cycle_offer_refused));
+        setCycleLastChanceRefused(Boolean(data.cycle_last_chance_refused));
+        setTrialStartDate(data.cycle_trial_started_at || null);
         setStreak(data.streak || 0);
         setCompleted(data.completed || {});
         setNotifications(data.notifications || []);
         setLastActiveDate(data.last_active_date ? new Date(data.last_active_date) : new Date());
         if (data.plan_updated_at) setStarted(true);
-        if (data.created_at) setTrialStartDate(data.created_at);
       }
       setProfileLoaded(true);
       profileLoadedRef.current = true;
@@ -461,7 +534,7 @@ function SlimDayApp() {
   useEffect(() => {
     if (!userId || !profileLoadedRef.current) return;
     scheduleSync();
-  }, [profile, streak, completed, notifications, lastActiveDate, planHiddenUntil, userId, started]);
+  }, [profile, streak, completed, notifications, lastActiveDate, planHiddenUntil, userId, started, cycleOfferRefused, cycleLastChanceRefused, trialStartDate]);
 
   // Forçar salvamento ao fechar a aba
   useEffect(() => {
@@ -555,6 +628,10 @@ function SlimDayApp() {
           getProfileSummary={getProfileSummary}
           cycleUnlocked={cycleUnlocked}
           onOpenCalendar={() => setActiveTab("calendario")}
+          cycleOfferState={cycleOfferState}
+          onRefuseOffer={handleRefuseInitialOffer}
+          onStartTrial={handleStartTrial}
+          trialDaysLeft={trialDaysLeft}
         />
 
         <div className="grid gap-8 lg:grid-cols-[1fr,3fr]">
@@ -682,8 +759,12 @@ function SlimDayApp() {
                   isTrialActive={isTrialActive}
                   trialDaysLeft={trialDaysLeft}
                   isTrialExpired={isTrialExpired}
-                  currentPrice={isTrialActive ? PROMO_PRICE : FULL_PRICE}
-                  currentPurchaseLink={isTrialActive ? PROMO_LINK : FULL_LINK}
+                  currentPrice={currentPrice}
+                  currentPurchaseLink={currentPurchaseLink}
+                  cycleOfferState={cycleOfferState}
+                  onRefuseOffer={handleRefuseInitialOffer}
+                  onStartTrial={handleStartTrial}
+                  onRefuseLastChance={handleRefuseLastChance}
                   cycleCalendar={cycleCalendar}
                   todayKey={todayKey}
                   currentDate={currentDate}

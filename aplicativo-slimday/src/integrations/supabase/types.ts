@@ -40,6 +40,9 @@ export type Database = {
           ultimo_ciclo: string | null
           updated_at: string
           user_id: string
+          cycle_trial_started_at: string | null
+          cycle_offer_refused: boolean | null
+          cycle_last_chance_refused: boolean | null
         }
         Insert: {
           altura?: string | null
@@ -66,6 +69,9 @@ export type Database = {
           ultimo_ciclo?: string | null
           updated_at?: string
           user_id: string
+          cycle_trial_started_at?: string | null
+          cycle_offer_refused?: boolean | null
+          cycle_last_chance_refused?: boolean | null
         }
         Update: {
           altura?: string | null
@@ -92,6 +98,9 @@ export type Database = {
           ultimo_ciclo?: string | null
           updated_at?: string
           user_id?: string
+          cycle_trial_started_at?: string | null
+          cycle_offer_refused?: boolean | null
+          cycle_last_chance_refused?: boolean | null
         }
         Relationships: []
       }

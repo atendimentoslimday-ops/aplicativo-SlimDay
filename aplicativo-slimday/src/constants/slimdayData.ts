@@ -1088,5 +1088,5 @@ export const APP_SALES_LINK = "https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8
 export const PROMO_LINK = "https://pay.kirvano.com/a44cda1b-153b-4e9c-85bc-438f8c014322";
 export const FULL_LINK = "https://pay.kirvano.com/3d0f4079-243d-413d-b5e0-dfde69bb123b";
 export const TRIAL_DAYS = 7;
-export const PROMO_PRICE = 29.90;
-export const FULL_PRICE = 89.90;
+export const PROMO_PRICE = 9.90;
+export const FULL_PRICE = 12.90;

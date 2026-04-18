@@ -8,9 +8,8 @@ export type CyclePhase = "menstruação" | "menstruação_final" | "ovulação" 
 export type OnboardingStep = "intro" | "nome" | "medidas_calendario" | "objetivo" | "nivel" | "tempo" | "rotina" | "refeicao" | "done" | "oferta";
 
 export type Profile = {
-  ultimoCiclo?: string;
-  duracaoCiclo?: string;
-  duracaoMenstruacao?: string;
+  refeicao: MealStyle;
+  rotina: RoutineStyle;
   nome: string;
   idade: string;
   altura: string;
@@ -18,8 +17,12 @@ export type Profile = {
   objetivo: Goal;
   nivel: FitnessLevel;
   tempo: TimePerDay;
-  rotina: RoutineStyle;
-  refeicao: MealStyle;
+  ultimoCiclo?: string;
+  duracaoCiclo?: string;
+  duracaoMenstruacao?: string;
+  cycleTrialStartedAt?: string;
+  cycleOfferRefused?: boolean;
+  cycleLastChanceRefused?: boolean;
 };
 
 export type RecipeDetail = {
