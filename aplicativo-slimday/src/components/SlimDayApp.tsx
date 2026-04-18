@@ -1,83 +1,137 @@
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import { 
-  Plus, Trash2, Save, Utensils, Dumbbell, User, CheckCircle2, Circle, Menu, X, ArrowRight, ArrowLeft, Target, Calendar as CalendarIcon, Layout, Bell, Share2, ChevronRight, AlertCircle, Info, HelpCircle, MessageSquare, Heart, Zap, TrendingUp, Award, Clock, Star, Moon, Droplets, Coffee, Apple, Camera, PlusCircle, ArrowUpRight, Check, ShieldCheck, Sparkles, History, Flame, ExternalLink, ChevronDown, Play, ClipboardList, ChevronLeft, Settings, LogOut, Send, Lock, Eye, BookOpen, Clock3, Salad, ChevronUp, Trophy, BadgeCheck, CalendarDays, Waves, Sun, BarChart3, PlayCircle, RefreshCcw, Cloud, CloudOff, ShoppingCart, MessageCircle, Home, BellOff, MapPin
-} from "lucide-react";
+import { recipeImages } from "@/assets/recipes";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+
+// UI Components
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { 
-  FitnessLevel, Goal, TimePerDay, MealStyle, RoutineStyle, SyncStatus, CyclePhase, 
-  Profile, PlanItem, DayPlan, DailyMessage, NotificationItem, AuthUser, CycleDay, 
-  PersistedState, OnboardingStep, RecipeDetail, PlanItemWithRecipe 
-} from "@/data/types";
-import { recipeBank, phaseTreats } from "@/data/recipes";
-import { dailyMessages, buildWorkoutPlan, buildWeekFocus, buildWeekSchedule, getCongratsMessage } from "@/data/exercises";
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
 
-// New Modular Components
-import { OnboardingQuiz } from "./OnboardingQuiz";
-import { AuthScreen } from "./AuthScreen";
-import { toDateKey, buildCycleCalendar, CycleCalendar } from "./CycleCalendar";
-import { WorkoutSection } from "./WorkoutSection";
-import { MealSection } from "./MealSection";
-import { SupportSection } from "./SupportSection";
-import { Dashboard } from "./Dashboard";
-import { PersonalizedPlan } from "./PersonalizedPlan";
-import WeeklySchedule from "./AgendaSemanal";
+// Icons
+import {
+  Trophy,
+  X,
+  CalendarDays,
+  Dumbbell,
+  Utensils,
+  Sparkles,
+  BadgeCheck,
+  Home,
+  Star,
+  Lock,
+  ShoppingCart,
+  ChevronRight,
+  Cloud,
+  RefreshCcw,
+  Zap
+} from "lucide-react";
 
-const BYPASS_PAYMENT = false; 
-const TRIAL_DAYS = 7;
-const PROMO_PRICE = "29,90";
-const FULL_PRICE = "89,90";
-const PROMO_LINK = "https://pay.kirvano.com/a44cda1b-153b-4e9c-85bc-438f8c014322";
-const FULL_LINK = "https://pay.kirvano.com/3d0f4079-243d-413d-b5e0-dfde69bb123b";
-const APP_SALES_LINK = "https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8f39c46c17df";
+// Modular Components
+import { AuthScreen } from "./Auth/AuthScreen";
+import { OnboardingQuiz } from "./Onboarding/OnboardingQuiz";
+import { CycleCalendar } from "./Calendar/CycleCalendar";
+import { Dashboard } from "./Dashboard/Dashboard";
+import { MealSection } from "./Health/MealSection";
+import { WorkoutSection } from "./Health/WorkoutSection";
+import { FeedbackForm } from "./Dashboard/FeedbackForm";
+import { WaterTracker } from "./Dashboard/WaterTracker";
 
-const defaultProfile: Profile = {
-  nome: "", idade: "", altura: "", peso: "", objetivo: "emagrecer",
-  nivel: "iniciante", tempo: "15", rotina: "corrida", refeicao: "pratico",
-  ultimoCiclo: "", duracaoCiclo: "28", duracaoMenstruacao: "5",
-};
+// Libs & Utils
+import { 
+  Profile, 
+  NotificationItem, 
+  SyncStatus, 
+  Goal, 
+  FitnessLevel, 
+  TimePerDay, 
+  RoutineStyle, 
+  MealStyle 
+} from "../types/slimday";
+import { 
+  ADMIN_EMAILS, 
+  DEV_MASTER_KEY, 
+  BYPASS_PAYMENT, 
+  TRIAL_DAYS, 
+  PROMO_PRICE, 
+  FULL_PRICE, 
+  PROMO_LINK, 
+  FULL_LINK, 
+  APP_SALES_LINK,
+  defaultProfile,
+  recipeBank,
+  phaseTreats
+} from "../constants/slimdayData";
+import { 
+  buildDailyMealPlan,
+  buildWorkoutPlan, 
+  buildMealPlan, 
+  buildWeekFocus, 
+  buildWeekSchedule, 
+  buildCycleCalendar, 
+  getDayBasedMessage, 
+  toDateKey, 
+  getDayDiff, 
+  buildNotification, 
+  getCongratsMessage, 
+  getReengagementMessage, 
+  getPhaseTitle, 
+  getProfileSummary,
+  sanitizeName,
+  sanitizeDecimal,
+  isGibberish
+} from "../utils/slimdayLogic";
 
-const feminineTheme = { "--primary": "#e11d48", "--secondary": "#1e293b" } as React.CSSProperties;
-
-const sanitizeDecimal = (val: string) => (val || "").replace(/[^0-9,.]/g, "").replace(/\./g, ",");
-const sanitizeName = (val: string) => (val || "").replace(/[^a-zA-ZáàâãéèêíïóôõúüçÁÀÂÃÉÈÍÏÓÔÕÚÜÇ\s-]/g, "").slice(0, 50);
-
-// Key obfuscation for security
-const getXKey = () => (import.meta.env.VITE_MASTER_KEY || "").split('').reverse().join('');
-const checkXKey = (input: string) => input.split('').reverse().join('') === getXKey();
-const ADMIN_ID = "00000000-0000-0000-0000-000000000000";
-
-const exampleAdminProfile: Profile = {
-  nome: "Admin SlimDay", idade: "28", altura: "165", peso: "62", objetivo: "emagrecer",
-  nivel: "intermediaria", tempo: "15", rotina: "moderada", refeicao: "equilibrado",
-  ultimoCiclo: toDateKey(new Date()), duracaoCiclo: "28", duracaoMenstruacao: "5",
-};
-
-export default function SlimDayApp() {
+function SlimDayApp() {
   const [userId, setUserId] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState("");
-  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
+  const [authMode, setAuthMode] = useState<"login" | "register">("login");
   const [authNome, setAuthNome] = useState("");
   const [authEmail, setAuthEmail] = useState("");
   const [authSenha, setAuthSenha] = useState("");
   const [authDevCode, setAuthDevCode] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
+  const [authError, setAuthError] = useState("");
+  const [authSuccess, setAuthSuccess] = useState("");
+  const [syncStatus, setSyncStatus] = useState<SyncStatus>("idle");
   const [authReady, setAuthReady] = useState(false);
-  const [syncStatus, setSyncStatus] = useState<SyncStatus>("synced");
 
-  const [profile, setProfile] = useState<Profile>(defaultProfile);
-  const [started, setStarted] = useState(false);
-  const [completed, setCompleted] = useState<Record<string, boolean>>({});
+  // Estados com persistência local inicial
+  const [profile, setProfile] = useState<Profile>(() => {
+    const local = localStorage.getItem("sd_profile");
+    return local ? JSON.parse(local) : defaultProfile;
+  });
+  const [started, setStarted] = useState(() => localStorage.getItem("sd_started") === "true");
+  const [completed, setCompleted] = useState<Record<string, boolean>>(() => {
+    const local = localStorage.getItem("sd_completed");
+    return local ? JSON.parse(local) : {};
+  });
+  const [activeTab, setActiveTab] = useState(() => localStorage.getItem("sd_active_tab") || "hoje");
+  const [streak, setStreak] = useState(() => Number(localStorage.getItem("sd_streak")) || 0);
+  const [notifications, setNotifications] = useState<NotificationItem[]>(() => {
+    const local = localStorage.getItem("sd_notifications");
+    return local ? JSON.parse(local) : [];
+  });
+  const [lastActiveDate, setLastActiveDate] = useState<Date>(() => {
+    const local = localStorage.getItem("sd_last_active");
+    return local ? new Date(local) : new Date();
+  });
+
   const [showCongrats, setShowCongrats] = useState(false);
   const [lastCompletedTitle, setLastCompletedTitle] = useState("");
-  const [activeTab, setActiveTab] = useState("hoje");
+  const [savedToast, setSavedToast] = useState(false);
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [lastActiveDate, setLastActiveDate] = useState<Date>(new Date());
-  const [streak, setStreak] = useState(0);
-  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  
   const [cycleUnlocked, setCycleUnlocked] = useState(BYPASS_PAYMENT);
   const [appUnlocked, setAppUnlocked] = useState(BYPASS_PAYMENT);
   const [appVerifyLoading, setAppVerifyLoading] = useState(false);
@@ -85,89 +139,256 @@ export default function SlimDayApp() {
   const [trialStartDate, setTrialStartDate] = useState<string | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [onboardingDismissed, setOnboardingDismissed] = useState(false);
+  const [nameError, setNameError] = useState<string | null>(null);
 
   const syncTimeoutRef = useRef<number | null>(null);
   const profileLoadedRef = useRef(false);
 
-  // --- LOGIC CHAINS ---
-  const dayMessage = useMemo(() => dailyMessages[currentDate.getDay()] || dailyMessages[0], [currentDate]);
-  const workoutPlan = useMemo(() => buildWorkoutPlan(profile), [profile]);
-  const mealPlan = useMemo(() => {
-    const style = profile.refeicao || "pratico";
-    const base = recipeBank[style] || recipeBank.pratico;
-    return [...base.slice(0, 4)];
-  }, [profile]);
-
-  const weekSchedule = useMemo(() => buildWeekSchedule(profile), [profile]);
+  const workoutPlan = useMemo(() => buildWorkoutPlan(profile, currentDate), [profile, currentDate]);
+  const mealPlan = useMemo(() => buildDailyMealPlan(profile, currentDate), [profile, currentDate]);
   const weekFocus = useMemo(() => buildWeekFocus(profile), [profile]);
+  const weekSchedule = useMemo(() => buildWeekSchedule(profile), [profile]);
+  const recipeSuggestions = useMemo(() => recipeBank[profile.refeicao], [profile.refeicao]);
+  const cycleCalendar = useMemo(() => buildCycleCalendar(profile, currentDate), [profile, currentDate]);
 
-  const checklistItems = useMemo(() => [
-    ...workoutPlan.map((w) => ({ id: w.id, titulo: w.titulo, tipo: "treino" })),
-    ...mealPlan.map((m) => ({ id: m.id, titulo: m.titulo, tipo: "alimentação" })),
-    { id: "agua", titulo: "Beber água", tipo: "hábito" },
-    { id: "sono", titulo: "Dormir bem", tipo: "hábito" }
-  ], [workoutPlan, mealPlan]);
+  const checklistItems = useMemo(
+    () => [
+      ...workoutPlan.map((w) => ({ id: w.id, titulo: w.titulo, tipo: "treino" })),
+      ...mealPlan.map((m) => ({ id: m.id, titulo: m.titulo, tipo: "alimentação" })),
+      { id: "agua", titulo: "Beber água ao longo do dia", tipo: "hábito" },
+      { id: "sono", titulo: "Dormir melhor hoje", tipo: "hábito" },
+      { id: "pausa", titulo: "Fazer uma pausa consciente", tipo: "bem-estar" },
+    ],
+    [workoutPlan, mealPlan]
+  );
 
   const completedCount = Object.values(completed).filter(Boolean).length;
-  const progress = Math.round((completedCount / checklistItems.length) * 100) || 0;
-  const dailyMinutes = Number(profile.tempo) || 15;
+  const totalCount = checklistItems.length;
+  const progress = Math.round((completedCount / totalCount) * 100) || 0;
+  const dailyMinutes = Number(profile.tempo);
+  const dayMessage = useMemo(() => getDayBasedMessage(currentDate), [currentDate]);
+  
   const bmi = useMemo(() => {
-    const w = Number(profile.peso); const h = Number(profile.altura) / 100;
-    return (w && h) ? (w / (h * h)).toFixed(1) : null;
+    const w = Number(profile.peso);
+    const h = Number(profile.altura) / 100;
+    if (!w || !h) return null;
+    return (w / (h * h)).toFixed(1);
   }, [profile.peso, profile.altura]);
+
+  const todayKey = useMemo(() => toDateKey(currentDate), [currentDate]);
+  const currentCycleDay = cycleCalendar.find((day) => day.dateKey === todayKey) ?? cycleCalendar[0] ?? null;
+  const cycleTreats = useMemo(() => {
+    const phase = currentCycleDay?.phase ?? "neutro";
+    const baseTreats = phaseTreats[phase] ?? phaseTreats.neutro;
+    if (profile.objetivo === "emagrecer") {
+      return baseTreats.map((item) => ({ ...item, descricao: `${item.descricao} Prefira porção pequena.` }));
+    }
+    return baseTreats;
+  }, [currentCycleDay, profile.objetivo]);
 
   const trialDaysLeft = useMemo(() => {
     if (!trialStartDate) return TRIAL_DAYS;
-    const diff = Math.floor((new Date().getTime() - new Date(trialStartDate).getTime()) / (1000 * 60 * 60 * 24));
+    const start = new Date(trialStartDate);
+    const now = new Date();
+    const diff = Math.floor((now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
     return Math.max(0, TRIAL_DAYS - diff);
   }, [trialStartDate, currentDate]);
 
-  const isPlanVisible = useMemo(() => !planHiddenUntil || new Date() >= new Date(planHiddenUntil), [planHiddenUntil, currentDate]);
+  const isTrialActive = trialDaysLeft > 0;
+  const isTrialExpired = trialStartDate && trialDaysLeft === 0;
 
-  // --- ACTIONS ---
-  const updateProfile = <K extends keyof Profile>(key: K, value: Profile[K]) => {
-    setProfile(prev => ({ ...prev, [key]: value }));
-  };
+  const isPlanVisible = useMemo(() => {
+    if (!planHiddenUntil) return true;
+    return new Date() >= new Date(planHiddenUntil);
+  }, [planHiddenUntil, currentDate]);
 
-  const applyPlan = () => {
-    setStarted(true);
-    const hideUntil = new Date(); hideUntil.setDate(hideUntil.getDate() + 30);
-    setPlanHiddenUntil(hideUntil.toISOString());
-  };
+  function updateProfile<K extends keyof Profile>(key: K, value: Profile[K]) {
+    setProfile((prev) => ({ ...prev, [key]: value }));
+  }
 
-  const toggleCheck = (id: string, title: string) => {
-    setCompleted(prev => {
+  const saveToSupabase = useCallback(async () => {
+    if (!userId || userId === "admin-dev-id") return;
+    setSyncStatus("saving");
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update({
+          nome: profile.nome,
+          email: userEmail,
+          idade: profile.idade,
+          altura: profile.altura,
+          peso: profile.peso,
+          objetivo: profile.objetivo,
+          nivel: profile.nivel,
+          tempo: profile.tempo,
+          rotina: profile.rotina,
+          refeicao: profile.refeicao,
+          ultimo_ciclo: profile.ultimoCiclo || "",
+          duracao_ciclo: profile.duracaoCiclo || "28",
+          duracao_menstruacao: profile.duracaoMenstruacao || "5",
+          streak,
+          completed: completed as any,
+          notifications: notifications as any,
+          last_active_date: lastActiveDate.toISOString(),
+          plan_updated_at: planHiddenUntil ? new Date().toISOString() : null,
+        })
+        .eq("user_id", userId);
+      if (error) throw error;
+      setSyncStatus("synced");
+    } catch {
+      setSyncStatus("error");
+    }
+  }, [userId, profile, streak, completed, notifications, lastActiveDate, planHiddenUntil, userEmail]);
+
+  function scheduleSync() {
+    if (!userId) return;
+    if (syncTimeoutRef.current) window.clearTimeout(syncTimeoutRef.current);
+    syncTimeoutRef.current = window.setTimeout(() => {
+      void saveToSupabase();
+    }, 1500);
+  }
+
+  function toggleCheck(id: string, title: string) {
+    setCompleted((prev) => {
       const next = !prev[id];
       if (next) {
+        const now = new Date();
+        const diff = getDayDiff(now, lastActiveDate);
         setLastCompletedTitle(title);
         setShowCongrats(true);
-        setLastActiveDate(new Date());
-        setTimeout(() => setShowCongrats(false), 2200);
+        setLastActiveDate(now);
+        setNotifications((prevN) => [
+          buildNotification("Etapa concluída", `Você concluiu: ${title}`, "conquista"),
+          ...prevN,
+        ].slice(0, 8));
+        setStreak((prevStreak) => {
+          if (toDateKey(lastActiveDate) === toDateKey(now)) return Math.max(prevStreak, 1);
+          if (diff === 1) return prevStreak + 1;
+          return 1;
+        });
+        window.setTimeout(() => setShowCongrats(false), 2200);
       }
       return { ...prev, [id]: next };
     });
-  };
+  }
 
-  const saveToSupabase = useCallback(async () => {
-    if (!userId || userId === ADMIN_ID) return;
-    setSyncStatus("saving");
+  function applyPlan() {
+    const now = new Date();
+    setStarted(true);
+    setSavedToast(true);
+    setLastActiveDate(now);
+    const hideUntil = new Date(now);
+    hideUntil.setDate(hideUntil.getDate() + 30);
+    setPlanHiddenUntil(hideUntil.toISOString());
+    setNotifications((prev) => [
+      buildNotification("Plano atualizado", "Seu plano foi reorganizado.", "motivacao"),
+      ...prev,
+    ].slice(0, 8));
+    window.setTimeout(() => setSavedToast(false), 1800);
+  }
+
+  function resetDay() {
+    setCompleted({});
+    setLastCompletedTitle("");
+    setLastActiveDate(new Date());
+    setNotifications((prev) => [
+      buildNotification("Novo começo", "Seu dia foi reiniciado.", "motivacao"),
+      ...prev,
+    ].slice(0, 8));
+  }
+
+  async function handleLogout() {
+    if (syncTimeoutRef.current) window.clearTimeout(syncTimeoutRef.current);
+    await saveToSupabase();
+    await supabase.auth.signOut();
+    setUserId(null);
+    setUserEmail("");
+    setSyncStatus("idle");
+  }
+
+  const verifyAndRefreshCyclePurchase = useCallback(async () => {
+    if (!userId || userId === "admin-dev-id" || BYPASS_PAYMENT) {
+      if (BYPASS_PAYMENT || userId === "admin-dev-id") setCycleUnlocked(true);
+      return;
+    }
     try {
-      const { error } = await supabase.from("profiles").update({
-        nome: profile.nome, email: userEmail, idade: profile.idade, altura: profile.altura,
-        peso: profile.peso, objetivo: profile.objetivo, nivel: profile.nivel,
-        tempo: profile.tempo, rotina: profile.rotina, refeicao: profile.refeicao,
-        ultimo_ciclo: profile.ultimoCiclo || "", duracao_ciclo: profile.duracaoCiclo || "28",
-        duracao_menstruacao: profile.duracaoMenstruacao || "5", streak,
-        completed: completed as any, notifications: notifications as any,
-        last_active_date: lastActiveDate.toISOString(),
-        plan_updated_at: planHiddenUntil ? new Date().toISOString() : null,
-      }).eq("user_id", userId);
-      if (error) throw error;
-      setSyncStatus("synced");
-    } catch { setSyncStatus("error"); }
-  }, [userId, profile, streak, completed, notifications, lastActiveDate, planHiddenUntil, userEmail]);
+      const { data, error } = await supabase
+        .from("purchases")
+        .select("status")
+        .eq("user_id", userId)
+        .eq("product_type", "calendar")
+        .eq("status", "completed")
+        .maybeSingle();
 
-  // --- EFFECTS ---
+      if (data) setCycleUnlocked(true);
+    } catch {}
+  }, [userId]);
+
+  const verifyAndRefreshAppPurchase = useCallback(async () => {
+    if (!userId || userId === "admin-dev-id" || BYPASS_PAYMENT) {
+      if (BYPASS_PAYMENT || userId === "admin-dev-id") setAppUnlocked(true);
+      return;
+    }
+    setAppVerifyLoading(true);
+    try {
+      const { data } = await supabase
+        .from("purchases")
+        .select("status")
+        .eq("user_id", userId)
+        .eq("product_type", "app")
+        .eq("status", "completed")
+        .maybeSingle();
+
+      if (data) setAppUnlocked(true);
+    } catch {} finally {
+      setAppVerifyLoading(false);
+    }
+  }, [userId]);
+
+  async function handleAuthSubmit() {
+    if (!authEmail.trim() || !authSenha.trim()) return;
+    setAuthLoading(true);
+    setAuthError("");
+
+    try {
+      const isAdminEmail = ADMIN_EMAILS.includes(authEmail.toLowerCase().trim());
+      const isDevKeyCorrect = authDevCode === DEV_MASTER_KEY;
+
+      if (isAdminEmail && isDevKeyCorrect) {
+        setUserId("admin-dev-id");
+        setAppUnlocked(true);
+        setCycleUnlocked(true);
+        setAuthReady(true);
+        return;
+      }
+
+      if (authMode === "register") {
+        const { data, error } = await supabase.auth.signUp({
+          email: authEmail.trim(),
+          password: authSenha.trim(),
+          options: { data: { nome: authNome.trim() } },
+        });
+        if (error) throw error;
+        if (data.user && !data.session) {
+          setAuthSuccess("Verifique seu e-mail para confirmar a conta.");
+          setAuthMode("login");
+          return;
+        }
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: authEmail.trim(),
+          password: authSenha.trim(),
+        });
+        if (error) throw error;
+      }
+    } catch (err: any) {
+      setAuthError(err.message || "Erro ao autenticar.");
+    } finally {
+      setAuthLoading(false);
+    }
+  }
+
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUserId(session?.user?.id || null);
@@ -178,248 +399,327 @@ export default function SlimDayApp() {
   }, []);
 
   useEffect(() => {
-    if (!userId || userId === ADMIN_ID) return;
+    if (!userId) {
+      if (authReady) {
+        setProfileLoaded(true);
+        profileLoadedRef.current = true;
+      }
+      return;
+    }
     const load = async () => {
+      if (userId === "admin-dev-id") {
+        setProfileLoaded(true);
+        profileLoadedRef.current = true;
+        setAppUnlocked(true);
+        setCycleUnlocked(true);
+        setStarted(true);
+        return;
+      }
       const { data } = await supabase.from("profiles").select("*").eq("user_id", userId).maybeSingle();
       if (data) {
         setProfile({
-          nome: data.nome || "", idade: data.idade || "", altura: data.altura || "", peso: data.peso || "",
-          objetivo: (data.objetivo as Goal) || "emagrecer", nivel: (data.nivel as FitnessLevel) || "iniciante",
-          tempo: (data.tempo as TimePerDay) || "15", rotina: (data.rotina as RoutineStyle) || "corrida", refeicao: (data.refeicao as MealStyle) || "pratico",
-          ultimoCiclo: data.ultimo_ciclo || "", duracaoCiclo: data.duracao_ciclo || "28",
+          nome: data.nome || "",
+          idade: data.idade || "",
+          altura: data.altura || "",
+          peso: data.peso || "",
+          objetivo: (data.objetivo as Goal) || "emagrecer",
+          nivel: (data.nivel as FitnessLevel) || "iniciante",
+          tempo: (data.tempo as TimePerDay) || "15",
+          rotina: (data.rotina as RoutineStyle) || "corrida",
+          refeicao: (data.refeicao as MealStyle) || "pratico",
+          ultimoCiclo: data.ultimo_ciclo || "",
+          duracaoCiclo: data.duracao_ciclo || "28",
           duracaoMenstruacao: data.duracao_menstruacao || "5",
         });
-        setAppUnlocked(Boolean(data.app_unlocked));
         setCycleUnlocked(Boolean(data.cycle_unlocked));
+        setAppUnlocked(Boolean(data.app_unlocked));
         setStreak(data.streak || 0);
-        setCompleted((data.completed as Record<string, boolean>) || {});
-        setNotifications((data.notifications as any) || []);
+        setCompleted(data.completed || {});
+        setNotifications(data.notifications || []);
+        setLastActiveDate(data.last_active_date ? new Date(data.last_active_date) : new Date());
+        if (data.plan_updated_at) setStarted(true);
         if (data.created_at) setTrialStartDate(data.created_at);
-        profileLoadedRef.current = true;
-        setProfileLoaded(true);
+      }
+      setProfileLoaded(true);
+      profileLoadedRef.current = true;
+    };
+    void load();
+  }, [userId, authReady]);
+
+  // Sincronização Local (Instantânea)
+  useEffect(() => {
+    localStorage.setItem("sd_profile", JSON.stringify(profile));
+    localStorage.setItem("sd_completed", JSON.stringify(completed));
+    localStorage.setItem("sd_active_tab", activeTab);
+    localStorage.setItem("sd_streak", String(streak));
+    localStorage.setItem("sd_notifications", JSON.stringify(notifications));
+    localStorage.setItem("sd_last_active", lastActiveDate.toISOString());
+    localStorage.setItem("sd_started", String(started));
+  }, [profile, completed, activeTab, streak, notifications, lastActiveDate, started]);
+
+  // Sincronização Nuvem (Com Delay p/ Performance)
+  useEffect(() => {
+    if (!userId || !profileLoadedRef.current) return;
+    scheduleSync();
+  }, [profile, streak, completed, notifications, lastActiveDate, planHiddenUntil, userId, started]);
+
+  // Forçar salvamento ao fechar a aba
+  useEffect(() => {
+    const handleUnload = () => {
+      if (userId && userId !== "admin-dev-id") {
+        void saveToSupabase();
       }
     };
-    load();
-  }, [userId]);
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+  }, [userId, profile, completed, streak, notifications]);
 
+  const hasAnyActivity = Object.keys(completed).length > 0 || streak > 0 || notifications.length > 0;
   useEffect(() => {
-    if (!userId || userId === ADMIN_ID || !profileLoadedRef.current) return;
-    if (syncTimeoutRef.current) window.clearTimeout(syncTimeoutRef.current);
-    syncTimeoutRef.current = window.setTimeout(() => void saveToSupabase(), 2000);
-  }, [profile, completed, userId]);
+    if (!started && !planHiddenUntil && profileLoaded && !hasAnyActivity && !onboardingDismissed) {
+      const timer = setTimeout(() => setShowOnboarding(true), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [started, planHiddenUntil, profileLoaded, hasAnyActivity, onboardingDismissed]);
 
-  if (!authReady) return <div className="min-h-screen grid place-items-center bg-rose-50 p-6">Carregando...</div>;
+  if (!authReady) return <div className="p-20 text-center">Carregando...</div>;
 
-  if (!userId) return (
-    <AuthScreen 
-      mode={authMode === "login" ? "login" : "register"} 
-      setMode={(m) => setAuthMode(m === "login" ? "login" : "signup")}
-      nome={authNome} setNome={setAuthNome}
-      email={authEmail} setEmail={setAuthEmail}
-      senha={authSenha} setSenha={setAuthSenha}
-      devCode={authEmail === "atendimentoslimday@gmail.com" ? authDevCode : undefined} 
-      setDevCode={authEmail === "atendimentoslimday@gmail.com" ? setAuthDevCode : undefined}
-      onSubmit={async (e) => {
-        if (e) e.preventDefault();
-        
-        // Novo Master Bypass solicitado - Chave extraída de Env para maior segurança
-        if (authEmail === "atendimentoslimday@gmail.com" && checkXKey(authDevCode)) {
-           setUserId(ADMIN_ID);
-           setUserEmail("atendimentoslimday@gmail.com");
-           setProfile(exampleAdminProfile); // Força dados reais para o admin
-           setAppUnlocked(true);
-           setCycleUnlocked(true);
-           setProfileLoaded(true);
-           setStarted(true);
-           profileLoadedRef.current = true;
-           return;
-        }
+  if (!userId) {
+    return (
+      <AuthScreen
+        mode={authMode} setMode={setAuthMode}
+        nome={authNome} setNome={setAuthNome}
+        email={authEmail} setEmail={setAuthEmail}
+        senha={authSenha} setSenha={setAuthSenha}
+        onSubmit={handleAuthSubmit}
+        loading={authLoading}
+        error={authError}
+        success={authSuccess}
+        devCode={authDevCode}
+        setDevCode={setAuthDevCode}
+      />
+    );
+  }
 
-        setAuthLoading(true);
-        try {
-          if (authMode === "signup") {
-            const { error } = await supabase.auth.signUp({ email: authEmail, password: authSenha, options: { data: { nome: authNome } } });
-            if (error) throw error;
-          } else {
-            const { error } = await supabase.auth.signInWithPassword({ email: authEmail, password: authSenha });
-            if (error) throw error;
-          }
-        } catch(err: any) { alert(err.message); } finally { setAuthLoading(false); }
-      }}
-      loading={authLoading}
-      error="" success=""
-    />
-  );
-
-  if (profileLoaded && !appUnlocked) return (
-    <div className="min-h-screen bg-rose-50 flex items-center justify-center p-6">
-      <Card className="max-w-md w-full rounded-[32px] p-8 text-center bg-white shadow-2xl">
-        <Lock className="h-20 w-20 text-rose-600 mx-auto mb-6" />
-        <h2 className="text-3xl font-black">Acesso Pendente</h2>
-        <p className="mt-4 text-slate-600">Confirme seu plano para liberar as funções exclusivas.</p>
-        <a href={APP_SALES_LINK} target="_blank" rel="noopener noreferrer" className="mt-8 block">
-          <Button className="w-full h-14 rounded-2xl bg-rose-600 font-bold text-lg">Adquirir SlimDay</Button>
-        </a>
-      </Card>
-    </div>
-  );
+  if (profileLoaded && !appUnlocked) {
+    return (
+      <div className="min-h-screen bg-rose-50 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full rounded-[32px] p-8 text-center bg-white shadow-2xl">
+          <Lock className="h-16 w-16 text-rose-600 mx-auto mb-6" />
+          <h2 className="text-3xl font-black mb-4">Acesso Bloqueado</h2>
+          <p className="text-slate-600 mb-8 font-light">Adquira o SlimDay para liberar seu plano de treinos e dieta.</p>
+          <a href={APP_SALES_LINK} target="_blank" rel="noopener noreferrer">
+            <Button className="w-full h-14 rounded-2xl bg-rose-600 font-bold mb-4">
+              <ShoppingCart className="mr-2" /> Adquirir o SlimDay
+            </Button>
+          </a>
+          <button onClick={verifyAndRefreshAppPurchase} disabled={appVerifyLoading} className="w-full text-sm text-slate-500 underline">
+            {appVerifyLoading ? "Verificando..." : "Já comprei - verificar agora"}
+          </button>
+          <button onClick={handleLogout} className="mt-6 text-xs text-slate-400">Sair</button>
+        </Card>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-rose-50/30 pb-20 overflow-x-hidden" style={feminineTheme}>
-      <header className="fixed top-0 z-40 w-full border-b border-rose-100 bg-white/80 backdrop-blur-md px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center text-white"><Sparkles className="h-5 w-5" /></div>
-          <span className="font-serif italic font-bold text-slate-900">SlimDay</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-xs font-bold border border-orange-100">
-            <Flame className="h-4 w-4" /> {streak} ZAP
-          </div>
-          <div className={`h-2 w-2 rounded-full ${syncStatus === "synced" ? "bg-emerald-500" : syncStatus === "saving" ? "bg-amber-500" : "bg-slate-300"}`} />
-          <Button variant="ghost" size="icon" onClick={() => supabase.auth.signOut()}><LogOut className="h-5 w-5" /></Button>
-        </div>
-      </header>
-
-      <main className="max-w-5xl mx-auto px-4 pt-24 space-y-8">
-        <header className="flex flex-col md:flex-row gap-6 md:items-center">
-              <Card className="flex-1 rounded-[32px] border-none shadow-premium bg-gradient-to-br from-primary via-rose-600 to-rose-700 p-8 text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl rounded-full -mr-16 -mt-16" />
-                <div className="relative z-10">
-                  <h1 className="text-3xl md:text-4xl font-serif italic mb-2">Olá, {profile.nome || "querida"} ✨</h1>
-                  <p className="opacity-90 font-light italic leading-relaxed">"{dayMessage.body}"</p>
-                </div>
-              </Card>
-
-              <Card className="w-full md:w-48 h-full rounded-[32px] border-none shadow-premium bg-white p-6 flex flex-col items-center justify-center text-center">
-                <div className="relative h-24 w-24 mb-3">
-                  <svg className="h-full w-full" viewBox="0 0 100 100">
-                    <circle className="stroke-current" strokeWidth="8" fill="transparent" r="40" cx="50" cy="50" />
-                    <circle className="stroke-primary transition-all duration-1000" strokeWidth="8" strokeDasharray="251.2" strokeDashoffset={251.2 - (251.2 * progress) / 100} strokeLinecap="round" fill="transparent" r="40" cx="50" cy="50" />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center"><span className="text-xl font-black text-slate-900">{progress}%</span></div>
-                </div>
-                <p className="text-[10px] uppercase font-bold text-slate-700">Progresso Hoje</p>
-              </Card>
-            </header>
-
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="w-full justify-start bg-transparent h-auto p-0 mb-8 flex-wrap gap-2 overflow-x-auto no-scrollbar">
-                {[
-                  { id: "hoje", label: "Hoje", icon: <Home /> },
-                  { id: "agenda", label: "Agenda", icon: <CalendarIcon /> },
-                  { id: "treino", label: "Treino", icon: <Dumbbell /> },
-                  { id: "alimentacao", label: "Menu", icon: <Utensils /> },
-                  { id: "ciclo", label: "Ciclo+", icon: <CalendarDays /> },
-                  { id: "ajustes", label: "Config", icon: <Settings /> },
-                  { id: "suporte", label: "Suporte", icon: <MessageCircle /> },
-                ].map(tab => (
-                  <TabsTrigger key={tab.id} value={tab.id} className="rounded-2xl px-6 py-3 font-bold bg-white border border-rose-100 data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:border-primary flex items-center gap-2 shadow-sm transition-all h-12">
-                     {React.cloneElement(tab.icon as React.ReactElement, { className: "h-4 w-4" })} {tab.label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-
-              <TabsContent value="hoje" className="mt-0">
-                <div className="mb-8 space-y-2">
-                  <h1 className="text-4xl md:text-5xl font-serif leading-tight text-slate-900">
-                    Olá, <span className="text-primary italic">{profile.nome || "querida"}</span>.
-                  </h1>
-                  <p className="text-slate-700 text-lg font-light">Vamos focar no seu bem-estar hoje?</p>
-                </div>
-                <Dashboard 
-                  profile={profile} 
-                  dailyMinutes={dailyMinutes} 
-                  bmi={bmi} 
-                  getProfileSummary={(p) => profile.rotina === "corrida" ? "Seu plano está mais enxuto e direto." : "Seu plano equilibra praticidade e progressão."} 
-                  setActiveTab={setActiveTab} 
-                  dayMessage={dayMessage}
-                  workoutPlan={workoutPlan}
-                  mealPlan={mealPlan}
-                />
-              </TabsContent>
-
-              <TabsContent value="agenda">
-                <WeeklySchedule schedule={weekSchedule} currentFocus={weekFocus} />
-              </TabsContent>
-
-              <TabsContent value="treino" className="mt-0">
-                <WorkoutSection 
-                  workoutPlan={workoutPlan} 
-                  completed={completed} 
-                  toggleCheck={toggleCheck} 
-                  expandedWorkoutId={null} 
-                  setExpandedWorkoutId={() => {}} 
-                />
-              </TabsContent>
-
-              <TabsContent value="alimentacao" className="mt-0">
-                <MealSection mealPlan={mealPlan} completed={completed} toggleCheck={toggleCheck} />
-              </TabsContent>
-
-              <TabsContent value="ciclo" className="mt-0">
-                <CycleCalendar 
-                  profile={profile} 
-                  currentDate={currentDate} 
-                  isUnlocked={cycleUnlocked || trialDaysLeft > 0} 
-                  onUnlock={() => window.open(PROMO_LINK, "_blank")}
-                />
-              </TabsContent>
-
-              <TabsContent value="suporte" className="mt-0">
-                <SupportSection 
-                  profile={profile} 
-                  userEmail={userEmail} 
-                  feedbackSubject="sugestao"
-                  setFeedbackSubject={() => {}}
-                  feedbackMessage=""
-                  setFeedbackMessage={() => {}}
-                />
-              </TabsContent>
-
-              <TabsContent value="ajustes" className="mt-0">
-                          <PersonalizedPlan 
-                    isPlanVisible={isPlanVisible} 
-                    profile={profile} 
-                    updateProfile={updateProfile}
-                    nameError={null} 
-                    setNameError={() => {}} 
-                    sanitizeName={sanitizeName}
-                    isGibberish={() => null} 
-                    sanitizeDecimal={sanitizeDecimal} 
-                    applyPlan={applyPlan}
-                  />
-                  {trialDaysLeft > 0 && !cycleUnlocked && (
-                    <Card className="rounded-[32px] border-amber-100 bg-amber-50/50 p-8 text-center border-dashed mt-6">
-                      <Clock className="h-10 w-10 text-amber-600 mx-auto mb-4" />
-                      <h4 className="font-bold text-amber-900 text-lg">Teste Grátis Ciclo+</h4>
-                      <p className="text-sm text-amber-700 mt-2 max-w-sm mx-auto">Você tem {trialDaysLeft} dias para testar o calendário premium completo.</p>
-                      <Button className="w-full max-w-xs mx-auto mt-6 h-14 rounded-2xl bg-amber-600 hover:bg-amber-700 font-bold" onClick={() => window.open(PROMO_LINK, "_blank")}>Garantir Acesso Vitalício</Button>
-                    </Card>
-                  )}
-              </TabsContent>
-            </Tabs>
-          </main>
-
+    <div className="min-h-screen bg-[#fffcfd]">
       <AnimatePresence>
-        {showCongrats && (
-          <motion.div initial={{ opacity: 0, y: 50, scale: 0.9 }} animate={{ opacity: 1, y: -20, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 pointer-events-none">
-            <Card className="rounded-full bg-slate-900/90 text-white px-8 py-4 backdrop-blur-md border-none shadow-2xl flex items-center gap-3">
-              <Trophy className="h-6 w-6 text-amber-400" />
-              <div className="text-sm font-bold">Concluído! {getCongratsMessage(completedCount)}</div>
-            </Card>
-          </motion.div>
+        {showOnboarding && (
+          <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+            <div className="relative w-full max-w-xl">
+              <button 
+                onClick={() => { setShowOnboarding(false); setOnboardingDismissed(true); }}
+                className="absolute top-4 right-4 z-10 text-white text-2xl"
+              >×</button>
+              <OnboardingQuiz 
+                profile={profile} 
+                onUpdateProfile={updateProfile} 
+                onComplete={() => { setShowOnboarding(false); setOnboardingDismissed(true); applyPlan(); }} 
+              />
+            </div>
+          </div>
         )}
       </AnimatePresence>
 
-      {showOnboarding && (
-        <div className="fixed inset-0 z-[100] bg-white overflow-y-auto">
-          <OnboardingQuiz 
-            profile={profile} 
-            onUpdateProfile={updateProfile} 
-            onComplete={() => setShowOnboarding(false)} 
-          />
+      <div className="mx-auto max-w-7xl px-4 py-8">
+        <Dashboard 
+          profile={profile} 
+          streak={streak} 
+          dayMessage={dayMessage} 
+          syncStatus={syncStatus} 
+          progress={progress} 
+          completedCount={completedCount} 
+          totalCount={totalCount}
+          resetDay={resetDay}
+          getProfileSummary={getProfileSummary}
+          cycleUnlocked={cycleUnlocked}
+          onOpenCalendar={() => setActiveTab("calendario")}
+        />
+
+        <div className="grid gap-8 lg:grid-cols-[1fr,3fr]">
+          <aside className="space-y-6">
+            <Card className="rounded-[40px] p-8 bg-gradient-to-br from-rose-100/80 to-white border-white shadow-premium">
+              <h2 className="text-xl font-serif italic mb-6 text-slate-900">Seu Perfil</h2>
+              <div className="space-y-4">
+                <div><Label className="text-slate-500">Nome: <span className="text-slate-900 font-bold">{profile.nome}</span></Label></div>
+                <div><Label className="text-slate-500">Meta: <span className="text-slate-900 font-bold">{profile.objetivo}</span></Label></div>
+                <div><Label className="text-slate-500">Tempo: <span className="text-slate-900 font-bold">{profile.tempo} min</span></Label></div>
+                {bmi && <div className="inline-block mt-2 px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold">IMC: {bmi}</div>}
+              </div>
+            </Card>
+            <Button variant="outline" className="w-full rounded-2xl h-12 border-rose-100 text-rose-400 hover:bg-rose-50" onClick={handleLogout}>Sair da Conta</Button>
+          </aside>
+
+          <main>
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="flex flex-wrap gap-2 bg-transparent h-auto mb-8">
+                <TabsTrigger value="hoje" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Hoje</TabsTrigger>
+                <TabsTrigger value="treino" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Treino</TabsTrigger>
+                <TabsTrigger value="alimentacao" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Menu</TabsTrigger>
+                <TabsTrigger value="calendario" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Ciclo+</TabsTrigger>
+                <TabsTrigger value="feedback" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Feedback</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="hoje" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                {/* Insights e Mantras */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* Card de Mantra */}
+                  <Card className="rounded-[40px] border-none shadow-premium bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-8 relative overflow-hidden group">
+                    <div className="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform">
+                      <Sparkles className="h-32 w-32" />
+                    </div>
+                    <div className="relative z-10">
+                      <Badge className="bg-white/20 text-white border-none mb-4 px-3 py-1 text-[10px] font-black uppercase tracking-widest">Mantra do Dia</Badge>
+                      <h3 className="text-2xl font-serif italic mb-2">"{dayMessage.title}"</h3>
+                      <p className="text-indigo-100 text-sm font-light leading-relaxed">
+                        {dayMessage.body}
+                      </p>
+                    </div>
+                  </Card>
+
+                  {/* Card de Insight Hormonal */}
+                  <Card className="rounded-[40px] border-none shadow-premium bg-white p-8 relative overflow-hidden group border border-rose-100/50">
+                    <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:rotate-12 transition-transform">
+                      <Zap className="h-32 w-32 text-rose-500 fill-current" />
+                    </div>
+                    <div className="relative z-10">
+                      <Badge className="bg-rose-50 text-rose-500 border-none mb-4 px-3 py-1 text-[10px] font-black uppercase tracking-widest">
+                        Insight {currentCycleDay?.phase ? `da Fase ${getPhaseTitle(currentCycleDay.phase)}` : "do Dia"}
+                      </Badge>
+                      <h3 className="text-xl font-bold text-slate-800 mb-2">Energia e Nutrição</h3>
+                      <p className="text-slate-500 text-sm font-light leading-relaxed">
+                        {currentCycleDay?.phase === "menstruação" ? "Sua energia pode estar mais recolhida. Priorize alimentos quentes e treinos de mobilidade leve." :
+                         currentCycleDay?.phase === "fértil" ? "Pico de energia! Ótimo momento para treinos intensos e conquistas pessoais." :
+                         currentCycleDay?.phase === "ovulação" ? "Você está radiante. Mantenha a hidratação alta e aproveite a disposição extra." :
+                         "Mantenha o foco na sua rotina. Pequenas vitórias hoje constroem grandes resultados amanhã."}
+                      </p>
+                    </div>
+                  </Card>
+                </div>
+
+                {/* Rastreador de Água */}
+                <WaterTracker />
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="group p-8 bg-rose-50 rounded-[40px] flex flex-col justify-between hover:bg-rose-100/50 transition-colors relative overflow-hidden">
+                    <div className="absolute -right-4 -top-4 opacity-5 group-hover:scale-110 transition-transform">
+                      <Dumbbell className="h-24 w-24 text-rose-500" />
+                    </div>
+                    <div className="relative z-10">
+                      <h3 className="text-2xl font-serif mb-2 text-slate-900">Treino de Hoje</h3>
+                      <p className="text-slate-500 font-light">{dailyMinutes} min focados para sua meta.</p>
+                      <Button className="mt-8 w-full h-14 rounded-2xl bg-rose-500 hover:bg-rose-600 font-bold shadow-lg shadow-rose-200" onClick={() => setActiveTab("treino")}>
+                        Começar Agora
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="group p-8 bg-orange-50 rounded-[40px] flex flex-col justify-between hover:bg-orange-100/50 transition-colors relative overflow-hidden">
+                    <div className="absolute -right-4 -top-4 opacity-5 group-hover:scale-110 transition-transform">
+                      <Utensils className="h-24 w-24 text-orange-500" />
+                    </div>
+                    <div className="relative z-10">
+                      <h3 className="text-2xl font-serif mb-2 text-slate-900">Sua Nutrição</h3>
+                      <p className="text-slate-500 font-light">Plano prático e nutritivo para suas refeições.</p>
+                      <Button variant="outline" className="mt-8 w-full h-14 rounded-2xl border-orange-200 text-orange-600 hover:bg-orange-100 font-bold" onClick={() => setActiveTab("alimentacao")}>
+                        Ver Menu Completo
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Atalho para Mimo da Fase */}
+                {cycleUnlocked && cycleTreats.length > 0 && (
+                  <Card className="rounded-[40px] border-none shadow-premium bg-gradient-to-r from-amber-50 to-orange-50 p-8 border border-orange-100/50 cursor-pointer hover:shadow-lg transition-all" onClick={() => setActiveTab("calendario")}>
+                    <div className="flex items-center gap-6">
+                      <div className="h-16 w-16 rounded-[24px] bg-white text-orange-500 flex items-center justify-center shadow-sm">
+                        <Sparkles className="h-8 w-8" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-[10px] uppercase font-bold tracking-[3px] text-orange-300">Mimo da Fase</p>
+                        <h4 className="text-lg font-bold text-slate-800">{cycleTreats[0].titulo}</h4>
+                        <p className="text-sm text-slate-500 font-light">{cycleTreats[0].descricao}</p>
+                      </div>
+                      <ChevronRight className="h-6 w-6 text-orange-300" />
+                    </div>
+                  </Card>
+                )}
+              </TabsContent>
+
+              <TabsContent value="treino">
+                <WorkoutSection workoutPlan={workoutPlan} completed={completed} toggleCheck={toggleCheck} />
+              </TabsContent>
+
+              <TabsContent value="alimentacao">
+                <MealSection mealPlan={mealPlan} completed={completed} toggleCheck={toggleCheck} style={profile.refeicao} />
+              </TabsContent>
+
+              <TabsContent value="calendario">
+                <CycleCalendar 
+                  profile={profile}
+                  cycleUnlocked={cycleUnlocked}
+                  isTrialActive={isTrialActive}
+                  trialDaysLeft={trialDaysLeft}
+                  isTrialExpired={isTrialExpired}
+                  currentPrice={isTrialActive ? PROMO_PRICE : FULL_PRICE}
+                  currentPurchaseLink={isTrialActive ? PROMO_LINK : FULL_LINK}
+                  cycleCalendar={cycleCalendar}
+                  todayKey={todayKey}
+                  currentDate={currentDate}
+                  setCurrentDate={setCurrentDate}
+                  updateProfile={updateProfile}
+                  verifyAndRefreshCyclePurchase={verifyAndRefreshCyclePurchase}
+                  getPhaseTitle={getPhaseTitle}
+                  cycleTreats={cycleTreats}
+                />
+              </TabsContent>
+              <TabsContent value="feedback">
+                <section className="mt-8 animate-in fade-in zoom-in-95 duration-500">
+                  <h2 className="text-3xl font-serif italic mb-8">Sua Opinião</h2>
+                  <FeedbackForm userId={userId} userEmail={userEmail} />
+                </section>
+              </TabsContent>
+            </Tabs>
+          </main>
         </div>
-      )}
+      </div>
+      
+      <AnimatePresence>
+        {showCongrats && (
+          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
+            className="fixed bottom-8 right-8 z-50 bg-slate-900 p-6 rounded-[32px] text-white shadow-2xl flex items-center gap-6">
+            <Trophy className="h-10 w-10 text-yellow-400" />
+            <div>
+              <p className="font-bold text-lg">Incrível!</p>
+              <p className="text-slate-400 text-sm">Você concluiu: {lastCompletedTitle}</p>
+            </div>
+            <button onClick={() => setShowCongrats(false)}><X className="h-5 w-5" /></button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
+
+export default SlimDayApp;

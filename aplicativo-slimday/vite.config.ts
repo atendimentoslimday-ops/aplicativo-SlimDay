@@ -9,6 +9,8 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 5173,
     hmr: {
+      port: 8080,
+      clientPort: 8080,
       overlay: false,
     },
   },
