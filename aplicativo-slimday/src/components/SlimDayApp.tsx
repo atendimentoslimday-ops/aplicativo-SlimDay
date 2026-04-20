@@ -425,6 +425,16 @@ function SlimDayApp() {
     setAuthError("");
 
     try {
+      // Bypass para Colaboradora Influencer
+      if (authEmail.trim().toLowerCase() === "ialvesdealmeidagomes@gmail.com" && authSenha.trim() === "SlimDay@VIP2024") {
+        setUserId("collaborator-vip-id");
+        setUserEmail("ialvesdealmeidagomes@gmail.com");
+        setAppUnlocked(true);
+        setCycleUnlocked(true);
+        setAuthReady(true);
+        return;
+      }
+
       // Bypass total de desenvolvedor (Ativado apenas com a Master Key)
       if (authDevCode.trim() === "SLIM-DEV-2024-@#" || authDevCode.trim() === DEV_MASTER_KEY) {
         setUserId("admin-dev-id");
@@ -433,6 +443,7 @@ function SlimDayApp() {
         setAuthReady(true);
         return;
       }
+
 
       const isAdminEmail = ADMIN_EMAILS.includes(authEmail.toLowerCase().trim());
       // Mantemos o resto do fluxo normal abaixo
@@ -481,7 +492,7 @@ function SlimDayApp() {
       return;
     }
     const load = async () => {
-      if (userId === "admin-dev-id") {
+      if (userId === "admin-dev-id" || userEmail === "ialvesdealmeidagomes@gmail.com") {
         setProfileLoaded(true);
         profileLoadedRef.current = true;
         setAppUnlocked(true);
