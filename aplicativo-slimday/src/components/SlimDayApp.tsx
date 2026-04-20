@@ -496,13 +496,13 @@ function SlimDayApp() {
         const isInfluencer = userEmail === "ialvesdealmeidagomes@gmail.com";
         setProfile((prev) => ({ 
           ...prev, 
-          nome: isInfluencer ? "Ingride" : prev.nome 
+          // Ajusta o nome para Ingride apenas se estiver vazio ou com o padrão
+          nome: (isInfluencer && (!prev.nome || prev.nome === "Feminina")) ? "Ingride" : prev.nome 
         }));
         setProfileLoaded(true);
         profileLoadedRef.current = true;
         setAppUnlocked(true);
         setCycleUnlocked(true);
-        // Se for a influencer, força o início (started = false) para abrir o quiz
         setStarted(isInfluencer ? false : true);
         return;
       }
