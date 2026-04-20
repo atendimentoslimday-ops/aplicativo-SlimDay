@@ -493,11 +493,17 @@ function SlimDayApp() {
     }
     const load = async () => {
       if (userId === "admin-dev-id" || userEmail === "ialvesdealmeidagomes@gmail.com") {
+        const isInfluencer = userEmail === "ialvesdealmeidagomes@gmail.com";
+        setProfile((prev) => ({ 
+          ...prev, 
+          nome: isInfluencer ? "Ingride" : prev.nome 
+        }));
         setProfileLoaded(true);
         profileLoadedRef.current = true;
         setAppUnlocked(true);
         setCycleUnlocked(true);
-        setStarted(true);
+        // Se for a influencer, força o início (started = false) para abrir o quiz
+        setStarted(isInfluencer ? false : true);
         return;
       }
       const { data } = await supabase.from("profiles").select("*").eq("user_id", userId).maybeSingle();

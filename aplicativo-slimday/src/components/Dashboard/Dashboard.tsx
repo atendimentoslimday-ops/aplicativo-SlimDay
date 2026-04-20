@@ -60,7 +60,7 @@ export function Dashboard({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-1">
           <h1 className="text-4xl font-serif italic text-slate-900 leading-tight">
-            Olá, <span className="text-rose-500">{profile.nome || "Feminina"}</span>
+            Olá, <span className="text-rose-500">{profile.nome || "Ingride"}</span>
           </h1>
           <p className="text-slate-500 font-light max-w-md">
             {dayMessage.body}
