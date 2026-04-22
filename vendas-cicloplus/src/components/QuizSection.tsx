@@ -57,7 +57,8 @@ function getProfileData(answers: Record<string, string>) {
 
 function saveLead(name: string, phone: string, email: string, answers: Record<string, string>) {
   try {
-    const leads = JSON.parse(localStorage.getItem("slimday_leads") || "[]");
+    // Alterado de localStorage para sessionStorage por segurança (Zero Trust)
+    const leads = JSON.parse(sessionStorage.getItem("slimday_leads") || "[]");
     leads.push({
       name,
       phone,
@@ -65,7 +66,7 @@ function saveLead(name: string, phone: string, email: string, answers: Record<st
       answers,
       timestamp: new Date().toISOString(),
     });
-    localStorage.setItem("slimday_leads", JSON.stringify(leads));
+    sessionStorage.setItem("slimday_leads", JSON.stringify(leads));
   } catch {
     // silently fail
   }

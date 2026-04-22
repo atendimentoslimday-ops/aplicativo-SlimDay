@@ -15,9 +15,19 @@ interface WaterTrackerProps {
 }
 
 export function WaterTracker({ initialCount = 0, profile }: WaterTrackerProps) {
+  // Segurança Zero Trust: Ofuscação de Dados
+  const encodeData = (data: any) => btoa(encodeURIComponent(JSON.stringify(data)));
+  const decodeData = (str: string) => {
+    try { return JSON.parse(decodeURIComponent(atob(str))); }
+    catch { return null; }
+  };
+
   const [glasses, setGlasses] = useState(() => {
-    const saved = localStorage.getItem("sd_water_count");
-    return saved ? JSON.parse(saved) : initialCount;
+    const local = localStorage.getItem("sd_w_obf");
+    if (local) return decodeData(local) || initialCount;
+    const oldLocal = localStorage.getItem("sd_water_count");
+    if (oldLocal) { localStorage.removeItem("sd_water_count"); return JSON.parse(oldLocal); }
+    return initialCount;
   });
 
   // Cálculo personalizado da meta de água com salvaguardas
@@ -43,7 +53,7 @@ export function WaterTracker({ initialCount = 0, profile }: WaterTrackerProps) {
   }, [profile?.peso, profile?.objetivo]);
 
   useEffect(() => {
-    localStorage.setItem("sd_water_count", JSON.stringify(glasses));
+    localStorage.setItem("sd_w_obf", encodeData(glasses));
   }, [glasses]);
 
   const toggleGlass = (index: number) => {

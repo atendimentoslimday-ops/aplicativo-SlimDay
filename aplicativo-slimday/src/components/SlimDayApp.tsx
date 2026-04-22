@@ -108,24 +108,37 @@ function SlimDayApp() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>("idle");
   const [authReady, setAuthReady] = useState(false);
 
-  // Estados com persistência local inicial
+  // Segurança Zero Trust: Ofuscação de Dados Pessoais
+  const encodeData = (data: any) => btoa(encodeURIComponent(JSON.stringify(data)));
+  const decodeData = (str: string) => {
+    try { return JSON.parse(decodeURIComponent(atob(str))); }
+    catch { return null; }
+  };
+
+  // Estados com persistência local inicial (Ofuscada)
   const [profile, setProfile] = useState<Profile>(() => {
-    const local = localStorage.getItem("sd_profile");
-    return local ? JSON.parse(local) : defaultProfile;
+    const local = localStorage.getItem("sd_p_obf");
+    if (local) return decodeData(local) || defaultProfile;
+    // Fallback para limpar o antigo em texto claro se existir
+    const oldLocal = localStorage.getItem("sd_profile");
+    if (oldLocal) { localStorage.removeItem("sd_profile"); return JSON.parse(oldLocal); }
+    return defaultProfile;
   });
-  const [started, setStarted] = useState(() => localStorage.getItem("sd_started") === "true");
+  const [started, setStarted] = useState(() => localStorage.getItem("sd_s_obf") === "true");
   const [completed, setCompleted] = useState<Record<string, boolean>>(() => {
-    const local = localStorage.getItem("sd_completed");
-    return local ? JSON.parse(local) : {};
+    const local = localStorage.getItem("sd_c_obf");
+    if (local) return decodeData(local) || {};
+    return {};
   });
-  const [activeTab, setActiveTab] = useState(() => localStorage.getItem("sd_active_tab") || "hoje");
-  const [streak, setStreak] = useState(() => Number(localStorage.getItem("sd_streak")) || 0);
+  const [activeTab, setActiveTab] = useState(() => localStorage.getItem("sd_t_obf") || "hoje");
+  const [streak, setStreak] = useState(() => Number(localStorage.getItem("sd_st_obf")) || 0);
   const [notifications, setNotifications] = useState<NotificationItem[]>(() => {
-    const local = localStorage.getItem("sd_notifications");
-    return local ? JSON.parse(local) : [];
+    const local = localStorage.getItem("sd_n_obf");
+    if (local) return decodeData(local) || [];
+    return [];
   });
   const [lastActiveDate, setLastActiveDate] = useState<Date>(() => {
-    const local = localStorage.getItem("sd_last_active");
+    const local = localStorage.getItem("sd_l_obf");
     return local ? new Date(local) : new Date();
   });
 
@@ -553,15 +566,15 @@ function SlimDayApp() {
     }
   }, [appUnlocked, purchaseTracked, userId]);
 
-  // Sincronização Local (Instantânea)
+  // Sincronização Local (Instantânea e Ofuscada)
   useEffect(() => {
-    localStorage.setItem("sd_profile", JSON.stringify(profile));
-    localStorage.setItem("sd_completed", JSON.stringify(completed));
-    localStorage.setItem("sd_active_tab", activeTab);
-    localStorage.setItem("sd_streak", String(streak));
-    localStorage.setItem("sd_notifications", JSON.stringify(notifications));
-    localStorage.setItem("sd_last_active", lastActiveDate.toISOString());
-    localStorage.setItem("sd_started", String(started));
+    localStorage.setItem("sd_p_obf", encodeData(profile));
+    localStorage.setItem("sd_c_obf", encodeData(completed));
+    localStorage.setItem("sd_t_obf", activeTab);
+    localStorage.setItem("sd_st_obf", String(streak));
+    localStorage.setItem("sd_n_obf", encodeData(notifications));
+    localStorage.setItem("sd_l_obf", lastActiveDate.toISOString());
+    localStorage.setItem("sd_s_obf", String(started));
   }, [profile, completed, activeTab, streak, notifications, lastActiveDate, started]);
 
   // Sincronização Nuvem (Com Delay p/ Performance)

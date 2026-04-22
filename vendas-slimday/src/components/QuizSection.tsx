@@ -60,7 +60,8 @@ function getProfileData(answers: Record<string, string>) {
 
 function saveLead(name: string, phone: string, email: string, answers: Record<string, string>) {
   try {
-    const leads = JSON.parse(localStorage.getItem("slimday_leads") || "[]");
+    // Alterado de localStorage para sessionStorage por segurança (Zero Trust)
+    const leads = JSON.parse(sessionStorage.getItem("slimday_leads") || "[]");
     leads.push({
       name,
       phone,
@@ -68,7 +69,7 @@ function saveLead(name: string, phone: string, email: string, answers: Record<st
       answers,
       timestamp: new Date().toISOString(),
     });
-    localStorage.setItem("slimday_leads", JSON.stringify(leads));
+    sessionStorage.setItem("slimday_leads", JSON.stringify(leads));
   } catch {
     // silently fail
   }
@@ -193,24 +194,24 @@ const QuizSection = () => {
       className="w-full py-16 md:py-24 px-4 relative overflow-hidden rounded-[2.5rem] shadow-xl"
       id="quiz-container"
       style={{
-        background: "linear-gradient(160deg, #064e3b 0%, #065f46 35%, #047857 60%, #10b981 100%)",
+        background: "linear-gradient(160deg, #881337 0%, #9f1239 35%, #be123c 60%, #f43f5e 100%)",
       }}
     >
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-white/5 rounded-full blur-[120px] -ml-64 -mt-64 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-300/10 rounded-full blur-[100px] -mr-32 -mb-32 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-rose-300/10 rounded-full blur-[100px] -mr-32 -mb-32 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(52,211,153,0.15),transparent_50%)] pointer-events-none" />
 
       <div className="max-w-2xl mx-auto relative z-10">
         {/* Section header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-emerald-200 font-bold text-[10px] uppercase tracking-[3px] mb-6 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-rose-200 font-bold text-[10px] uppercase tracking-[3px] mb-6 backdrop-blur-md">
             <Sparkles className="h-3 w-3" /> Descubra seu perfil
           </div>
           <h2 className="text-4xl md:text-6xl font-serif text-white leading-tight mb-4">
-            Seu plano <span className="italic text-emerald-300">personalizado</span><br />em 2 minutos
+            Seu plano <span className="italic text-rose-300">personalizado</span><br />em 2 minutos
           </h2>
-          <p className="text-emerald-100 text-lg font-light max-w-lg mx-auto leading-relaxed">
+          <p className="text-rose-100 text-lg font-light max-w-lg mx-auto leading-relaxed">
             Responda 8 perguntas rápidas e receba uma recomendação feita exclusivamente para a sua rotina.
           </p>
         </div>
@@ -226,16 +227,16 @@ const QuizSection = () => {
             >
               {/* Progress info */}
               <div className="flex justify-between items-center mb-4">
-                <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-[3px]">Passo {currentQuestion + 1} de {questions.length}</span>
+                <span className="text-[10px] font-bold text-rose-600 uppercase tracking-[3px]">Passo {currentQuestion + 1} de {questions.length}</span>
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[3px]">{progress}% Concluído</span>
               </div>
               {/* Progress bar */}
-              <div className="h-2 w-full bg-emerald-50 rounded-full mb-10 overflow-hidden">
+              <div className="h-2 w-full bg-rose-50 rounded-full mb-10 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}
                   className="h-full rounded-full"
-                  style={{ background: "linear-gradient(90deg, #059669, #10b981)" }}
+                  style={{ background: "linear-gradient(90deg, #e11d48, #f43f5e)" }}
                 />
               </div>
 
@@ -252,8 +253,8 @@ const QuizSection = () => {
                       onClick={() => selectOption(option)}
                       className={`w-full text-left font-bold text-base p-5 rounded-[20px] border-2 transition-all duration-300 group relative overflow-hidden
                         ${answers[q.key] === option
-                          ? "border-emerald-500 bg-emerald-500 text-white shadow-lg shadow-emerald-200 -translate-y-0.5"
-                          : "border-slate-100 bg-slate-50/50 hover:border-emerald-300 hover:bg-emerald-50 hover:-translate-y-0.5 text-slate-700"
+                          ? "border-rose-500 bg-rose-500 text-white shadow-lg shadow-rose-200 -translate-y-0.5"
+                          : "border-slate-100 bg-slate-50/50 hover:border-rose-300 hover:bg-rose-50 hover:-translate-y-0.5 text-slate-700"
                         }`}
                     >
                       <div className="flex items-center gap-4">
@@ -273,7 +274,7 @@ const QuizSection = () => {
               {q.type === "input" && (
                 <div className="space-y-6">
                   <div>
-                    <label className="text-[10px] font-bold text-emerald-600 uppercase tracking-[2px] mb-4 block">{q.label}</label>
+                    <label className="text-[10px] font-bold text-rose-600 uppercase tracking-[2px] mb-4 block">{q.label}</label>
                     <Input
                       type="number"
                       inputMode="decimal"
@@ -287,14 +288,14 @@ const QuizSection = () => {
                         }
                       }}
                       placeholder={q.placeholder}
-                      className="rounded-[20px] text-xl py-8 px-6 border-2 border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400 h-auto transition-all"
+                      className="rounded-[20px] text-xl py-8 px-6 border-2 border-rose-100 focus-visible:ring-rose-400 focus-visible:border-rose-400 h-auto transition-all"
                       onKeyDown={(e) => e.key === "Enter" && handleNext()}
                     />
                   </div>
                   <Button
                     onClick={handleNext}
                     className="w-full h-16 rounded-[20px] text-lg font-bold text-white"
-                    style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}
+                    style={{ background: "linear-gradient(135deg, #e11d48, #f43f5e)" }}
                   >
                     Continuar <ChevronRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -304,7 +305,7 @@ const QuizSection = () => {
               <div className="mt-8 flex justify-center">
                 <button
                   onClick={handleBack}
-                  className={`flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-300 hover:text-emerald-600 transition-colors ${currentQuestion === 0 ? "invisible" : ""}`}
+                  className={`flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-300 hover:text-rose-600 transition-colors ${currentQuestion === 0 ? "invisible" : ""}`}
                 >
                   ← Voltar para anterior
                 </button>
@@ -319,23 +320,23 @@ const QuizSection = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12 text-center"
             >
-              <div className="h-20 w-20 rounded-[28px] mx-auto flex items-center justify-center mb-8 animate-bounce" style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}>
+              <div className="h-20 w-20 rounded-[28px] mx-auto flex items-center justify-center mb-8 animate-bounce" style={{ background: "linear-gradient(135deg, #e11d48, #f43f5e)" }}>
                 <Sparkles className="h-10 w-10 text-white" />
               </div>
               <h3 className="text-3xl md:text-5xl font-serif text-slate-900 leading-tight mb-4">
                 Criando sua{" "}
-                <span className="italic" style={{ color: "#059669" }}>recomendação Elite</span>
+                <span className="italic" style={{ color: "#e11d48" }}>recomendação Elite</span>
               </h3>
               <p className="text-lg text-slate-500 font-light mb-10">
                 Estamos processando seus dados para criar a melhor experiência possível.
               </p>
 
-              <div className="h-3 w-full bg-emerald-50 rounded-full mb-10 overflow-hidden border border-emerald-100">
+              <div className="h-3 w-full bg-rose-50 rounded-full mb-10 overflow-hidden border border-rose-100">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${processingProgress}%` }}
                   className="h-full rounded-full"
-                  style={{ background: "linear-gradient(90deg, #059669, #34d399)" }}
+                  style={{ background: "linear-gradient(90deg, #e11d48, #fb7185)" }}
                 />
               </div>
 
@@ -345,11 +346,11 @@ const QuizSection = () => {
                     key={i}
                     className={`p-5 rounded-[20px] border-2 font-bold text-sm transition-all duration-500 flex items-center gap-4 ${
                       i <= activeProcessingStep
-                        ? "border-emerald-200 bg-emerald-50 text-emerald-900"
+                        ? "border-rose-200 bg-rose-50 text-rose-900"
                         : "opacity-30 bg-white border-slate-100 text-slate-400"
                     }`}
                   >
-                    <CheckCircle2 className={`h-5 w-5 shrink-0 ${i <= activeProcessingStep ? "text-emerald-500" : "text-slate-300"}`} />
+                    <CheckCircle2 className={`h-5 w-5 shrink-0 ${i <= activeProcessingStep ? "text-rose-500" : "text-slate-300"}`} />
                     {text}
                   </div>
                 ))}
@@ -364,13 +365,13 @@ const QuizSection = () => {
               animate={{ opacity: 1, y: 0 }}
               className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12"
             >
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full font-bold text-[10px] uppercase tracking-[3px] mb-8 shadow-sm text-white" style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}>
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full font-bold text-[10px] uppercase tracking-[3px] mb-8 shadow-sm text-white" style={{ background: "linear-gradient(135deg, #e11d48, #f43f5e)" }}>
                 ✨ Plano de Elite Identificado
               </div>
 
               <h3 className="text-3xl md:text-5xl font-serif text-slate-900 leading-tight mb-6">
                 Seu plano foca em{" "}
-                <span className="italic" style={{ color: "#059669" }}>resultados rápidos</span>{" "}
+                <span className="italic" style={{ color: "#e11d48" }}>resultados rápidos</span>{" "}
                 e consistentes
               </h3>
 
@@ -379,43 +380,43 @@ const QuizSection = () => {
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-                <div className="p-6 rounded-[24px] border-2 border-emerald-200 bg-emerald-50">
-                  <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-2">Perfil Elite</span>
-                  <strong className="text-emerald-900 text-lg font-serif italic">{profile}</strong>
+                <div className="p-6 rounded-[24px] border-2 border-rose-200 bg-rose-50">
+                  <span className="text-[10px] font-bold text-rose-600 uppercase tracking-widest block mb-2">Perfil Elite</span>
+                  <strong className="text-rose-900 text-lg font-serif italic">{profile}</strong>
                 </div>
-                <div className="p-6 rounded-[24px] border-2 border-emerald-100 bg-emerald-50/50">
-                  <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest block mb-2">Formato Recomendado</span>
+                <div className="p-6 rounded-[24px] border-2 border-rose-100 bg-rose-50/50">
+                  <span className="text-[10px] font-bold text-rose-500 uppercase tracking-widest block mb-2">Formato Recomendado</span>
                   <strong className="text-slate-900 text-lg font-serif italic">15 min / dia</strong>
                 </div>
-                <div className="p-6 rounded-[24px] border-2 border-emerald-100 bg-emerald-50/50">
-                  <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest block mb-2">Destaque do Plano</span>
+                <div className="p-6 rounded-[24px] border-2 border-rose-100 bg-rose-50/50">
+                  <span className="text-[10px] font-bold text-rose-500 uppercase tracking-widest block mb-2">Destaque do Plano</span>
                   <strong className="text-slate-900 text-lg font-serif italic">{focus}</strong>
                 </div>
               </div>
 
-              <div className="rounded-[32px] p-8 mb-10 text-white relative overflow-hidden" style={{ background: "linear-gradient(135deg, #064e3b, #065f46)" }}>
-                <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-400/20 blur-3xl rounded-full -mr-16 -mt-16" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-300/10 blur-2xl rounded-full -ml-8 -mb-8" />
+              <div className="rounded-[32px] p-8 mb-10 text-white relative overflow-hidden" style={{ background: "linear-gradient(135deg, #881337, #9f1239)" }}>
+                <div className="absolute top-0 right-0 w-48 h-48 bg-rose-400/20 blur-3xl rounded-full -mr-16 -mt-16" />
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-rose-300/10 blur-2xl rounded-full -ml-8 -mb-8" />
                 <h4 className="text-xl font-serif mb-3 flex items-center gap-3 relative z-10">
-                  <ShieldCheck className="h-6 w-6 text-emerald-400" />
+                  <ShieldCheck className="h-6 w-6 text-rose-400" />
                   O Método SlimDay
                 </h4>
-                <p className="text-emerald-100 leading-relaxed text-sm font-light relative z-10">
+                <p className="text-rose-100 leading-relaxed text-sm font-light relative z-10">
                   Diferente de planos genéricos, sua recomendação elite prioriza a proteção do seu metabolismo através de treinos inteligentes e micro-hábitos funcionais.
                 </p>
               </div>
 
-              <div className="rounded-[32px] bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 mb-10 text-white shadow-xl relative overflow-hidden group transition-all">
+              <div className="rounded-[32px] bg-gradient-to-br from-rose-600 to-rose-800 p-8 mb-10 text-white shadow-xl relative overflow-hidden group transition-all">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl rounded-full -mr-16 -mt-16" />
                 
                 <div className="relative z-10 flex items-center justify-between flex-wrap gap-6">
                   <div>
-                    <div className="inline-flex px-3 py-1 rounded-full bg-emerald-400 text-emerald-950 font-black text-[10px] uppercase tracking-[2px] mb-3 shadow-sm">
+                    <div className="inline-flex px-3 py-1 rounded-full bg-rose-400 text-rose-950 font-black text-[10px] uppercase tracking-[2px] mb-3 shadow-sm">
                       Oferta Única · Pagamento Único
                     </div>
                     <div className="flex items-baseline gap-3">
                       <span className="text-4xl md:text-5xl font-serif text-white leading-none">R$ 29,90</span>
-                      <span className="text-lg font-bold text-emerald-300/60 line-through">R$ 89,90</span>
+                      <span className="text-lg font-bold text-rose-300/60 line-through">R$ 89,90</span>
                     </div>
                   </div>
                   <div className="flex -space-x-3">
@@ -424,10 +425,10 @@ const QuizSection = () => {
                         key={i} 
                         src={`/avatars/sp${i}.png`}
                         alt="User"
-                        className="h-10 w-10 rounded-full border-2 border-emerald-100 object-cover shadow-sm bg-emerald-200" 
+                        className="h-10 w-10 rounded-full border-2 border-rose-100 object-cover shadow-sm bg-rose-200" 
                       />
                     ))}
-                    <div className="h-10 w-10 rounded-full border-2 border-emerald-100 flex items-center justify-center text-[10px] font-black text-emerald-950" style={{ background: "#4ade80" }}>+8K</div>
+                    <div className="h-10 w-10 rounded-full border-2 border-rose-100 flex items-center justify-center text-[10px] font-black text-rose-950" style={{ background: "#fb7185" }}>+8K</div>
                   </div>
                 </div>
               </div>
@@ -441,8 +442,8 @@ const QuizSection = () => {
                     currency: 'BRL'
                   });
                 }}
-                className="w-full h-20 rounded-[28px] text-xl font-bold text-white transition-all active:scale-[0.98] shadow-xl shadow-emerald-900/30 flex items-center justify-center gap-3 group"
-                style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}
+                className="w-full h-20 rounded-[28px] text-xl font-bold text-white transition-all active:scale-[0.98] shadow-xl shadow-rose-900/30 flex items-center justify-center gap-3 group"
+                style={{ background: "linear-gradient(135deg, #e11d48, #f43f5e)" }}
               >
                 Ativar meu plano personalizado agora <Sparkles className="h-6 w-6 group-hover:rotate-12 transition-transform" />
               </button>
@@ -456,20 +457,20 @@ const QuizSection = () => {
               animate={{ opacity: 1, scale: 1 }}
               className="bg-white rounded-[40px] shadow-2xl p-8 md:p-12"
             >
-              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full font-bold text-[10px] uppercase tracking-[3px] mb-8 shadow-sm text-white" style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}>
+              <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full font-bold text-[10px] uppercase tracking-[3px] mb-8 shadow-sm text-white" style={{ background: "linear-gradient(135deg, #e11d48, #f43f5e)" }}>
                 ✨ Recepção SlimDay Elite
               </div>
               <h3 className="text-3xl md:text-5xl font-serif text-slate-900 leading-tight mb-4">
                 Pronta para{" "}
-                <span className="italic" style={{ color: "#059669" }}>começar o seu dia 1?</span>
+                <span className="italic" style={{ color: "#e11d48" }}>começar o seu dia 1?</span>
               </h3>
               <p className="text-lg text-slate-500 font-light leading-relaxed mb-10">
-                Preencha seus dados para salvar sua recomendação personalizada e seguir para a página de ativação segura por <strong className="text-emerald-700">R$ 29,90</strong>.
+                Preencha seus dados para salvar sua recomendação personalizada e seguir para a página de ativação segura por <strong className="text-rose-700">R$ 29,90</strong>.
               </p>
 
               <div className="grid gap-4">
                 <div className="relative">
-                  <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-400" />
+                  <User className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-rose-400" />
                   <Input
                     value={name}
                     onChange={(e) => { 
@@ -478,12 +479,12 @@ const QuizSection = () => {
                       setLeadErrors((p) => ({ ...p, name: undefined })); 
                     }}
                     placeholder="Seu primeiro nome"
-                    className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.name ? "border-red-400 focus-visible:ring-red-400" : "border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400"}`}
+                    className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.name ? "border-red-400 focus-visible:ring-red-400" : "border-rose-100 focus-visible:ring-rose-400 focus-visible:border-rose-400"}`}
                   />
                 </div>
 
                 <div className="relative">
-                  <Phone className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-400" />
+                  <Phone className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-rose-400" />
                   <Input
                     value={phone}
                     onChange={(e) => { 
@@ -493,32 +494,32 @@ const QuizSection = () => {
                     }}
                     placeholder="WhatsApp"
                     type="tel"
-                    className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.phone ? "border-red-400 focus-visible:ring-red-400" : "border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400"}`}
+                    className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.phone ? "border-red-400 focus-visible:ring-red-400" : "border-rose-100 focus-visible:ring-rose-400 focus-visible:border-rose-400"}`}
                   />
                 </div>
 
                 <div className="relative">
-                  <Mail className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-emerald-400" />
+                  <Mail className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-rose-400" />
                   <Input
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setLeadErrors((p) => ({ ...p, email: undefined })); }}
                     placeholder="E-mail principal"
                     type="email"
-                    className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.email ? "border-red-400 focus-visible:ring-red-400" : "border-emerald-100 focus-visible:ring-emerald-400 focus-visible:border-emerald-400"}`}
+                    className={`rounded-[20px] text-base py-8 pl-14 pr-6 h-auto border-2 bg-slate-50/50 ${leadErrors.email ? "border-red-400 focus-visible:ring-red-400" : "border-rose-100 focus-visible:ring-rose-400 focus-visible:border-rose-400"}`}
                   />
                 </div>
 
                 <button
                   onClick={validateAndGoCheckout}
-                  className="w-full h-20 rounded-[24px] text-xl font-bold text-white mt-4 transition-all shadow-xl shadow-emerald-900/30 active:scale-[0.98]"
-                  style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}
+                  className="w-full h-20 rounded-[24px] text-xl font-bold text-white mt-4 transition-all shadow-xl shadow-rose-900/30 active:scale-[0.98]"
+                  style={{ background: "linear-gradient(135deg, #e11d48, #f43f5e)" }}
                 >
                   Finalizar Ativação · R$ 29,90
                 </button>
               </div>
 
               <div className="mt-8 flex items-center justify-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                <ShieldCheck className="h-4 w-4 text-emerald-500" />
+                <ShieldCheck className="h-4 w-4 text-rose-500" />
                 Ambiente 100% Seguro &amp; Protegido
               </div>
             </motion.div>

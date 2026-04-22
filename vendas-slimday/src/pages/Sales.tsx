@@ -75,7 +75,7 @@ const Sales = () => {
       <header className="sticky top-0 z-20 backdrop-blur-md bg-card/80 border-b border-border/80">
         <div className="container flex items-center justify-between py-3.5">
           <div>
-            <span className="text-2xl font-extrabold text-primary leading-none">SlimDay</span>
+            <span className="text-2xl font-extrabold text-primary leading-none" translate="no">SlimDay</span>
             <div className="text-[11px] font-bold text-slate-600 mt-1 uppercase tracking-tight">
               Seu corpo em forma, mesmo com rotina corrida
             </div>
@@ -122,7 +122,7 @@ const Sales = () => {
                     "Uma sugestão inicial pensada para dar clareza e facilitar a constância.",
                   ].map((text) => (
                     <div key={text} className="flex gap-3 items-start text-secondary leading-relaxed text-sm">
-                      <span>✔️</span><div>{text}</div>
+                      <span aria-hidden="true">✔️</span><div>{text}</div>
                     </div>
                   ))}
                 </div>
@@ -177,8 +177,8 @@ const Sales = () => {
             exit={{ opacity: 0, scale: 0.9, x: -20 }}
             className="fixed bottom-24 left-6 z-50 bg-white/95 backdrop-blur-xl p-4 pr-8 rounded-2xl shadow-2xl border border-slate-100 flex items-center gap-4 max-w-[280px]"
           >
-            <div className="h-10 w-10 rounded-full bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
-              <Sparkles className="h-5 w-5 text-emerald-600" />
+            <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
+              <Sparkles className="h-5 w-5 text-primary" />
             </div>
             <div>
               <p className="text-[10px] font-bold text-slate-900 leading-tight">

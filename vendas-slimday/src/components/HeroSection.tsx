@@ -20,8 +20,8 @@ const HeroSection = () => (
           Diagnóstico Gratuito · 2 Minutos
         </div>
         
-        <h1 className="text-5xl md:text-8xl font-serif leading-[1] tracking-tight text-slate-900 mb-8">
-          Sua melhor versão em <span className="text-primary italic">15 minutos</span> por dia
+        <h1 className="text-5xl md:text-8xl font-serif leading-[1] tracking-tight text-slate-900 mb-8 text-balance">
+          Sua melhor versão em <span className="text-primary italic">15&nbsp;minutos</span> por dia
         </h1>
         
         <p className="text-xl text-slate-600 leading-relaxed mb-12 max-w-2xl font-light">
@@ -61,7 +61,10 @@ const HeroSection = () => (
           <img 
             src="/images/model_hero.png" 
             alt="SlimDay Life" 
-            className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700"
+            width={600}
+            height={800}
+            fetchpriority="high"
+            className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-[filter,opacity] duration-700"
           />
         </div>
         
