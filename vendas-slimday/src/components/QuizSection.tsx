@@ -441,10 +441,10 @@ const QuizSection = () => {
                     currency: 'BRL'
                   });
                 }}
-                className="w-full h-20 rounded-[28px] text-xl font-bold text-white transition-all active:scale-[0.98] shadow-xl shadow-emerald-900/30"
+                className="w-full h-20 rounded-[28px] text-xl font-bold text-white transition-all active:scale-[0.98] shadow-xl shadow-emerald-900/30 flex items-center justify-center gap-3 group"
                 style={{ background: "linear-gradient(135deg, #059669, #10b981)" }}
               >
-                Ativar meu plano personalizado ✦
+                Ativar meu plano personalizado agora <Sparkles className="h-6 w-6 group-hover:rotate-12 transition-transform" />
               </button>
             </motion.div>
           )}

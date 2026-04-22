@@ -13,7 +13,42 @@ const faqs = [
   { q: "Como recebo o acesso?", a: "Imediatamente após a confirmação. Você receberá todas as instruções no seu e-mail em instantes." },
 ];
 
-const PricingFaqSection = () => (
+const purchaseNotifications = [
+  { name: "Mariana S.", location: "São Paulo, SP" },
+  { name: "Juliana R.", location: "Belo Horizonte, MG" },
+  { name: "Fernanda O.", location: "Curitiba, PR" },
+  { name: "Carla M.", location: "Rio de Janeiro, RJ" },
+  { name: "Patrícia L.", location: "Salvador, BA" },
+];
+
+const PricingFaqSection = () => {
+  const [timeLeft, setTimeLeft] = React.useState(900); // 15 minutes in seconds
+  const [activeNotification, setActiveNotification] = React.useState(0);
+  const [showNotification, setShowNotification] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 900));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 5000);
+      setActiveNotification((prev) => (prev + 1) % purchaseNotifications.length);
+    }, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  return (
   <section className="py-24 md:py-32 bg-slate-900 text-white overflow-hidden relative">
     <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 blur-[150px] rounded-full -mr-64 -mt-64" />
     <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/5 blur-[150px] rounded-full -ml-64 -mb-64" />
@@ -87,6 +122,15 @@ const PricingFaqSection = () => (
                 <span className="text-8xl font-serif leading-none tracking-tighter text-slate-900">29,90</span>
               </div>
               <p className="text-slate-400 mt-4 text-xs font-bold uppercase tracking-widest">Pagamento único · Acesso Vitalício</p>
+              
+              {/* Countdown Timer */}
+              <div className="mt-6 p-4 rounded-3xl bg-primary/5 border border-primary/10 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Zap className="h-5 w-5 text-primary animate-pulse" />
+                  <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Oferta expira em:</span>
+                </div>
+                <span className="text-2xl font-mono font-black text-primary">{formatTime(timeLeft)}</span>
+              </div>
             </div>
 
             <div className="space-y-6 mb-12">
@@ -118,6 +162,20 @@ const PricingFaqSection = () => (
               </Button>
             </a>
 
+            {/* Payment Icons */}
+            <div className="mt-8 flex flex-col items-center gap-4">
+              <div className="flex items-center gap-4 opacity-50 grayscale hover:grayscale-0 transition-all">
+                <img src="https://logodownload.org/wp-content/uploads/2014/10/visa-logo-1.png" alt="Visa" className="h-3 object-contain" />
+                <img src="https://logodownload.org/wp-content/uploads/2014/07/mastercard-logo-7.png" alt="Mastercard" className="h-5 object-contain" />
+                <img src="https://logodownload.org/wp-content/uploads/2015/03/elo-logo-1.png" alt="Elo" className="h-4 object-contain" />
+                <div className="flex items-center gap-1 font-black text-xs text-slate-800">
+                  <svg className="h-4 w-4 fill-emerald-500" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/><path d="M12 6c-3.309 0-6 2.691-6 6s2.691 6 6 6 6-2.691 6-6-2.691-6-6-6zm2.4 9h-4.8v-1.2h4.8V15zm0-2.4h-4.8v-1.2h4.8v1.2zm0-2.4h-4.8V9h4.8v1.2z"/></svg>
+                  PIX
+                </div>
+              </div>
+              <p className="text-[10px] text-slate-400 font-medium">Acesso imediato liberado após o pagamento</p>
+            </div>
+
           </motion.div>
           
           <p className="text-center mt-8 text-slate-500 text-[10px] flex items-center justify-center gap-2 uppercase tracking-[2px] font-bold">
@@ -141,6 +199,28 @@ const PricingFaqSection = () => (
         </div>
       </div>
     </div>
+
+    {/* Social Proof Notification */}
+    <AnimatePresence>
+      {showNotification && (
+        <motion.div
+          initial={{ opacity: 0, x: -50, scale: 0.9 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9, x: -20 }}
+          className="fixed bottom-24 left-6 z-50 bg-white/90 backdrop-blur-xl p-4 pr-8 rounded-2xl shadow-2xl border border-white/50 flex items-center gap-4 max-w-[280px]"
+        >
+          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+            <Sparkles className="h-5 w-5 text-primary" />
+          </div>
+          <div>
+            <p className="text-[10px] font-bold text-slate-950 leading-tight">
+              {purchaseNotifications[activeNotification].name} de {purchaseNotifications[activeNotification].location}
+            </p>
+            <p className="text-[9px] text-slate-500 font-medium mt-1">Acaba de ativar o Plano Elite ✨</p>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   </section>
 );
 
