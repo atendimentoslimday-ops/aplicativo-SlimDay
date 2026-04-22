@@ -59,7 +59,7 @@ const HeroSection = () => (
         <div className="absolute -inset-10 bg-primary/5 rounded-[60px] blur-[80px] -z-10" />
         <div className="relative aspect-[4/5] overflow-hidden rounded-[50px] border-[12px] border-white shadow-premium-dark rotate-2 hover:rotate-0 transition-transform duration-700">
           <img 
-            src="/images/model_hero.png" 
+            src="/images/model_hero_blue.png" 
             alt="SlimDay Life" 
             width={600}
             height={800}
