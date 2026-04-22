@@ -11,6 +11,7 @@ import {
   Gift,
   Clock3,
   Zap,
+  Flame,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";

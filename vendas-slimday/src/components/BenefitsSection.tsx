@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CheckCircle2, Heart, Zap, Sparkles } from "lucide-react";
+import { CheckCircle2, Heart, Zap, Sparkles, Flame } from "lucide-react";
 
 import React from "react";
 const benefits = [
