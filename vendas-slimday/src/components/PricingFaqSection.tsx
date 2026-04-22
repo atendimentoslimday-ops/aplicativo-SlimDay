@@ -1,6 +1,6 @@
 import React from "react";
 import { ShieldCheck, Sparkles, Zap, Heart, Calendar, Check, ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { trackFacebookEvent } from "@/utils/facebook";
 
