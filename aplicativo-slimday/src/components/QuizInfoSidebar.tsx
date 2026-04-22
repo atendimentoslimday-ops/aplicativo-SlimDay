@@ -1,8 +1,25 @@
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Zap, ShieldCheck } from "lucide-react";
 
 const CHECKOUT_URL = "https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8f39c46c17df";
 
 const QuizInfoSidebar = () => {
+  const [timeLeft, setTimeLeft] = useState(900); // 15 minutos
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
   const goCheckout = () => {
     window.open(CHECKOUT_URL, "_blank");
   };
@@ -31,33 +48,82 @@ const QuizInfoSidebar = () => {
       </div>
 
       {/* Side Offer */}
-      <div className="p-5 rounded-2xl bg-gradient-to-b from-accent/5 to-card border border-accent/20 shadow-cta/30">
-        <span className="inline-flex px-3 py-1.5 rounded-full bg-accent/10 text-accent font-extrabold text-xs uppercase tracking-wider">
-          Oferta disponível hoje
-        </span>
-        <h3 className="text-2xl font-extrabold text-secondary tracking-tight mt-3 mb-2">
-          Comece hoje com um valor mais leve
-        </h3>
-        <p className="text-muted-foreground text-sm leading-relaxed mb-3">
-          Uma condição pensada para facilitar sua entrada no SlimDay.
-        </p>
-        <div className="flex items-end gap-3 mb-3 flex-wrap">
-          <span className="text-muted-foreground text-xl font-extrabold line-through">R$ 89,90</span>
-          <span className="text-4xl font-black text-secondary tracking-tighter leading-none">R$ 29,90</span>
-        </div>
-        <div className="grid gap-2.5 mb-4">
-          {["Acesso à experiência SlimDay.", "Treinos curtos para rotina corrida.", "Começo simples, direto e prático."].map((item) => (
-            <div key={item} className="flex gap-2.5 items-start text-secondary font-semibold text-sm leading-relaxed">
-              <span>✔️</span><div>{item}</div>
+      <div className="p-6 rounded-[2.5rem] bg-gradient-to-br from-emerald-600 to-emerald-800 border-0 shadow-2xl relative overflow-hidden group">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-white/20 transition-colors" />
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-400/10 blur-2xl rounded-full -ml-8 -mb-8" />
+        
+        <div className="relative z-10">
+          <div className="flex justify-between items-start mb-4">
+            <span className="inline-flex px-3.5 py-1.5 rounded-full bg-emerald-400 text-emerald-950 font-black text-[10px] uppercase tracking-[2px] shadow-sm">
+              Oferta disponível hoje
+            </span>
+            <span className="text-[10px] font-bold text-emerald-200 uppercase tracking-widest">
+              Pagamento único
+            </span>
+          </div>
+
+          <h3 className="text-2xl font-extrabold text-white tracking-tight mb-2 leading-tight">
+            Comece hoje com um valor mais leve
+          </h3>
+          <p className="text-emerald-100/80 text-sm leading-relaxed mb-5 font-medium">
+            Uma condição exclusiva para você garantir sua entrada no SlimDay agora.
+          </p>
+
+          {/* Countdown Timer */}
+          <div className="mb-6 p-3 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-between text-white">
+            <div className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-emerald-400 animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-wider">Oferta expira em:</span>
             </div>
-          ))}
+            <span className="text-xl font-mono font-black text-emerald-400">{formatTime(timeLeft)}</span>
+          </div>
+
+          <div className="flex items-baseline gap-3 mb-6 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10">
+            <span className="text-emerald-300/60 text-lg font-bold line-through">R$ 89,90</span>
+            <span className="text-5xl font-black text-white tracking-tighter">R$ 29,90</span>
+          </div>
+
+          <div className="grid gap-3 mb-6">
+            {[
+              "Acesso imediato à experiência Elite.",
+              "Treinos curtos (15 min) de alta eficácia.",
+              "Direto, sem enrolação e 100% prático.",
+            ].map((item) => (
+              <div key={item} className="flex gap-3 items-start text-white font-semibold text-sm leading-tight">
+                <span className="text-emerald-400">✔️</span>
+                <div>{item}</div>
+              </div>
+            ))}
+          </div>
+
+          <Button 
+            variant="secondary" 
+            onClick={goCheckout} 
+            className="w-full h-14 rounded-2xl bg-white text-emerald-900 hover:bg-emerald-50 font-bold text-lg shadow-xl active:scale-[0.98] transition-all"
+          >
+            Garantir meu acesso agora
+          </Button>
+
+          <p className="text-[10px] text-emerald-200/60 mt-4 text-center font-bold uppercase tracking-widest">
+            Acesso vitalício · Sem mensalidades
+          </p>
+
+          {/* Trust Icons */}
+          <div className="mt-6 pt-6 border-t border-white/10 flex flex-col items-center gap-3">
+            <div className="flex items-center gap-3 opacity-40 grayscale hover:grayscale-0 transition-all">
+              <img src="https://logodownload.org/wp-content/uploads/2014/10/visa-logo-1.png" alt="Visa" className="h-2.5 object-contain" />
+              <img src="https://logodownload.org/wp-content/uploads/2014/07/mastercard-logo-7.png" alt="Mastercard" className="h-4 object-contain" />
+              <img src="https://logodownload.org/wp-content/uploads/2015/03/elo-logo-1.png" alt="Elo" className="h-3 object-contain" />
+              <div className="flex items-center gap-1 font-bold text-[8px] text-white">
+                PIX
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 text-[8px] text-emerald-200/50 uppercase tracking-[1px] font-bold">
+              <ShieldCheck className="h-3 w-3" /> Transação Criptografada
+            </div>
+          </div>
         </div>
-        <Button variant="cta" onClick={goCheckout} className="w-full rounded-xl">
-          Garantir meu acesso agora
-        </Button>
-        <p className="text-xs text-muted-foreground mt-3">
-          Aproveite o valor atual para começar com mais leveza e praticidade.
-        </p>
       </div>
 
       <p className="text-xs text-muted-foreground mt-4 leading-relaxed">
