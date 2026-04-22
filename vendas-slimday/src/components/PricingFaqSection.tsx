@@ -180,8 +180,6 @@ const PricingFaqSection = () => {
         </div>
       </div>
     </div>
-
-    </div>
   </section>
 );
 
