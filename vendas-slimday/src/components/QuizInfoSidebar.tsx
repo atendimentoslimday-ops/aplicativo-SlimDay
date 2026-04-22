@@ -19,12 +19,11 @@ const QuizInfoSidebar = () => {
         const end = parseInt(savedEnd, 10);
         const remaining = end - now;
         if (remaining > 0) return remaining;
-        if (remaining < -3600) {
-          const newEnd = now + DURATION;
-          localStorage.setItem(STORAGE_KEY, newEnd.toString());
-          return DURATION;
-        }
-        return 0;
+        
+        // Se expirou, reinicia imediatamente
+        const newEnd = now + DURATION;
+        localStorage.setItem(STORAGE_KEY, newEnd.toString());
+        return DURATION;
       }
       
       const newEnd = now + DURATION;

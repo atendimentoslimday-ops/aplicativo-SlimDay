@@ -29,14 +29,11 @@ const PricingFaqSection = () => {
         const end = parseInt(savedEnd, 10);
         const remaining = end - now;
         if (remaining > 0) return remaining;
-        // Se expirou, podemos reiniciar ou deixar em 0. 
-        // Para urgência, vamos reiniciar se tiver passado mais de 1 hora.
-        if (remaining < -3600) {
-          const newEnd = now + DURATION;
-          localStorage.setItem(STORAGE_KEY, newEnd.toString());
-          return DURATION;
-        }
-        return 0;
+        
+        // Se expirou, reinicia imediatamente para manter a urgência
+        const newEnd = now + DURATION;
+        localStorage.setItem(STORAGE_KEY, newEnd.toString());
+        return DURATION;
       }
       
       const newEnd = now + DURATION;
