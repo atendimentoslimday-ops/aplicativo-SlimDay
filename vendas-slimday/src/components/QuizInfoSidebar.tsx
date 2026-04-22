@@ -1,8 +1,25 @@
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Zap, ShieldCheck } from "lucide-react";
 
 const CHECKOUT_URL = "https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8f39c46c17df";
 
 const QuizInfoSidebar = () => {
+  const [timeLeft, setTimeLeft] = useState(900); // 15 minutos
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
   const goCheckout = () => {
     window.open(CHECKOUT_URL, "_blank");
   };
@@ -53,6 +70,15 @@ const QuizInfoSidebar = () => {
             Uma condição exclusiva para você garantir sua entrada no SlimDay agora.
           </p>
 
+          {/* Countdown Timer */}
+          <div className="mb-6 p-3 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-between text-white">
+            <div className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-emerald-400 animate-pulse" />
+              <span className="text-[10px] font-bold uppercase tracking-wider">Oferta expira em:</span>
+            </div>
+            <span className="text-xl font-mono font-black text-emerald-400">{formatTime(timeLeft)}</span>
+          </div>
+
           <div className="flex items-baseline gap-3 mb-6 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10">
             <span className="text-emerald-300/60 text-lg font-bold line-through">R$ 89,90</span>
             <span className="text-5xl font-black text-white tracking-tighter">R$ 29,90</span>
@@ -82,6 +108,21 @@ const QuizInfoSidebar = () => {
           <p className="text-[10px] text-emerald-200/60 mt-4 text-center font-bold uppercase tracking-widest">
             Acesso vitalício · Sem mensalidades
           </p>
+
+          {/* Trust Icons */}
+          <div className="mt-6 pt-6 border-t border-white/10 flex flex-col items-center gap-3">
+            <div className="flex items-center gap-3 opacity-40 grayscale hover:grayscale-0 transition-all">
+              <img src="https://logodownload.org/wp-content/uploads/2014/10/visa-logo-1.png" alt="Visa" className="h-2.5 object-contain" />
+              <img src="https://logodownload.org/wp-content/uploads/2014/07/mastercard-logo-7.png" alt="Mastercard" className="h-4 object-contain" />
+              <img src="https://logodownload.org/wp-content/uploads/2015/03/elo-logo-1.png" alt="Elo" className="h-3 object-contain" />
+              <div className="flex items-center gap-1 font-bold text-[8px] text-white">
+                PIX
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 text-[8px] text-emerald-200/50 uppercase tracking-[1px] font-bold">
+              <ShieldCheck className="h-3 w-3" /> Transação Criptografada
+            </div>
+          </div>
         </div>
       </div>
 

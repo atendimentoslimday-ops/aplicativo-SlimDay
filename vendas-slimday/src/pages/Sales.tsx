@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import HeroSection from "@/components/HeroSection";
 import BenefitsSection from "@/components/BenefitsSection";
 import QuizSection from "@/components/QuizSection";
@@ -9,8 +10,35 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import StickyCTA from "@/components/StickyCTA";
 import FooterSection from "@/components/FooterSection";
 import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
+import { Sparkles } from "lucide-react";
+
+const purchaseNotifications = [
+  { name: "Mariana S.", location: "São Paulo, SP" },
+  { name: "Juliana R.", location: "Belo Horizonte, MG" },
+  { name: "Fernanda O.", location: "Curitiba, PR" },
+  { name: "Carla M.", location: "Rio de Janeiro, RJ" },
+  { name: "Patrícia L.", location: "Salvador, BA" },
+  { name: "Amanda K.", location: "Porto Alegre, RS" },
+];
 
 const Sales = () => {
+  const [activeNotification, setActiveNotification] = useState(0);
+  const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    // Começar após 10 segundos
+    const initialDelay = setTimeout(() => {
+      const interval = setInterval(() => {
+        setShowNotification(true);
+        setTimeout(() => setShowNotification(false), 5000);
+        setActiveNotification((prev) => (prev + 1) % purchaseNotifications.length);
+      }, 15000);
+      return () => clearInterval(interval);
+    }, 10000);
+    
+    return () => clearTimeout(initialDelay);
+  }, []);
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -109,6 +137,28 @@ const Sales = () => {
       <FooterSection />
       <WhatsAppButton />
       <StickyCTA />
+
+      {/* Social Proof Global Notification */}
+      <AnimatePresence>
+        {showNotification && (
+          <motion.div
+            initial={{ opacity: 0, x: -50, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9, x: -20 }}
+            className="fixed bottom-24 left-6 z-50 bg-white/95 backdrop-blur-xl p-4 pr-8 rounded-2xl shadow-2xl border border-slate-100 flex items-center gap-4 max-w-[280px]"
+          >
+            <div className="h-10 w-10 rounded-full bg-emerald-50 flex items-center justify-center shrink-0 border border-emerald-100">
+              <Sparkles className="h-5 w-5 text-emerald-600" />
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-slate-900 leading-tight">
+                {purchaseNotifications[activeNotification].name} de {purchaseNotifications[activeNotification].location}
+              </p>
+              <p className="text-[9px] text-slate-500 font-medium mt-1">Acaba de ativar o Plano Elite ✨</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -13,33 +13,14 @@ const faqs = [
   { q: "Como recebo o acesso?", a: "Imediatamente após a confirmação. Você receberá todas as instruções no seu e-mail em instantes." },
 ];
 
-const purchaseNotifications = [
-  { name: "Mariana S.", location: "São Paulo, SP" },
-  { name: "Juliana R.", location: "Belo Horizonte, MG" },
-  { name: "Fernanda O.", location: "Curitiba, PR" },
-  { name: "Carla M.", location: "Rio de Janeiro, RJ" },
-  { name: "Patrícia L.", location: "Salvador, BA" },
-];
 
 const PricingFaqSection = () => {
   const [timeLeft, setTimeLeft] = React.useState(900); // 15 minutes in seconds
-  const [activeNotification, setActiveNotification] = React.useState(0);
-  const [showNotification, setShowNotification] = React.useState(false);
-
   React.useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 900));
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
-
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setShowNotification(true);
-      setTimeout(() => setShowNotification(false), 5000);
-      setActiveNotification((prev) => (prev + 1) % purchaseNotifications.length);
-    }, 15000);
-    return () => clearInterval(interval);
   }, []);
 
   const formatTime = (seconds: number) => {
@@ -116,7 +97,7 @@ const PricingFaqSection = () => {
             </div>
             
             <div className="mb-10">
-              <span className="text-slate-300 line-through text-xl font-light">R$ 97,00</span>
+              <span className="text-slate-300 line-through text-xl font-light">R$ 89,90</span>
               <div className="flex items-baseline gap-2 mt-2">
                 <span className="text-3xl font-serif italic text-slate-400">R$</span>
                 <span className="text-8xl font-serif leading-none tracking-tighter text-slate-900">29,90</span>
@@ -200,27 +181,7 @@ const PricingFaqSection = () => {
       </div>
     </div>
 
-    {/* Social Proof Notification */}
-    <AnimatePresence>
-      {showNotification && (
-        <motion.div
-          initial={{ opacity: 0, x: -50, scale: 0.9 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.9, x: -20 }}
-          className="fixed bottom-24 left-6 z-50 bg-white/90 backdrop-blur-xl p-4 pr-8 rounded-2xl shadow-2xl border border-white/50 flex items-center gap-4 max-w-[280px]"
-        >
-          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-            <Sparkles className="h-5 w-5 text-primary" />
-          </div>
-          <div>
-            <p className="text-[10px] font-bold text-slate-950 leading-tight">
-              {purchaseNotifications[activeNotification].name} de {purchaseNotifications[activeNotification].location}
-            </p>
-            <p className="text-[9px] text-slate-500 font-medium mt-1">Acaba de ativar o Plano Elite ✨</p>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    </div>
   </section>
 );
 
