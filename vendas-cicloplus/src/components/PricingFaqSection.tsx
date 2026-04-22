@@ -25,13 +25,13 @@ const PricingFaqSection = () => (
         </p>
 
         {/* Garantia e Segurança */}
-        <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-5 mb-5 flex gap-4 items-center">
+        <div className="rounded-2xl bg-rose-50 border border-rose-200 p-5 mb-5 flex gap-4 items-center">
           <div className="bg-white p-2.5 rounded-xl shadow-sm">
-            <ShieldCheck className="h-6 w-6 text-emerald-600" />
+            <ShieldCheck className="h-6 w-6 text-rose-600" />
           </div>
           <div>
-            <div className="text-sm font-bold text-emerald-900 uppercase tracking-wide">Garantia Total de 7 Dias</div>
-            <p className="text-xs text-emerald-700 leading-tight mt-1">
+            <div className="text-sm font-bold text-rose-900 uppercase tracking-wide">Garantia Total de 7 Dias</div>
+            <p className="text-xs text-rose-700 leading-tight mt-1">
               Teste sem riscos. Se não gostar, devolvemos seu investimento integralmente. Risco zero.
             </p>
           </div>
