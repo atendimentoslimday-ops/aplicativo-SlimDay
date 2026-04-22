@@ -21,7 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { recipeImages } from "../../assets/recipes";
+import { recipeImages, defaultRecipeImage } from "../../assets/recipes";
 import { Label } from "@/components/ui/label";
 import { 
   Profile, 
@@ -441,7 +441,7 @@ export function CycleCalendar({
                       <div className="flex items-center gap-5">
                         <div className="h-20 w-24 rounded-2xl overflow-hidden shrink-0">
                            <img 
-                             src={recipeImages[item.titulo]} 
+                             src={recipeImages[item.titulo] || defaultRecipeImage} 
                              alt={item.titulo}
                              className="w-full h-full object-cover"
                            />

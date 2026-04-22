@@ -199,7 +199,7 @@ export function OnboardingQuiz({
                 <CardContent className="p-0 space-y-8">
                   <h2 className="text-3xl font-serif text-center">Qual seu objetivo principal?</h2>
                   <div className="grid gap-3">
-                    {([["emagrecer", "🔥 Emagrecer"], ["definir", "💪 Definir"], ["mais energia", "⚡ Mais energia"]] as [Goal, string][]).map(([val, label]) => (
+                    {([["emagrecer", "🔥 Emagrecer"], ["definir", "💪 Definir"], ["mais energia", "⚡ Mais energia"], ["ganhar_massa", "📈 Ganhar Massa"]] as [Goal, string][]).map(([val, label]) => (
                       <button key={val} onClick={() => { onUpdateProfile("objetivo", val); next(); }} className={`p-6 rounded-3xl border-2 text-left transition-all ${profile.objetivo === val ? "border-rose-500 bg-rose-50" : "border-slate-100 hover:border-rose-200"}`}>
                         <p className="font-bold text-slate-900">{label}</p>
                       </button>

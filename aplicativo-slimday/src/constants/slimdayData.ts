@@ -38,11 +38,12 @@ export const DAILY_MESSAGES: DailyMessage[] = [
   { title: "Voltar faz diferença", body: "Ficar muitos dias sem abrir o plano pode enfraquecer seu ritmo. Recomeçar hoje já recoloca você no eixo." },
 ];
 
-export const phaseTreats: Record<CyclePhase, { titulo: string; descricao: string; receita: RecipeDetail }[]> = {
+export const phaseTreats: Record<CyclePhase, { titulo: string; descricao: string; calorias?: string; receita: RecipeDetail }[]> = {
   menstruação: [
     { 
       titulo: "Brigadeiro de Whey Gourmet", 
       descricao: "O magnésio do cacau relaxa a musculatura e reduz cólicas, enquanto o whey garante saciedade.",
+      calorias: "~140 kcal",
       receita: {
         ingredientes: [
           "1 dose (30g) de Whey Protein de chocolate ou baunilha", 
@@ -60,6 +61,7 @@ export const phaseTreats: Record<CyclePhase, { titulo: string; descricao: string
     { 
       titulo: "Tâmaras Recheadas com Pasta de Amendoim", 
       descricao: "Energia estável e magnésio para combater a fadiga e a compulsão por doces típica desta fase.",
+      calorias: "~180 kcal",
       receita: {
         ingredientes: [
           "4 tâmaras grandes (tipo Jumbo/Medjool)", 
@@ -79,6 +81,7 @@ export const phaseTreats: Record<CyclePhase, { titulo: string; descricao: string
     { 
       titulo: "Mousse Cremoso de Maracujá e Chia", 
       descricao: "Calmante natural para a transição hormonal, rico em fibras para desinchar.",
+      calorias: "~130 kcal",
       receita: {
         ingredientes: [
           "1 pote (170g) de iogurte natural desnatado sem açúcar", 
@@ -98,6 +101,7 @@ export const phaseTreats: Record<CyclePhase, { titulo: string; descricao: string
     { 
       titulo: "Chia Pudding de Coco com Manga", 
       descricao: "Tropical e refrescante para acompanhar seu pico de energia e disposição.",
+      calorias: "~190 kcal",
       receita: {
         ingredientes: [
           "200ml de leite de coco light ou bebida de amêndoas", 
@@ -117,6 +121,7 @@ export const phaseTreats: Record<CyclePhase, { titulo: string; descricao: string
     { 
       titulo: "Sorbet Estimulante de Banana e Canela", 
       descricao: "Doce térmico que auxilia na saciedade e controle glicêmico durante o pico hormonal.",
+      calorias: "~160 kcal",
       receita: {
         ingredientes: [
           "2 bananas médias congeladas (retire a casca antes de congelar)", 
@@ -135,6 +140,7 @@ export const phaseTreats: Record<CyclePhase, { titulo: string; descricao: string
     { 
       titulo: "Trufa Funcional de Cacau e Amêndoas", 
       descricao: "Snack antioxidante para manter o foco e a estabilidade de energia.",
+      calorias: "~140 kcal",
       receita: {
         ingredientes: [
           "100g de chocolate amargo (mínimo 70% cacau)", 
@@ -158,6 +164,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Omelete de Ervas Finas", 
       descricao: "Proteína de absorção rápida para despertar o metabolismo.", 
       categoria: "Café da Manhã", 
+      calorias: "~160 kcal",
       objetivos: ["emagrecer", "mais energia"], 
       receita: { 
         ingredientes: ["2 ovos caipiras", "1 colher de sopa de salsinha e cebolinha picadas", "1 pitada de sal marinho", "1 fio de azeite"], 
@@ -174,6 +181,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Tapioca Proteica de Ovo", 
       descricao: "Carbo inteligente com proteína para energia duradoura.", 
       categoria: "Café da Manhã", 
+      calorias: "~250 kcal",
       objetivos: ["mais energia"], 
       receita: { 
         ingredientes: ["2 colheres de sopa de goma de tapioca peneirada", "1 ovo grande", "Orégano a gosto"], 
@@ -189,6 +197,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Frango Selado com Gergelim", 
       descricao: "Crocância saudável rica em cálcio e gorduras boas.", 
       categoria: "Almoço", 
+      calorias: "~300 kcal",
       objetivos: ["emagrecer", "definir"], 
       receita: { 
         ingredientes: ["150g de peito de frango em cubos", "1 colher de sopa de gergelim branco ou preto", "Sal, pimenta e limão"], 
@@ -204,6 +213,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Chips de Abobrinha com Páprica", 
       descricao: "Snack crocante de baixíssima caloria.", 
       categoria: "Lanche da Tarde", 
+      calorias: "~60 kcal",
       objetivos: ["emagrecer"], 
       receita: { 
         ingredientes: ["1 abobrinha média", "Páprica defumada", "Sal a gosto"], 
@@ -219,6 +229,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Iogurte Termogênico", 
       descricao: "Combina o cálcio do iogurte com o poder da canela.", 
       categoria: "Lanche", 
+      calorias: "~120 kcal",
       objetivos: ["emagrecer", "criar constancia"], 
       receita: { 
         ingredientes: ["1 pote de iogurte natural desnatado", "1 colher de chá de canela em pó", "3 amêndoas picadas"], 
@@ -234,6 +245,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Tacos de Alface e Carne Moída", 
       descricao: "Jantar 'Low Carb' refrescante e visualmente incrível.", 
       categoria: "Jantar", 
+      calorias: "~220 kcal",
       objetivos: ["emagrecer", "definir"], 
       receita: { 
         ingredientes: ["4 folhas grandes de alface americana ou romana", "100g de carne moída magra refogada", "Tomate picado e coentro"], 
@@ -251,6 +263,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Bowl de Frutas, Iogurte e Chia", 
       descricao: "Combinação perfeita de fibras, probióticos e antioxidantes.", 
       categoria: "Café da Manhã", 
+      calorias: "~280 kcal",
       objetivos: ["emagrecer", "mais energia"], 
       receita: { 
         ingredientes: ["1/2 xícara de morangos picados", "1 colher de sopa de chia", "1 iogurte natural desnatado"], 
@@ -266,6 +279,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Salmão Grelhado com Brócolis no Vapor", 
       descricao: "Rico em Ômega 3 e fitoquímicos detox.", 
       categoria: "Almoço", 
+      calorias: "~350 kcal",
       objetivos: ["emagrecer", "definir"], 
       receita: { 
         ingredientes: ["1 posta de salmão (150g)", "1 xícara de brócolis ninja em floretes", "Limão e ervas finas"], 
@@ -281,6 +295,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Húmus com Palitos de Cenoura", 
       descricao: "Proteína vegetal prática e muito saciante.", 
       categoria: "Lanche da Tarde", 
+      calorias: "~180 kcal",
       objetivos: ["mais energia"], 
       receita: { 
         ingredientes: ["2 colheres de sopa de húmus (pasta de grão-de-bico)", "1 cenoura pequena cortada em tiras", "Azeite e páprica"], 
@@ -296,6 +311,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Mix de Oleaginosas Premium", 
       descricao: "Gorduras nobres que auxiliam na concentração.", 
       categoria: "Lanche", 
+      calorias: "~200 kcal",
       objetivos: ["definir", "mais energia"], 
       receita: { 
         ingredientes: ["3 nozes inteiras", "5 castanhas-do-pará", "1 fatia de coco seco (opcional)"], 
@@ -311,6 +327,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Risoto Low Carb de Couve-Flor", 
       descricao: "Todo o sabor de um risoto com 80% menos carboidratos.", 
       categoria: "Jantar", 
+      calorias: "~280 kcal",
       objetivos: ["emagrecer", "definir"], 
       receita: { 
         ingredientes: ["2 xícaras de couve-flor triturada (textura de arroz)", "100g de camarão ou frango", "1 colher de sopa de requeijão light"], 
@@ -328,6 +345,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Shake Energético de Morango", 
       descricao: "Bata tudo e leve para tomar no caminho.", 
       categoria: "Café da Manhã", 
+      calorias: "~220 kcal",
       objetivos: ["emagrecer", "mais energia"], 
       receita: { 
         ingredientes: ["1 xícara de morangos congelados", "200ml de leite desnatado ou vegetal", "1 colher de sopa de aveia em flocos"], 
@@ -343,6 +361,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Bowl Expresso de Atum e Milho", 
       descricao: "Refeição completa em 60 segundos.", 
       categoria: "Almoço", 
+      calorias: "~260 kcal",
       objetivos: ["emagrecer", "criar constancia"], 
       receita: { 
         ingredientes: ["1 lata de atum light (em água)", "2 colheres de sopa de milho", "1 tomate picado", "Folhas verdes à vontade"], 
@@ -358,6 +377,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Smoothie de Whey e Água de Coco", 
       descricao: "Hidratação e recuperação muscular rápida.", 
       categoria: "Lanche da Tarde", 
+      calorias: "~150 kcal",
       objetivos: ["definir", "mais energia"], 
       receita: { 
         ingredientes: ["1 scoop de Whey Protein", "200ml de água de coco gelada", "Pedras de gelo"], 
@@ -373,6 +393,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Snack de Barra de Proteína Fit", 
       descricao: "A solução para emergências na bolsa.", 
       categoria: "Lanche", 
+      calorias: "~200 kcal",
       objetivos: ["definir", "criar constancia"], 
       receita: { 
         ingredientes: ["1 barra de proteína (mínimo 10g de proteína)", "1 copo de água (importante)"], 
@@ -387,6 +408,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Wrap Rápido de Peito de Peru", 
       descricao: "Jantar leve que não pesa no estômago.", 
       categoria: "Jantar", 
+      calorias: "~280 kcal",
       objetivos: ["emagrecer", "criar constancia"], 
       receita: { 
         ingredientes: ["1 tortilha fit (Rap10 integral ou folha de arroz)", "2 fatias de peito de peru", "1 fatia de queijo branco pequeno"], 
@@ -404,6 +426,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Cuscuz Tradicional com Ovo Mexido", 
       descricao: "O sabor do Brasil com equilíbrio nutricional.", 
       categoria: "Café da Manhã", 
+      calorias: "~320 kcal",
       objetivos: ["mais energia", "criar constancia"], 
       receita: { 
         ingredientes: ["1/2 xícara de flocão de milho", "1 ovo caipira", "Sal e água"], 
@@ -419,6 +442,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Escondidinho Fit de Abóbora", 
       descricao: "Refeição reconfortante e rica em betacaroteno.", 
       categoria: "Almoço", 
+      calorias: "~350 kcal",
       objetivos: ["emagrecer", "mais energia"], 
       receita: { 
         ingredientes: ["200g de abóbora cabotiá cozida", "100g de frango desfiado temperado", "Temperos naturais (cebola, alho, salsa)"], 
@@ -434,6 +458,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Banana-da-Terra Grelhada com Canela", 
       descricao: "Doce natural que acalma a vontade de açúcar.", 
       categoria: "Lanche da Tarde", 
+      calorias: "~180 kcal",
       objetivos: ["mais energia"], 
       receita: { 
         ingredientes: ["1 banana-da-terra pequena madura", "Canela em pó", "1 colher de café de óleo de coco"], 
@@ -449,6 +474,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Sanduíche de Pão Integral e Queijo Branco", 
       descricao: "Lanche clássico e equilibrado para qualquer hora.", 
       categoria: "Lanche", 
+      calorias: "~260 kcal",
       objetivos: ["criar constancia"], 
       receita: { 
         ingredientes: ["2 fatias de pão integral 100%", "2 fatias de queijo minas frescal (branco)", "Orégano"], 
@@ -464,6 +490,7 @@ export const recipeBank: Record<MealStyle, PlanItemWithRecipe[]> = {
       titulo: "Espaguete de Cenoura ao Molho Pesto", 
       descricao: "Leveza máxima para uma noite de sono tranquila.", 
       categoria: "Jantar", 
+      calorias: "~220 kcal",
       objetivos: ["emagrecer", "definir"], 
       receita: { 
         ingredientes: ["1 cenoura grande ralada em fios (espessura de espaguete)", "1 colher de sopa de molho pesto caseiro", "Lascas de amêndoas"], 

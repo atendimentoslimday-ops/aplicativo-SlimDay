@@ -19,9 +19,9 @@ const benefits = [
     desc: "Uma proposta real para você conseguir resultados mesmo nos dias mais corridos e sem tempo." 
   },
   { 
-    icon: <CheckCircle2 className="h-6 w-6" />, 
-    title: "Hábito Construído", 
-    desc: "Uma experiência criada para aumentar a constância e ajudar você a dar o primeiro passo hoje mesmo." 
+    icon: <Flame className="h-6 w-6" />, 
+    title: "Controle de Calorias", 
+    desc: "Metas diárias ajustadas ao seu objetivo (emagrecer ou ganhar massa) para resultados reais." 
   },
 ];
 

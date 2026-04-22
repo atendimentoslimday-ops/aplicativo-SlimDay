@@ -46,6 +46,7 @@ import { MealSection } from "./Health/MealSection";
 import { WorkoutSection } from "./Health/WorkoutSection";
 import { FeedbackForm } from "./Dashboard/FeedbackForm";
 import { WaterTracker } from "./Dashboard/WaterTracker";
+import { ProfileSection } from "./Dashboard/ProfileSection";
 
 // Libs & Utils
 import { 
@@ -688,6 +689,7 @@ function SlimDayApp() {
                 <TabsTrigger value="treino" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Treino</TabsTrigger>
                 <TabsTrigger value="alimentacao" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Menu</TabsTrigger>
                 <TabsTrigger value="calendario" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Ciclo+</TabsTrigger>
+                <TabsTrigger value="perfil" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Perfil</TabsTrigger>
                 <TabsTrigger value="feedback" className="rounded-2xl px-6 py-3 border data-[state=active]:bg-rose-500 data-[state=active]:text-white">Feedback</TabsTrigger>
               </TabsList>
 
@@ -729,7 +731,7 @@ function SlimDayApp() {
                 </div>
 
                 {/* Rastreador de Água */}
-                <WaterTracker />
+                <WaterTracker profile={profile} />
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="group p-8 bg-rose-50 rounded-[40px] flex flex-col justify-between hover:bg-rose-100/50 transition-colors relative overflow-hidden">
@@ -782,7 +784,7 @@ function SlimDayApp() {
               </TabsContent>
 
               <TabsContent value="alimentacao">
-                <MealSection mealPlan={mealPlan} completed={completed} toggleCheck={toggleCheck} style={profile.refeicao} />
+                <MealSection mealPlan={mealPlan} completed={completed} toggleCheck={toggleCheck} style={profile.refeicao} profile={profile} />
               </TabsContent>
 
               <TabsContent value="calendario">
@@ -808,6 +810,20 @@ function SlimDayApp() {
                   cycleTreats={cycleTreats}
                 />
               </TabsContent>
+
+              <TabsContent value="perfil">
+                <ProfileSection profile={profile} onUpdateProfile={updateProfile} cycleUnlocked={cycleUnlocked} />
+                <div className="flex justify-center -mt-10 mb-20">
+                  <Button 
+                    variant="ghost" 
+                    className="text-slate-400 hover:text-rose-500 font-bold"
+                    onClick={() => { setShowOnboarding(true); setOnboardingDismissed(false); }}
+                  >
+                    Refazer Quiz Inicial
+                  </Button>
+                </div>
+              </TabsContent>
+
               <TabsContent value="feedback">
                 <section className="mt-8 animate-in fade-in zoom-in-95 duration-500">
                   <h2 className="text-3xl font-serif italic mb-8">Sua Opinião</h2>

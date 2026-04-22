@@ -1,5 +1,5 @@
 export type FitnessLevel = "iniciante" | "intermediaria" | "avancada";
-export type Goal = "emagrecer" | "definir" | "mais energia" | "criar constancia";
+export type Goal = "emagrecer" | "definir" | "mais energia" | "criar constancia" | "ganhar_massa";
 export type TimePerDay = "10" | "15" | "20" | "30";
 export type MealStyle = "pratico" | "equilibrado" | "sem tempo" | "caseiro";
 export type RoutineStyle = "corrida" | "moderada" | "flexivel";

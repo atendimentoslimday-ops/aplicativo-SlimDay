@@ -51,6 +51,11 @@ const benefits = [
     desc: "Dicas de alimentação e autocuidado para cada fase do seu ciclo.",
   },
   {
+    icon: Flame,
+    title: "Cálculo Calórico Personalizado",
+    desc: "Metas de calorias diárias ajustadas automaticamente ao seu peso, idade e objetivo.",
+  },
+  {
     icon: ShieldCheck,
     title: "Previsões inteligentes",
     desc: "Saiba quando sua próxima menstruação vai chegar e se prepare com antecedência.",
@@ -235,6 +240,7 @@ export default function Sales() {
                   ["Treino adaptado ao ciclo", false, true],
                   ["Previsão de fases", false, true],
                   ["Dicas por fase do ciclo", false, true],
+                  ["Cálculo de calorias por meta", false, true],
                 ].map(([feature, free, plus], i) => (
                   <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}>
                     <td className="px-5 py-3 text-slate-700">{feature as string}</td>

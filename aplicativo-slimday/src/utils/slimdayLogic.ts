@@ -69,11 +69,35 @@ export function buildDailyMealPlan(profile: Profile, date: Date): PlanItemWithRe
       titulo: chosenTreat.titulo,
       descricao: chosenTreat.descricao,
       categoria: "Docinho Pós-Janta",
+      calorias: (chosenTreat as any).calorias || "~150 kcal",
       receita: chosenTreat.receita
     } as PlanItemWithRecipe);
   }
 
   return dailyPlan;
+}
+
+export function calculateCalorieTarget(profile: Profile): number {
+  const w = Number(profile.peso) || 60;
+  const h = Number(profile.altura) || 165;
+  const a = Number(profile.idade) || 30;
+
+  // Mifflin-St Jeor Equation for women
+  let bmr = 10 * w + 6.25 * h - 5 * a - 161;
+  
+  // Lightly active multiplier
+  let tee = bmr * 1.3;
+
+  const goalMultipliers: Record<Goal, number> = {
+    emagrecer: 0.8,
+    definir: 0.95,
+    ganhar_massa: 1.15,
+    "mais energia": 1.1,
+    "criar constancia": 1.0,
+  };
+
+  const target = tee * (goalMultipliers[profile.objetivo] || 1.0);
+  return Math.round(target);
 }
 
 export const sanitizeDecimal = (val: string) => {

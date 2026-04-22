@@ -16,45 +16,53 @@ import almondegasPatinho from "./images/almondegas_patinho_molho_1776468357207.p
 import paoQueijo from "./images/pao_queijo_frigideira_aveia_1776468380405.png";
 import smoothieFrutas from "./images/smoothie_frutas_vermelhas_1776468392771.png";
 
-const foodImages: Record<string, string> = {
-  // IDs do Novo Banco Padronizado
-  "p-cafe-1": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=512&h=512&fit=crop&q=80", 
-  "p-cafe-2": "https://images.unsplash.com/photo-1594179047519-13ac9735e831?w=512&h=512&fit=crop&q=80",
-  "p-almoco-1": frangoGergelim,
-  "p-almoco-2": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=512&h=512&fit=crop&q=80",
-  "p-lanche-t-1": "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=512&h=512&fit=crop&q=80",
-  "p-lanche-1": "https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=512&h=512&fit=crop&q=80",
-  "p-jantar-1": tacosAlface,
-  "p-jantar-2": "https://images.unsplash.com/photo-1512058560550-42749359a767?w=512&h=512&fit=crop&q=80",
+export const recipeImages: Record<string, string> = {
+  // Mapeamento por Títulos (Páginas de Ciclo e Dashboard)
+  "Brigadeiro de Whey Gourmet": "https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?w=512&h=512&fit=crop&q=80",
+  "Tâmaras Recheadas com Pasta de Amendoim": bombomTamara,
+  "Mousse Cremoso de Maracujá e Chia": mousseMaracuja,
+  "Chia Pudding de Coco com Manga": pudimCoco,
+  "Sorbet Estimulante de Banana e Canela": sorveteBanana,
+  "Trufa Funcional de Cacau e Amêndoas": trufaCacau,
+  
+  "Omelete de Ervas Finas": "https://images.unsplash.com/photo-1510693206972-df098062cb71?w=512&h=512&fit=crop&q=80",
+  "Tapioca Proteica de Ovo": "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=512&h=512&fit=crop&q=80",
+  "Frango Selado com Gergelim": frangoGergelim,
+  "Chips de Abobrinha com Páprica": "https://images.unsplash.com/photo-1603532648955-0393e01c8a64?w=512&h=512&fit=crop&q=80",
+  "Iogurte Termogênico": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=512&h=512&fit=crop&q=80",
+  "Tacos de Alface e Carne Moída": tacosAlface,
+  "Bowl de Frutas, Iogurte e Chia": "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=512&h=512&fit=crop&q=80",
+  "Salmão Grelhado com Brócolis no Vapor": salmaoBrocolis,
+  "Húmus com Palitos de Cenoura": "https://images.unsplash.com/photo-1585238341267-1cfec2046a55?w=512&h=512&fit=crop&q=80",
+  "Mix de Oleaginosas Premium": "https://images.unsplash.com/photo-1511910849309-0dffb8785146?w=512&h=512&fit=crop&q=80",
+  "Risoto Low Carb de Couve-Flor": risotoCouveFlor,
+  "Shake Energético de Morango": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=512&h=512&fit=crop&q=80",
+  "Bowl Expresso de Atum e Milho": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=512&h=512&fit=crop&q=80",
+  "Smoothie de Whey e Água de Coco": "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=512&h=512&fit=crop&q=80",
+  "Snack de Barra de Proteína Fit": trufaCacau, // Usando imagem local para garantir que apareça
+  "Wrap Rápido de Peito de Peru": "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=512&h=512&fit=crop&q=80",
+  "Cuscuz Tradicional com Ovo Mexido": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=512&h=512&fit=crop&q=80",
+  "Escondidinho Fit de Abóbora": escondidinhoAbobora,
+  "Banana-da-Terra Grelhada com Canela": "https://images.unsplash.com/photo-1528825871115-3581a5387919?w=512&h=512&fit=crop&q=80",
+  "Sanduíche de Pão Integral e Queijo Branco": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=512&h=512&fit=crop&q=80",
+  "Espaguete de Cenoura ao Molho Pesto": espagueteCenoura,
 
+  // Mapeamento por IDs
+  "p-cafe-1": "https://images.unsplash.com/photo-1510693206972-df098062cb71?w=512&h=512&fit=crop&q=80", 
+  "p-cafe-2": "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=512&h=512&fit=crop&q=80",
+  "p-almoco-1": frangoGergelim,
+  "p-lanche-t-1": "https://images.unsplash.com/photo-1603532648955-0393e01c8a64?w=512&h=512&fit=crop&q=80",
+  "p-lanche-1": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=512&h=512&fit=crop&q=80",
+  "p-jantar-1": tacosAlface,
   "e-cafe-1": "https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=512&h=512&fit=crop&q=80",
   "e-almoco-1": salmaoBrocolis,
-  "e-lanche-t-1": "https://images.unsplash.com/photo-1585238341267-1cfec2046a55?w=512&h=512&fit=crop&q=80",
-  "e-lanche-1": "https://images.unsplash.com/photo-1511910849309-0dffb8785146?w=512&h=512&fit=crop&q=80",
   "e-jantar-1": risotoCouveFlor,
-
-  "st-cafe-1": "https://images.unsplash.com/photo-1502301103665-0b95cc738def?w=512&h=512&fit=crop&q=80",
+  "st-cafe-1": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=512&h=512&fit=crop&q=80",
   "st-almoco-1": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=512&h=512&fit=crop&q=80",
   "st-lanche-t-1": smoothieFrutas,
-  "st-lanche-1": "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=512&h=512&fit=crop&q=80",
-  "st-jantar-1": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=512&h=512&fit=crop&q=80",
-
   "c-cafe-1": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=512&h=512&fit=crop&q=80",
   "c-almoco-1": escondidinhoAbobora,
-  "c-lanche-t-1": "https://images.unsplash.com/photo-1528825871115-3581a5387919?w=512&h=512&fit=crop&q=80",
-  "c-lanche-1": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=512&h=512&fit=crop&q=80",
   "c-jantar-1": espagueteCenoura,
-
-  // Docinhos por Título
-  "Bombom de Tâmara e Amendoim": bombomTamara,
-  "Mousse de Maracujá com Chia": mousseMaracuja,
-  "Pudim de Leite de Coco e Manga": pudimCoco,
-  "Sorvete de Banana e Canela": sorveteBanana,
-  "Trufa de Cacau e Amêndoas": trufaCacau,
 };
 
-export const recipeImages: Record<string, string> = new Proxy(foodImages, {
-  get(target, prop: string) {
-    return target[prop] || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=512&h=512&fit=crop&q=80";
-  },
-});
+export const defaultRecipeImage = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=512&h=512&fit=crop&q=80";
