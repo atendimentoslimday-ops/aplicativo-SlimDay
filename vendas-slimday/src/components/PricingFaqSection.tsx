@@ -35,12 +35,11 @@ const PricingFaqSection = () => {
     <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/5 blur-[150px] rounded-full -ml-64 -mb-64" />
     
     <div className="container relative z-10 px-4">
-      <div className="text-center max-w-4xl mx-auto mb-20">
-        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-primary font-bold text-[10px] uppercase tracking-[3px] mb-8">
+      <div className="text-center max        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-emerald-400 font-bold text-[10px] uppercase tracking-[3px] mb-8">
           Oferta Exclusiva Elite
         </div>
         <h2 className="text-4xl md:text-7xl font-serif mb-8 leading-tight">
-          Sua melhor versão por <span className="text-primary italic">menos de R$ 1</span> por dia
+          Sua melhor versão por <span className="text-emerald-400 italic">menos de R$ 1</span> por dia
         </h2>
         <p className="text-xl text-slate-400 font-light max-w-2xl mx-auto leading-relaxed">
           Acesso vitalício, sem mensalidades e com garantia incondicional. O SlimDay é o último guia que você vai precisar.
@@ -61,7 +60,7 @@ const PricingFaqSection = () => {
                 whileHover={{ y: -5 }}
                 className="p-8 rounded-[40px] bg-white/5 border border-white/10 backdrop-blur-xl hover:bg-white/10 transition-all duration-300"
               >
-                <div className="h-12 w-12 rounded-2xl bg-primary/20 text-primary flex items-center justify-center mb-6">
+                <div className="h-12 w-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-6">
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-serif italic mb-3 text-white">{item.title}</h3>
@@ -70,11 +69,11 @@ const PricingFaqSection = () => {
             ))}
           </div>
 
-          <div className="p-10 rounded-[40px] bg-gradient-to-br from-emerald-950/50 to-slate-900 border border-primary/20 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-all" />
+          <div className="p-10 rounded-[40px] bg-gradient-to-br from-emerald-950/50 to-slate-900 border border-emerald-500/20 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl group-hover:bg-emerald-500/20 transition-all" />
             <div className="flex flex-col md:flex-row gap-8 items-center relative z-10">
-              <div className="h-20 w-20 bg-primary/20 rounded-3xl flex items-center justify-center border border-primary/30 shadow-premium">
-                <ShieldCheck className="h-10 w-10 text-primary" />
+              <div className="h-20 w-20 bg-emerald-500/20 rounded-3xl flex items-center justify-center border border-emerald-500/30 shadow-premium">
+                <ShieldCheck className="h-10 w-10 text-emerald-400" />
               </div>
               <div className="text-center md:text-left">
                 <h4 className="text-2xl font-serif italic text-white mb-2">Garantia Blindada de 7 Dias</h4>
@@ -93,7 +92,7 @@ const PricingFaqSection = () => {
             className="p-12 rounded-[50px] bg-white text-slate-900 shadow-premium-dark relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 p-8">
-              <div className="bg-primary/10 text-primary text-[10px] uppercase tracking-[3px] font-black px-5 py-2 rounded-full">Elite Offer</div>
+              <div className="bg-emerald-500/10 text-emerald-600 text-[10px] uppercase tracking-[3px] font-black px-5 py-2 rounded-full">Elite Offer</div>
             </div>
             
             <div className="mb-10">
@@ -105,12 +104,12 @@ const PricingFaqSection = () => {
               <p className="text-slate-400 mt-4 text-xs font-bold uppercase tracking-widest">Pagamento único · Acesso Vitalício</p>
               
               {/* Countdown Timer */}
-              <div className="mt-6 p-4 rounded-3xl bg-primary/5 border border-primary/10 flex items-center justify-between">
+              <div className="mt-6 p-4 rounded-3xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <Zap className="h-5 w-5 text-primary animate-pulse" />
+                  <Zap className="h-5 w-5 text-emerald-500 animate-pulse" />
                   <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Oferta expira em:</span>
                 </div>
-                <span className="text-2xl font-mono font-black text-primary">{formatTime(timeLeft)}</span>
+                <span className="text-2xl font-mono font-black text-emerald-500">{formatTime(timeLeft)}</span>
               </div>
             </div>
 
@@ -118,11 +117,11 @@ const PricingFaqSection = () => {
               {[
                 "Ativação Imediata via E-mail",
                 "Experiência Completa SlimDay",
-                "Módulo Ciclo+ de Acompanhamento",
+                "Plano Personalizado Incluso",
                 "Suporte Especializado",
               ].map((check) => (
                 <div key={check} className="flex items-center gap-4 text-slate-600 font-light">
-                  <div className="h-6 w-6 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                  <div className="h-6 w-6 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500">
                     <Check className="h-3.5 w-3.5" />
                   </div>
                   {check}
@@ -138,7 +137,7 @@ const PricingFaqSection = () => {
                 currency: 'BRL'
               })}
             >
-              <Button className="w-full h-20 bg-slate-900 text-white text-lg font-bold rounded-[30px] hover:bg-primary transition-all shadow-premium flex items-center justify-center gap-3 active:scale-95">
+              <Button className="w-full h-20 bg-emerald-600 text-white text-lg font-bold rounded-[30px] hover:bg-emerald-700 transition-all shadow-premium flex items-center justify-center gap-3 active:scale-95 border-none">
                 Ativar Meu Plano Agora
               </Button>
             </a>
