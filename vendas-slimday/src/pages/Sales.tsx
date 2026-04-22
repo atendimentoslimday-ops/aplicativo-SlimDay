@@ -20,6 +20,26 @@ const purchaseNotifications = [
   { name: "Carla M.", location: "Rio de Janeiro, RJ" },
   { name: "Patrícia L.", location: "Salvador, BA" },
   { name: "Amanda K.", location: "Porto Alegre, RS" },
+  { name: "Beatriz M.", location: "Fortaleza, CE" },
+  { name: "Larissa W.", location: "Joinville, SC" },
+  { name: "Renata P.", location: "Brasília, DF" },
+  { name: "Camila G.", location: "Recife, PE" },
+  { name: "Isabela S.", location: "Campinas, SP" },
+  { name: "Tatiane R.", location: "Goiânia, GO" },
+  { name: "Priscila B.", location: "Manaus, AM" },
+  { name: "Monalisa F.", location: "Vitória, ES" },
+  { name: "Sandra K.", location: "Florianópolis, SC" },
+  { name: "Luciana V.", location: "Natal, RN" },
+  { name: "Letícia D.", location: "Cuiabá, MT" },
+  { name: "Andréia H.", location: "Santos, SP" },
+  { name: "Cláudia T.", location: "Maceió, AL" },
+  { name: "Roberta N.", location: "Belém, PA" },
+  { name: "Vanessa J.", location: "Uberlândia, MG" },
+  { name: "Aline C.", location: "Campo Grande, MS" },
+  { name: "Jaqueline Q.", location: "Aracaju, SE" },
+  { name: "Gabriela L.", location: "Londrina, PR" },
+  { name: "Danielle Z.", location: "Caxias do Sul, RS" },
+  { name: "Michele X.", location: "João Pessoa, PB" },
 ];
 
 const Sales = () => {
@@ -30,11 +50,19 @@ const Sales = () => {
     let interval: NodeJS.Timeout;
     const initialDelay = setTimeout(() => {
       interval = setInterval(() => {
+        // Selecionar um índice aleatório diferente do atual
+        setActiveNotification((prev) => {
+          let next;
+          do {
+            next = Math.floor(Math.random() * purchaseNotifications.length);
+          } while (next === prev);
+          return next;
+        });
+        
         setShowNotification(true);
         setTimeout(() => setShowNotification(false), 5000);
-        setActiveNotification((prev) => (prev + 1) % purchaseNotifications.length);
-      }, 15000);
-    }, 3000); // Reduzido para 3 segundos para teste imediato
+      }, 18000); // Intervalo um pouco mais variado (18s)
+    }, 3000);
     
     return () => {
       clearTimeout(initialDelay);

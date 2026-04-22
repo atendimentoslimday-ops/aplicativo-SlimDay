@@ -5,12 +5,40 @@ import { Zap, ShieldCheck } from "lucide-react";
 const CHECKOUT_URL = "https://pay.kirvano.com/e4ad9a8c-bee4-4279-be20-8f39c46c17df";
 
 const QuizInfoSidebar = () => {
-  const [timeLeft, setTimeLeft] = useState(900); // 15 minutos
+  const [timeLeft, setTimeLeft] = useState(900);
 
   useEffect(() => {
+    const STORAGE_KEY = "slimday_timer_end";
+    const DURATION = 900;
+    
+    const getInitialTime = () => {
+      const savedEnd = localStorage.getItem(STORAGE_KEY);
+      const now = Math.floor(Date.now() / 1000);
+      
+      if (savedEnd) {
+        const end = parseInt(savedEnd, 10);
+        const remaining = end - now;
+        if (remaining > 0) return remaining;
+        if (remaining < -3600) {
+          const newEnd = now + DURATION;
+          localStorage.setItem(STORAGE_KEY, newEnd.toString());
+          return DURATION;
+        }
+        return 0;
+      }
+      
+      const newEnd = now + DURATION;
+      localStorage.setItem(STORAGE_KEY, newEnd.toString());
+      return DURATION;
+    };
+
+    const initialTime = getInitialTime();
+    setTimeLeft(initialTime);
+
     const timer = setInterval(() => {
       setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
+    
     return () => clearInterval(timer);
   }, []);
 
@@ -63,13 +91,6 @@ const QuizInfoSidebar = () => {
             </span>
           </div>
 
-          <h3 className="text-2xl font-extrabold text-white tracking-tight mb-2 leading-tight">
-            Comece hoje com um valor mais leve
-          </h3>
-          <p className="text-emerald-100/80 text-sm leading-relaxed mb-5 font-medium">
-            Uma condição exclusiva para você garantir sua entrada no SlimDay agora.
-          </p>
-
           {/* Countdown Timer */}
           <div className="mb-6 p-3 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-between text-white">
             <div className="flex items-center gap-2">
@@ -78,6 +99,13 @@ const QuizInfoSidebar = () => {
             </div>
             <span className="text-xl font-mono font-black text-emerald-400">{formatTime(timeLeft)}</span>
           </div>
+
+          <h3 className="text-2xl font-extrabold text-white tracking-tight mb-2 leading-tight">
+            Comece hoje com um valor mais leve
+          </h3>
+          <p className="text-emerald-100/80 text-sm leading-relaxed mb-5 font-medium">
+            Uma condição exclusiva para você garantir sua entrada no SlimDay agora.
+          </p>
 
           <div className="flex items-baseline gap-3 mb-6 bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/10">
             <span className="text-emerald-300/60 text-lg font-bold line-through">R$ 89,90</span>
@@ -111,16 +139,16 @@ const QuizInfoSidebar = () => {
 
           {/* Trust Icons */}
           <div className="mt-6 pt-6 border-t border-white/10 flex flex-col items-center gap-3">
-            <div className="flex items-center gap-3 opacity-40 grayscale hover:grayscale-0 transition-all">
-              <img src="https://logodownload.org/wp-content/uploads/2014/10/visa-logo-1.png" alt="Visa" className="h-2.5 object-contain" />
-              <img src="https://logodownload.org/wp-content/uploads/2014/07/mastercard-logo-7.png" alt="Mastercard" className="h-4 object-contain" />
-              <img src="https://logodownload.org/wp-content/uploads/2015/03/elo-logo-1.png" alt="Elo" className="h-3 object-contain" />
-              <div className="flex items-center gap-1 font-bold text-[8px] text-white">
-                PIX
+            <div className="flex items-center gap-4 saturate-150 brightness-110">
+              <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos/assets/cards/visa.svg" alt="Visa" className="h-3 object-contain" />
+              <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos/assets/cards/mastercard.svg" alt="Mastercard" className="h-5 object-contain" />
+              <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos/assets/cards/elo.svg" alt="Elo" className="h-4 object-contain" />
+              <div className="flex items-center gap-1">
+                <img src="https://logopng.com.br/logos/pix-106.svg" alt="Pix" className="h-5 object-contain brightness-200" />
               </div>
             </div>
-            <div className="flex items-center gap-1.5 text-[8px] text-emerald-200/50 uppercase tracking-[1px] font-bold">
-              <ShieldCheck className="h-3 w-3" /> Transação Criptografada
+            <div className="flex items-center gap-1.5 text-[8px] text-emerald-200/60 uppercase tracking-[1px] font-bold">
+              <ShieldCheck className="h-3.5 w-3.5" /> Transação Criptografada
             </div>
           </div>
         </div>

@@ -15,11 +15,42 @@ const faqs = [
 
 
 const PricingFaqSection = () => {
-  const [timeLeft, setTimeLeft] = React.useState(900); // 15 minutes in seconds
+  const [timeLeft, setTimeLeft] = React.useState(900);
+
   React.useEffect(() => {
+    const STORAGE_KEY = "slimday_timer_end";
+    const DURATION = 900; // 15 minutes
+    
+    const getInitialTime = () => {
+      const savedEnd = localStorage.getItem(STORAGE_KEY);
+      const now = Math.floor(Date.now() / 1000);
+      
+      if (savedEnd) {
+        const end = parseInt(savedEnd, 10);
+        const remaining = end - now;
+        if (remaining > 0) return remaining;
+        // Se expirou, podemos reiniciar ou deixar em 0. 
+        // Para urgência, vamos reiniciar se tiver passado mais de 1 hora.
+        if (remaining < -3600) {
+          const newEnd = now + DURATION;
+          localStorage.setItem(STORAGE_KEY, newEnd.toString());
+          return DURATION;
+        }
+        return 0;
+      }
+      
+      const newEnd = now + DURATION;
+      localStorage.setItem(STORAGE_KEY, newEnd.toString());
+      return DURATION;
+    };
+
+    const initialTime = getInitialTime();
+    setTimeLeft(initialTime);
+
     const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 900));
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
     }, 1000);
+    
     return () => clearInterval(timer);
   }, []);
 
@@ -35,7 +66,8 @@ const PricingFaqSection = () => {
     <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-emerald-500/5 blur-[150px] rounded-full -ml-64 -mb-64" />
     
     <div className="container relative z-10 px-4">
-      <div className="text-center max        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-emerald-400 font-bold text-[10px] uppercase tracking-[3px] mb-8">
+      <div className="text-center max-w-4xl mx-auto mb-20">
+        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-emerald-400 font-bold text-[10px] uppercase tracking-[3px] mb-8">
           Oferta Exclusiva Elite
         </div>
         <h2 className="text-4xl md:text-7xl font-serif mb-8 leading-tight">
@@ -95,6 +127,15 @@ const PricingFaqSection = () => {
               <div className="bg-emerald-500/10 text-emerald-600 text-[10px] uppercase tracking-[3px] font-black px-5 py-2 rounded-full">Elite Offer</div>
             </div>
             
+            {/* Countdown Timer */}
+            <div className="mb-8 p-4 rounded-3xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Zap className="h-5 w-5 text-emerald-500 animate-pulse" />
+                <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Oferta expira em:</span>
+              </div>
+              <span className="text-2xl font-mono font-black text-emerald-500">{formatTime(timeLeft)}</span>
+            </div>
+
             <div className="mb-10">
               <span className="text-slate-300 line-through text-xl font-light">R$ 89,90</span>
               <div className="flex items-baseline gap-2 mt-2">
@@ -102,15 +143,6 @@ const PricingFaqSection = () => {
                 <span className="text-8xl font-serif leading-none tracking-tighter text-slate-900">29,90</span>
               </div>
               <p className="text-slate-400 mt-4 text-xs font-bold uppercase tracking-widest">Pagamento único · Acesso Vitalício</p>
-              
-              {/* Countdown Timer */}
-              <div className="mt-6 p-4 rounded-3xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Zap className="h-5 w-5 text-emerald-500 animate-pulse" />
-                  <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Oferta expira em:</span>
-                </div>
-                <span className="text-2xl font-mono font-black text-emerald-500">{formatTime(timeLeft)}</span>
-              </div>
             </div>
 
             <div className="space-y-6 mb-12">
@@ -143,17 +175,16 @@ const PricingFaqSection = () => {
             </a>
 
             {/* Payment Icons */}
-            <div className="mt-8 flex flex-col items-center gap-4">
-              <div className="flex items-center gap-4 opacity-50 grayscale hover:grayscale-0 transition-all">
-                <img src="https://logodownload.org/wp-content/uploads/2014/10/visa-logo-1.png" alt="Visa" className="h-3 object-contain" />
-                <img src="https://logodownload.org/wp-content/uploads/2014/07/mastercard-logo-7.png" alt="Mastercard" className="h-5 object-contain" />
-                <img src="https://logodownload.org/wp-content/uploads/2015/03/elo-logo-1.png" alt="Elo" className="h-4 object-contain" />
-                <div className="flex items-center gap-1 font-black text-xs text-slate-800">
-                  <svg className="h-4 w-4 fill-emerald-500" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/><path d="M12 6c-3.309 0-6 2.691-6 6s2.691 6 6 6 6-2.691 6-6-2.691-6-6-6zm2.4 9h-4.8v-1.2h4.8V15zm0-2.4h-4.8v-1.2h4.8v1.2zm0-2.4h-4.8V9h4.8v1.2z"/></svg>
-                  PIX
+            <div className="mt-8 flex flex-col items-center gap-4 bg-slate-50 p-6 rounded-3xl border border-slate-100">
+              <div className="flex items-center gap-6 saturate-150">
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos/assets/cards/visa.svg" alt="Visa" className="h-4 object-contain" />
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos/assets/cards/mastercard.svg" alt="Mastercard" className="h-6 object-contain" />
+                <img src="https://cdn.jsdelivr.net/gh/datatrans/payment-logos/assets/cards/elo.svg" alt="Elo" className="h-5 object-contain" />
+                <div className="flex items-center gap-1">
+                  <img src="https://logopng.com.br/logos/pix-106.svg" alt="Pix" className="h-5 object-contain" />
                 </div>
               </div>
-              <p className="text-[10px] text-slate-400 font-medium">Acesso imediato liberado após o pagamento</p>
+              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Acesso imediato liberado após o pagamento</p>
             </div>
 
           </motion.div>
@@ -180,6 +211,7 @@ const PricingFaqSection = () => {
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default PricingFaqSection;
