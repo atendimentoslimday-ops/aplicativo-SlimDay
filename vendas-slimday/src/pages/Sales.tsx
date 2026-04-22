@@ -27,17 +27,19 @@ const Sales = () => {
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
-    // Começar após 10 segundos
+    let interval: NodeJS.Timeout;
     const initialDelay = setTimeout(() => {
-      const interval = setInterval(() => {
+      interval = setInterval(() => {
         setShowNotification(true);
         setTimeout(() => setShowNotification(false), 5000);
         setActiveNotification((prev) => (prev + 1) % purchaseNotifications.length);
       }, 15000);
-      return () => clearInterval(interval);
-    }, 10000);
+    }, 3000); // Reduzido para 3 segundos para teste imediato
     
-    return () => clearTimeout(initialDelay);
+    return () => {
+      clearTimeout(initialDelay);
+      if (interval) clearInterval(interval);
+    };
   }, []);
   return (
     <div className="min-h-screen">
