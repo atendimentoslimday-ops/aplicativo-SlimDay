@@ -17,6 +17,7 @@ interface AuthScreenProps {
   devCode?: string;
   setDevCode?: (v: string) => void;
   onSubmit: (e: React.FormEvent) => void;
+  onResetPassword?: () => void | Promise<void>;
   loading: boolean;
   error?: string;
   success?: string;
@@ -24,7 +25,7 @@ interface AuthScreenProps {
 
 export function AuthScreen({
   mode, setMode, nome, setNome, email, setEmail, senha, setSenha,
-  devCode, setDevCode, onSubmit, loading, error, success
+  devCode, setDevCode, onSubmit, onResetPassword, loading, error, success
 }: AuthScreenProps) {
   return (
     <div className="min-h-screen bg-white px-4 py-12 md:py-24 overflow-hidden relative">
@@ -97,10 +98,17 @@ export function AuthScreen({
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <Label className="text-xs font-bold uppercase tracking-widest text-slate-600 ml-1">Sua Senha</Label>
+                    <div className="flex justify-between items-center ml-1">
+                      <Label className="text-xs font-bold uppercase tracking-widest text-slate-600">Sua Senha</Label>
+                      {mode === "login" && onResetPassword && (
+                        <button type="button" onClick={onResetPassword} className="text-xs font-semibold text-rose-500 hover:text-rose-600 transition-colors">
+                          Esqueci a senha?
+                        </button>
+                      )}
+                    </div>
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
-                      <Input type="password" className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="••••••••" required />
+                      <Input type="password" className="h-14 pl-12 rounded-2xl border-slate-100 bg-slate-50/50 focus:bg-white" value={senha} onChange={(e) => setSenha(e.target.value)} placeholder="••••••••" required={mode === "register"} />
                     </div>
                   </div>
                 )}

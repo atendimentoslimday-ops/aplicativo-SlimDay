@@ -161,6 +161,9 @@ function SlimDayApp() {
   const [cycleOfferRefused, setCycleOfferRefused] = useState(false);
   const [cycleLastChanceRefused, setCycleLastChanceRefused] = useState(false);
   const [purchaseTracked, setPurchaseTracked] = useState(() => sessionStorage.getItem("sd_purchase_tracked") === "true");
+  const [showPasswordReset, setShowPasswordReset] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [resetLoading, setResetLoading] = useState(false);
 
   const syncTimeoutRef = useRef<number | null>(null);
   const profileLoadedRef = useRef(false);
@@ -488,8 +491,52 @@ function SlimDayApp() {
     }
   }
 
+  async function handleResetPassword() {
+    if (!authEmail.trim()) {
+      setAuthError("Por favor, preencha o e-mail para recuperar a senha.");
+      return;
+    }
+    setAuthLoading(true);
+    setAuthError("");
+    setAuthSuccess("");
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(authEmail.trim(), {
+        redirectTo: window.location.origin,
+      });
+      if (error) throw error;
+      setAuthSuccess("Enviamos um link de recuperação para o seu e-mail!");
+    } catch (err: any) {
+      setAuthError(err.message || "Erro ao solicitar recuperação de senha.");
+    } finally {
+      setAuthLoading(false);
+    }
+  }
+
+  async function handleUpdatePassword() {
+    if (newPassword.length < 6) {
+      setAuthError("A senha deve ter pelo menos 6 caracteres.");
+      return;
+    }
+    setResetLoading(true);
+    setAuthError("");
+    try {
+      const { error } = await supabase.auth.updateUser({ password: newPassword });
+      if (error) throw error;
+      setAuthSuccess("Senha atualizada com sucesso!");
+      setShowPasswordReset(false);
+      setNewPassword("");
+    } catch (err: any) {
+      setAuthError(err.message || "Erro ao atualizar senha.");
+    } finally {
+      setResetLoading(false);
+    }
+  }
+
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        setShowPasswordReset(true);
+      }
       setUserId(session?.user?.id || null);
       setUserEmail(session?.user?.email || "");
       setAuthReady(true);
@@ -612,6 +659,7 @@ function SlimDayApp() {
         email={authEmail} setEmail={setAuthEmail}
         senha={authSenha} setSenha={setAuthSenha}
         onSubmit={handleAuthSubmit}
+        onResetPassword={handleResetPassword}
         loading={authLoading}
         error={authError}
         success={authSuccess}
@@ -645,6 +693,45 @@ function SlimDayApp() {
   return (
     <div className="min-h-screen bg-[#fffcfd]">
       <AnimatePresence>
+        {showPasswordReset && (
+          <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+             <Card className="max-w-md w-full rounded-[32px] p-8 bg-white shadow-2xl animate-in zoom-in-95 relative">
+                <button 
+                  onClick={() => setShowPasswordReset(false)}
+                  className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
+                >×</button>
+                <div className="text-center mb-6">
+                  <div className="h-16 w-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Lock className="h-8 w-8" />
+                  </div>
+                  <h3 className="text-2xl font-serif italic text-slate-900">Definir Nova Senha</h3>
+                  <p className="text-slate-500 text-sm font-light mt-2">Escolha uma senha segura para seus próximos acessos.</p>
+                </div>
+                
+                <form onSubmit={(e) => { e.preventDefault(); handleUpdatePassword(); }} className="space-y-4">
+                  {authError && <div className="p-3 rounded-xl bg-rose-50 text-rose-600 text-xs text-center border border-rose-100">{authError}</div>}
+                  <div className="space-y-2">
+                    <Label className="text-xs font-bold uppercase tracking-widest text-slate-400">Nova Senha</Label>
+                    <Input 
+                      type="password" 
+                      className="h-14 rounded-2xl border-slate-100 bg-slate-50/50" 
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      placeholder="••••••••"
+                      required
+                    />
+                  </div>
+                  <Button 
+                    type="submit"
+                    className="w-full h-14 rounded-2xl bg-rose-500 hover:bg-rose-600 font-bold text-white shadow-lg shadow-rose-200"
+                    disabled={resetLoading}
+                  >
+                    {resetLoading ? "Salvando..." : "Salvar Nova Senha"}
+                  </Button>
+                </form>
+             </Card>
+          </div>
+        )}
         {showOnboarding && (
           <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
             <div className="relative w-full max-w-xl">

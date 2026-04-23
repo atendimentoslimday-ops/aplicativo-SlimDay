@@ -24,7 +24,8 @@ interface AuthScreenProps {
   setSenha: (v: string) => void;
   devCode: string;
   setDevCode: (v: string) => void;
-  onSubmit: () => void;
+  onSubmit: () => void | Promise<void>;
+  onResetPassword?: () => void | Promise<void>;
   loading: boolean;
   error: string;
   success: string;
@@ -36,6 +37,7 @@ export function AuthScreen({
   devCode,
   setDevCode,
   onSubmit,
+  onResetPassword,
   loading,
   error, success,
 }: AuthScreenProps) {
@@ -139,7 +141,14 @@ export function AuthScreen({
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs font-bold uppercase tracking-widest text-slate-400 ml-1">Sua Senha</Label>
+                  <div className="flex justify-between items-center ml-1">
+                    <Label className="text-xs font-bold uppercase tracking-widest text-slate-400">Sua Senha</Label>
+                    {mode === "login" && onResetPassword && (
+                      <button type="button" onClick={onResetPassword} className="text-xs font-semibold text-rose-500 hover:text-rose-600 transition-colors">
+                        Esqueci a senha?
+                      </button>
+                    )}
+                  </div>
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-300" />
                     <Input 
